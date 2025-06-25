@@ -9,27 +9,51 @@ class DelegationRegistration extends Model
 {
     use HasFactory;
 
-    protected $table = 'delegation_registrations';
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
+        // Kolom-kolom yang sudah ada
         'registering_as',
-        'delegate_type', // Can be null for Observer
+        'delegate_type',
+        'institution_name',
+        'delegate_count',
         'full_name',
         'email',
         'phone',
         'nationality',
-        'institution_name',
-        'motivation_statement', // Might be optional for Observer
-        'do_you_need_accommodation', // Can be null/false for Observer
+        'do_you_need_accommodation',
+        'motivation_statement',
         'payment_proof_path',
         'social_media_proof_path',
         'referral_code',
+
+        // --- TAMBAHKAN SEMUA KOLOM BARU DI SINI ---
+        'council_preference_1',
+        'country_preference_1_1',
+        'country_preference_1_2',
+        'reason_for_first_country_preference_1',
+        'reason_for_second_country_preference_1',
+
+        'council_preference_2',
+        'country_preference_2_1',
+        'country_preference_2_2',
+        'reason_for_first_country_preference_2',
+        'reason_for_second_country_preference_2',
+
+        'council_preference_3',
+        'country_preference_3_1',
+        'country_preference_3_2',
+        'reason_for_first_country_preference_3',
+        'reason_for_second_country_preference_3',
+        'is_verified',
     ];
 
-    protected $casts = [
-        'do_you_need_accommodation' => 'boolean',
-    ];
-
+    /**
+     * Mendefinisikan relasi one-to-many ke model Delegate.
+     */
     public function delegates()
     {
         return $this->hasMany(Delegate::class);

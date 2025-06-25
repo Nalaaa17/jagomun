@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail; // Jika Anda ingin mengirim email
 
 class ContactController extends Controller
 {
     /**
-     * Display the Contact Us page.
-     *
-     * @return \Illuminate\View\View
+     * Menampilkan halaman kontak.
      */
     public function index()
     {
@@ -18,30 +16,26 @@ class ContactController extends Controller
     }
 
     /**
-     * Handle the contact form submission.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * PERBAIKAN: Mengganti nama metode dari 'store' menjadi 'submit'
+     * agar sesuai dengan rute 'contact.submit'.
      */
     public function submit(Request $request)
     {
-        // Validasi data input
-        $validatedData = $request->validate([
+        // Validasi input dari formulir
+        $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'message' => 'required|string|min:10',
+            'message' => 'required|string',
         ]);
 
-        // Opsional: Kirim email
-        // Anda perlu mengkonfigurasi pengaturan mail di .env (MAIL_MAILER, MAIL_HOST, dll.)
-        // dan membuat Mailable class (php artisan make:mail ContactUsMail)
-        /*
-        Mail::to('admin@jagomun.com')->send(new \App\Mail\ContactUsMail($validatedData));
-        */
+        // Simpan data ke database
+        Contact::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+        ]);
 
-        // Atau Anda bisa menyimpannya ke database jika Anda memiliki tabel 'contacts'
-        // \App\Models\Contact::create($validatedData);
-
-        return redirect()->back()->with('success', 'Pesan Anda telah berhasil dikirim!');
+        // Kembali ke halaman sebelumnya dengan pesan sukses
+        return back()->with('succes', 'Thank you for your message! We will get back to you soon.');
     }
 }

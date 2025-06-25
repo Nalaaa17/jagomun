@@ -17,7 +17,7 @@
             @csrf
             <input type="hidden" name="delegate_type" value="{{ $delegateType }}">
 
-            {{-- Section: Personal Details --}}
+            {{-- Section: Personal Details (Tidak diubah) --}}
             <div class="border border-gray-300 p-6 rounded-lg mb-8 bg-orange-50 bg-opacity-20">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-6">Personal Details</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -54,20 +54,115 @@
                 </div>
             </div>
 
-            {{-- Council Preferences (Individual Delegate might not have this as extensive, but included for completeness) --}}
+            {{-- MODIFIED: Bagian Council Preferences diganti dengan kode HTML langsung --}}
             <div class="border border-gray-300 p-6 rounded-lg mb-8 bg-orange-50 bg-opacity-20">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-6">Council Preferences</h2>
                 <p class="text-gray-600 mb-4">You can set your preferred councils and countries here.</p>
-                {{-- Ini bisa disederhanakan jika Individual Delegate hanya punya 1 preferensi --}}
-                {{-- Saya menyertakan yang sama dengan form delegasi untuk kemudahan saat ini --}}
-                @include('registration.partials.council-preferences', ['delegateIndex' => '', 'data' => old()])
+
+                {{-- Council Preference 1 --}}
+                <div class="border-b border-gray-200 pb-6 mb-6">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Council Preference 1</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <x-input-label for="council_preference_1" :value="__('Council Preference')" />
+                            <select id="council_preference_1" name="council_preference_1" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                                <option value="">Select Council</option><option value="UNSC">UNSC</option><option value="UNHRC">UNHRC</option><option value="WHO">WHO</option><option value="ECOSOC">ECOSOC</option>
+                            </select>
+                        </div>
+                        <div>
+                            <x-input-label for="country_preference_1_1" :value="__('Country Preference 1')" />
+                            <select id="country_preference_1_1" name="country_preference_1_1" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                                <option value="">Select Country</option><option value="USA">USA</option><option value="China">China</option><option value="Indonesia">Indonesia</option>
+                            </select>
+                        </div>
+                        <div>
+                            <x-input-label for="country_preference_1_2" :value="__('Country Preference 2')" />
+                            <select id="country_preference_1_2" name="country_preference_1_2" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                                <option value="">Select Country</option><option value="Germany">Germany</option><option value="Japan">Japan</option><option value="Brazil">Brazil</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-3">
+                            <x-input-label for="reason_for_first_country_preference_1" :value="__('Reason for First Country Preference')" />
+                            <textarea id="reason_for_first_country_preference_1" name="reason_for_first_country_preference_1" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"></textarea>
+                        </div>
+                        <div class="md:col-span-3">
+                            <x-input-label for="reason_for_second_country_preference_1" :value="__('Reason for Second Country Preference')" />
+                            <textarea id="reason_for_second_country_preference_1" name="reason_for_second_country_preference_1" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Council Preference 2 --}}
+                <div class="border-b border-gray-200 pb-6 mb-6">
+                     <h3 class="text-xl font-semibold text-gray-700 mb-4">Council Preference 2</h3>
+                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <x-input-label for="council_preference_2" :value="__('Council Preference')" />
+                            <select id="council_preference_2" name="council_preference_2" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                                <option value="">Select Council</option><option value="UNSC">UNSC</option><option value="UNHRC">UNHRC</option><option value="WHO">WHO</option><option value="ECOSOC">ECOSOC</option>
+                            </select>
+                        </div>
+                        <div>
+                            <x-input-label for="country_preference_2_1" :value="__('Country Preference 1')" />
+                            <select id="country_preference_2_1" name="country_preference_2_1" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                                <option value="">Select Country</option><option value="USA">USA</option><option value="China">China</option><option value="Indonesia">Indonesia</option>
+                            </select>
+                        </div>
+                        <div>
+                            <x-input-label for="country_preference_2_2" :value="__('Country Preference 2')" />
+                            <select id="country_preference_2_2" name="country_preference_2_2" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                                <option value="">Select Country</option><option value="Germany">Germany</option><option value="Japan">Japan</option><option value="Brazil">Brazil</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-3">
+                            <x-input-label for="reason_for_first_country_preference_2" :value="__('Reason for First Country Preference')" />
+                            <textarea id="reason_for_first_country_preference_2" name="reason_for_first_country_preference_2" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"></textarea>
+                        </div>
+                        <div class="md:col-span-3">
+                            <x-input-label for="reason_for_second_country_preference_2" :value="__('Reason for Second Country Preference')" />
+                            <textarea id="reason_for_second_country_preference_2" name="reason_for_second_country_preference_2" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                 {{-- Council Preference 3 --}}
+                 <div>
+                     <h3 class="text-xl font-semibold text-gray-700 mb-4">Council Preference 3</h3>
+                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <x-input-label for="council_preference_3" :value="__('Council Preference')" />
+                            <select id="council_preference_3" name="council_preference_3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                                <option value="">Select Council</option><option value="UNSC">UNSC</option><option value="UNHRC">UNHRC</option><option value="WHO">WHO</option><option value="ECOSOC">ECOSOC</option>
+                            </select>
+                        </div>
+                        <div>
+                            <x-input-label for="country_preference_3_1" :value="__('Country Preference 1')" />
+                            <select id="country_preference_3_1" name="country_preference_3_1" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                                <option value="">Select Country</option><option value="USA">USA</option><option value="China">China</option><option value="Indonesia">Indonesia</option>
+                            </select>
+                        </div>
+                        <div>
+                            <x-input-label for="country_preference_3_2" :value="__('Country Preference 2')" />
+                            <select id="country_preference_3_2" name="country_preference_3_2" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                                <option value="">Select Country</option><option value="Germany">Germany</option><option value="Japan">Japan</option><option value="Brazil">Brazil</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-3">
+                            <x-input-label for="reason_for_first_country_preference_3" :value="__('Reason for First Country Preference')" />
+                            <textarea id="reason_for_first_country_preference_3" name="reason_for_first_country_preference_3" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"></textarea>
+                        </div>
+                        <div class="md:col-span-3">
+                            <x-input-label for="reason_for_second_country_preference_3" :value="__('Reason for Second Country Preference')" />
+                            <textarea id="reason_for_second_country_preference_3" name="reason_for_second_country_preference_3" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
-            {{-- Section: Payment & Social Media Proof --}}
+            {{-- Section: Payment & Social Media Proof (Tidak diubah) --}}
             <div class="border border-gray-300 p-6 rounded-lg mb-8 bg-orange-50 bg-opacity-20">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-6">Payment & Social Media Proof</h2>
-
                 <div class="mb-6">
                     <p class="text-sm text-gray-600 mb-2">
                         Please refer to Indonesia MUN Official Instagram (@indonesiamun) for the prices.
@@ -78,8 +173,6 @@
                         **PayPal:** nanasiyah0@gmail.com (PayPal)
                     </p>
                 </div>
-
-                {{-- Payment Proof Upload --}}
                 <div class="mb-6">
                     <x-input-label for="payment_proof" :value="__('Payment Proof Upload')" />
                     <label for="payment_proof" class="flex items-center justify-center border-2 border-dashed border-gray-400 rounded-lg p-6 cursor-pointer hover:border-blue-500 hover:bg-gray-50 transition duration-150 ease-in-out">
@@ -94,8 +187,6 @@
                     </label>
                     <x-input-error :messages="$errors->get('payment_proof')" class="mt-2" />
                 </div>
-
-                {{-- Social Media Upload --}}
                 <div class="mb-6">
                     <x-input-label for="social_media_proof" :value="__('Social Media Upload (Click ')" />
                     <a href="#" target="_blank" class="text-blue-600 hover:underline">Click to see the petition template</a>)
@@ -111,8 +202,6 @@
                     </label>
                     <x-input-error :messages="$errors->get('social_media_proof')" class="mt-2" />
                 </div>
-
-                {{-- Referral Code --}}
                 <div class="mb-6">
                     <x-input-label for="referral_code" :value="__('Referral Code (Optional, leave blank if you don\'t have one)')" />
                     <x-text-input id="referral_code" class="block mt-1 w-full" type="text" name="referral_code" :value="old('referral_code')" placeholder="Enter your Referral Code Here" />

@@ -7,25 +7,17 @@ use App\Models\DelegationRegistration;
 use App\Models\Delegate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use App\Events\NewRegistrationCreated;
+use App\MailServices\PHPMailerService;
 
 class RegistrationController extends Controller
 {
-    /**
-     * Show the initial registration type selection page (SS 1).
-     *
-     * @return \Illuminate\View\View
-     */
+    // Metode chooseType, processType, chooseDelegateType, processDelegateType tidak berubah
     public function chooseType()
     {
         return view('registration.choose-type');
     }
 
-    /**
-     * Handle the selection of registration type and redirect (SS 1).
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function processType(Request $request)
     {
         $request->validate([
@@ -37,38 +29,24 @@ class RegistrationController extends Controller
         } elseif ($request->registration_type === 'Delegation') {
             return redirect()->route('registration.chooseDelegateType', ['type' => 'Delegation']);
         } elseif ($request->registration_type === 'Observer') {
-            // PERBAIKAN DI SINI: Arahkan Observer ke chooseDelegateType juga
             return redirect()->route('registration.chooseDelegateType', ['type' => 'Observer']);
         }
 
         return redirect()->back()->with('error', 'Tipe pendaftaran tidak valid.');
     }
 
-    /**
-     * Show the delegate type selection (National/International) (SS 2).
-     *
-     * @param  string $type ('Individual Delegate' or 'Delegation' or 'Observer')
-     * @return \Illuminate\View\View
-     */
     public function chooseDelegateType($type)
     {
-        // Sesuaikan validasi tipe untuk mencakup Observer
         if (!in_array($type, ['Individual Delegate', 'Delegation', 'Observer'])) {
             abort(404, 'Invalid registration type.');
         }
         return view('registration.choose-delegate-type', compact('type'));
     }
 
-    /**
-     * Handle the selection of delegate type and redirect (SS 2).
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function processDelegateType(Request $request)
     {
         $request->validate([
-            'parent_type' => ['required', Rule::in(['Individual Delegate', 'Delegation', 'Observer'])], // Tambahkan Observer
+            'parent_type' => ['required', Rule::in(['Individual Delegate', 'Delegation', 'Observer'])],
             'delegate_type' => ['required', Rule::in(['National Delegate', 'International Delegate'])],
         ]);
 
@@ -81,7 +59,6 @@ class RegistrationController extends Controller
                 'delegate_type' => $request->delegate_type
             ]);
         } elseif ($request->parent_type === 'Observer') {
-            // PERBAIKAN DI SINI: Arahkan Observer ke form observer dengan delegate_type
             return redirect()->route('registration.observerForm', [
                 'delegate_type' => $request->delegate_type
             ]);
@@ -90,12 +67,7 @@ class RegistrationController extends Controller
         return redirect()->back()->with('error', 'Tipe delegasi tidak valid.');
     }
 
-    /**
-     * Show the Individual Delegate registration form.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\View\View
-     */
+    // Metode untuk menampilkan form tidak berubah
     public function showIndividualForm(Request $request)
     {
         $delegateType = $request->query('delegate_type');
@@ -105,11 +77,18 @@ class RegistrationController extends Controller
         return view('registration.individual-form', compact('delegateType'));
     }
 
+    public function observerForm($delegate_type)
+    {
+        if (!in_array($delegate_type, ['National Delegate', 'International Delegate'])) {
+            abort(404, 'Invalid delegate type for observer registration.');
+        }
+        return view('registration.observer-form', [
+            'delegateType' => $delegate_type,
+        ]);
+    }
+
     /**
      * Handle Individual Delegate form submission.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function submitIndividualForm(Request $request)
     {
@@ -124,18 +103,27 @@ class RegistrationController extends Controller
             'payment_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'social_media_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'referral_code' => 'nullable|string|max:50',
+            'council_preference_1' => 'nullable|string|max:255',
+            'country_preference_1_1' => 'nullable|string|max:255',
+            'country_preference_1_2' => 'nullable|string|max:255',
+            'reason_for_first_country_preference_1' => 'nullable|string',
+            'reason_for_second_country_preference_1' => 'nullable|string',
+            'council_preference_2' => 'nullable|string|max:255',
+            'country_preference_2_1' => 'nullable|string|max:255',
+            'country_preference_2_2' => 'nullable|string|max:255',
+            'reason_for_first_country_preference_2' => 'nullable|string',
+            'reason_for_second_country_preference_2' => 'nullable|string',
+            'council_preference_3' => 'nullable|string|max:255',
+            'country_preference_3_1' => 'nullable|string|max:255',
+            'country_preference_3_2' => 'nullable|string|max:255',
+            'reason_for_first_country_preference_3' => 'nullable|string',
+            'reason_for_second_country_preference_3' => 'nullable|string',
         ]);
 
-        $paymentProofPath = null;
-        if ($request->hasFile('payment_proof')) {
-            $paymentProofPath = $request->file('payment_proof')->store('proofs/payment', 'public');
-        }
-        $socialMediaProofPath = null;
-        if ($request->hasFile('social_media_proof')) {
-            $socialMediaProofPath = $request->file('social_media_proof')->store('proofs/social_media', 'public');
-        }
+        $paymentProofPath = $request->file('payment_proof')->store('proofs/payment', 'public');
+        $socialMediaProofPath = $request->file('social_media_proof')->store('proofs/social_media', 'public');
 
-        DelegationRegistration::create([
+        $registration = DelegationRegistration::create([
             'registering_as' => 'Individual Delegate',
             'delegate_type' => $validatedData['delegate_type'],
             'full_name' => $validatedData['full_name'],
@@ -147,55 +135,50 @@ class RegistrationController extends Controller
             'payment_proof_path' => $paymentProofPath,
             'social_media_proof_path' => $socialMediaProofPath,
             'referral_code' => $validatedData['referral_code'] ?? null,
+            'council_preference_1' => $validatedData['council_preference_1'] ?? null,
+            'country_preference_1_1' => $validatedData['country_preference_1_1'] ?? null,
+            'country_preference_1_2' => $validatedData['country_preference_1_2'] ?? null,
+            'reason_for_first_country_preference_1' => $validatedData['reason_for_first_country_preference_1'] ?? null,
+            'reason_for_second_country_preference_1' => $validatedData['reason_for_second_country_preference_1'] ?? null,
+            'council_preference_2' => $validatedData['council_preference_2'] ?? null,
+            'country_preference_2_1' => $validatedData['country_preference_2_1'] ?? null,
+            'country_preference_2_2' => $validatedData['country_preference_2_2'] ?? null,
+            'reason_for_first_country_preference_2' => $validatedData['reason_for_first_country_preference_2'] ?? null,
+            'reason_for_second_country_preference_2' => $validatedData['reason_for_second_country_preference_2'] ?? null,
+            'council_preference_3' => $validatedData['council_preference_3'] ?? null,
+            'country_preference_3_1' => $validatedData['country_preference_3_1'] ?? null,
+            'country_preference_3_2' => $validatedData['country_preference_3_2'] ?? null,
+            'reason_for_first_country_preference_3' => $validatedData['reason_for_first_country_preference_3'] ?? null,
+            'reason_for_second_country_preference_3' => $validatedData['reason_for_second_country_preference_3'] ?? null,
         ]);
 
+        NewRegistrationCreated::dispatch();
+        $mailer = new PHPMailerService();
+        $mailer->sendMail(
+            $registration->email,
+            'Konfirmasi Pendaftaran JagoMUN',
+            '<p>Halo ' . $registration->full_name . ',</p><p>Terima kasih telah mendaftar sebagai Individual Delegate di JagoMUN. Kami akan segera memproses pendaftaran Anda.</p>'
+        );
         return redirect()->route('registration.success')->with('success', 'Registrasi Individual Anda berhasil!');
     }
 
-    /**
-     * Show the Delegation registration form (SS 3 and beyond).
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\View\View
-     */
     public function showDelegationForm(Request $request)
     {
         $delegateType = $request->query('delegate_type');
         if (!in_array($delegateType, ['National Delegate', 'International Delegate'])) {
             abort(404, 'Invalid delegate type for delegation registration.');
         }
-        // Ini hanya akan menampilkan halaman yang memuat komponen Livewire
         return view('registration.delegation-form-wrapper', compact('delegateType'));
     }
 
     /**
-     * Show the Observer registration form.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\View\View
-     */
-    public function observerForm($delegate_type)
-    {
-        if (!in_array($delegate_type, ['National Delegate', 'International Delegate'])) {
-        abort(404, 'Invalid delegate type for observer registration.');
-    }
-
-        return view('registration.observer-form', [
-        'delegateType' => $delegate_type,
-    ]);
-    }
-
-
-    /**
-     * Handle Observer form submission.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * MODIFIED: Handle Observer form submission.
      */
     public function submitObserverForm(Request $request)
     {
+        // 1. MODIFIED: Aturan validasi untuk kolom council preferences DILENGKAPI
         $validatedData = $request->validate([
-            'delegate_type' => ['required', Rule::in(['National Delegate', 'International Delegate'])], // Tambahkan validasi ini
+            'delegate_type' => ['required', Rule::in(['National Delegate', 'International Delegate'])],
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:delegation_registrations,email',
             'phone' => 'required|string|max:20',
@@ -205,42 +188,74 @@ class RegistrationController extends Controller
             'payment_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'social_media_proof' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'referral_code' => 'nullable|string|max:50',
+
+            // --- Aturan Validasi untuk Kolom Baru (Dilengkapi) ---
+            'council_preference_1' => 'nullable|string|max:255',
+            'country_preference_1_1' => 'nullable|string|max:255',
+            'country_preference_1_2' => 'nullable|string|max:255',
+            'reason_for_first_country_preference_1' => 'nullable|string',
+            'reason_for_second_country_preference_1' => 'nullable|string',
+            'council_preference_2' => 'nullable|string|max:255',
+            'country_preference_2_1' => 'nullable|string|max:255',
+            'country_preference_2_2' => 'nullable|string|max:255',
+            'reason_for_first_country_preference_2' => 'nullable|string',
+            'reason_for_second_country_preference_2' => 'nullable|string',
+            'council_preference_3' => 'nullable|string|max:255',
+            'country_preference_3_1' => 'nullable|string|max:255',
+            'country_preference_3_2' => 'nullable|string|max:255',
+            'reason_for_first_country_preference_3' => 'nullable|string',
+            'reason_for_second_country_preference_3' => 'nullable|string',
         ]);
 
-        $paymentProofPath = null;
-        if ($request->hasFile('payment_proof')) {
-            $paymentProofPath = $request->file('payment_proof')->store('proofs/payment', 'public');
-        }
-        $socialMediaProofPath = null;
-        if ($request->hasFile('social_media_proof')) {
-            $socialMediaProofPath = $request->file('social_media_proof')->store('proofs/social_media', 'public');
-        }
+        $paymentProofPath = $request->file('payment_proof')->store('proofs/payment', 'public');
+        $socialMediaProofPath = $request->hasFile('social_media_proof') ? $request->file('social_media_proof')->store('proofs/social_media', 'public') : null;
 
-        DelegationRegistration::create([
+        // 2. MODIFIED: Field-field baru DILENGKAPI saat membuat data
+        $registration = DelegationRegistration::create([
             'registering_as' => 'Observer',
-            'delegate_type' => $validatedData['delegate_type'], // Simpan tipe delegasi yang dipilih
+            'delegate_type' => $validatedData['delegate_type'],
             'full_name' => $validatedData['full_name'],
             'email' => $validatedData['email'],
             'phone' => $validatedData['phone'],
             'nationality' => $validatedData['nationality'],
             'institution_name' => $validatedData['institution'] ?? null,
             'motivation_statement' => $validatedData['motivation_statement'] ?? null,
-            'do_you_need_accommodation' => null,
             'payment_proof_path' => $paymentProofPath,
             'social_media_proof_path' => $socialMediaProofPath,
             'referral_code' => $validatedData['referral_code'] ?? null,
+
+            // --- Menyimpan Data Council Preferences (Dilengkapi) ---
+            'council_preference_1' => $validatedData['council_preference_1'] ?? null,
+            'country_preference_1_1' => $validatedData['country_preference_1_1'] ?? null,
+            'country_preference_1_2' => $validatedData['country_preference_1_2'] ?? null,
+            'reason_for_first_country_preference_1' => $validatedData['reason_for_first_country_preference_1'] ?? null,
+            'reason_for_second_country_preference_1' => $validatedData['reason_for_second_country_preference_1'] ?? null,
+            'council_preference_2' => $validatedData['council_preference_2'] ?? null,
+            'country_preference_2_1' => $validatedData['country_preference_2_1'] ?? null,
+            'country_preference_2_2' => $validatedData['country_preference_2_2'] ?? null,
+            'reason_for_first_country_preference_2' => $validatedData['reason_for_first_country_preference_2'] ?? null,
+            'reason_for_second_country_preference_2' => $validatedData['reason_for_second_country_preference_2'] ?? null,
+            'council_preference_3' => $validatedData['council_preference_3'] ?? null,
+            'country_preference_3_1' => $validatedData['country_preference_3_1'] ?? null,
+            'country_preference_3_2' => $validatedData['country_preference_3_2'] ?? null,
+            'reason_for_first_country_preference_3' => $validatedData['reason_for_first_country_preference_3'] ?? null,
+            'reason_for_second_country_preference_3' => $validatedData['reason_for_second_country_preference_3'] ?? null,
         ]);
 
+        NewRegistrationCreated::dispatch();
+
+        $mailer = new PHPMailerService();
+        $mailer->sendMail(
+            $registration->email,
+            'Konfirmasi Pendaftaran JagoMUN',
+            '<p>Halo ' . $registration->full_name . ',</p><p>Terima kasih telah mendaftar sebagai Individual Delegate di JagoMUN. Kami akan segera memproses pendaftaran Anda.</p>'
+        );
         return redirect()->route('registration.success')->with('success', 'Registrasi Observer Anda berhasil!');
     }
 
-    /**
-     * Display the registration success page.
-     *
-     * @return \Illuminate\View\View
-     */
     public function success()
     {
         return view('registration.succes');
     }
 }
+
