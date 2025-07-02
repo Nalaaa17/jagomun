@@ -5,10 +5,11 @@ use App\Http\Controllers\CouncilsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\DelegationForm;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
+use App\Http\Controllers\PageController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,8 @@ Route::prefix('register')->name('registration.')->group(function () {
     Route::get('/individual-form', [RegistrationController::class, 'showIndividualForm'])->name('individualForm');
     Route::post('/individual-submit', [RegistrationController::class, 'submitIndividualForm'])->name('individualSubmit');
     Route::get('/delegation-form', [RegistrationController::class, 'showDelegationForm'])->name('delegationForm');
-    Route::get('/observer-form/{delegate_type}', [RegistrationController::class, 'observerForm'])->name('observerForm');
+    Route::post('/delegation-submit', [RegistrationController::class, 'submitDelegationForm'])->name('delegationSubmit');
+    Route::get('/observer-form', [RegistrationController::class, 'observerForm'])->name('observerForm');
     Route::post('/observer-submit', [RegistrationController::class, 'submitObserverForm'])->name('observerSubmit');
     Route::get('/success', [RegistrationController::class, 'success'])->name('success');
 });
@@ -56,6 +58,8 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     Route::delete('contacts/{contact}', [ContactMessageController::class, 'destroy'])->name('contacts.destroy');
     // Mengarah ke AdminController dan fungsi toggleVerification
     Route::post('/registrations/{registration}/toggle-verification', [AdminController::class, 'toggleVerification'])->name('registration.toggleVerification');
+    Route::delete('/registrations/{id}', [AdminController::class, 'destroy'])->name('registration.destroy');
+    Route::get('/registrations/export', [AdminController::class, 'export'])->name('registrations.export');
 });
 
 // Laravel Breeze Authentication Routes (jika masih diperlukan untuk user biasa)
@@ -67,3 +71,5 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::get('/packages', [App\Http\Controllers\PageController::class, 'packages'])->name('packages');

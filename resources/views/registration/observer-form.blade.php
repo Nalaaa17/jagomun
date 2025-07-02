@@ -10,17 +10,15 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
             </div>
-            {{-- PERBAIKAN DI SINI: Tampilkan delegateType di judul --}}
-            <h1 class="text-3xl font-bold text-gray-800">I am Registering as {{ $delegateType }} Observer</h1>
-            <p class="text-gray-700">Please fill out your personal details below.</p>
+            <h1 class="text-3xl font-bold text-gray-800">I am Registering as {{ $delegateType }}</h1>
+            <p class="text-gray-700">Please fill out your details below.</p>
         </div>
 
         <form action="{{ route('registration.observerSubmit') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            {{-- PERBAIKAN DI SINI: Tambahkan input tersembunyi untuk delegate_type --}}
             <input type="hidden" name="delegate_type" value="{{ $delegateType }}">
 
-            {{-- Section: Personal Details (Mirip Individual Delegate) --}}
+            {{-- Section: Personal Details --}}
             <div class="border border-gray-300 p-6 rounded-lg mb-8 bg-orange-50 bg-opacity-20">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-6">Personal Details</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -40,115 +38,277 @@
                         <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                     </div>
                     <div>
-                        <x-input-label for="nationality" :value="__('Nationality')" />
+                        <x-input-label for="nationality" :value="__(Str::contains($delegateType, 'International') ? 'Nationality' : 'Domicile')" />
                         <x-text-input id="nationality" class="block mt-1 w-full" type="text" name="nationality" :value="old('nationality')" required />
                         <x-input-error :messages="$errors->get('nationality')" class="mt-2" />
                     </div>
                     <div class="md:col-span-2">
-                        <x-input-label for="institution" :value="__('Institution (Optional)')" />
+                        <x-input-label for="institution" :value="__('Institution')" />
                         <x-text-input id="institution" class="block mt-1 w-full" type="text" name="institution" :value="old('institution')" />
                         <x-input-error :messages="$errors->get('institution')" class="mt-2" />
                     </div>
-                    <div class="md:col-span-2">
-                        <x-input-label for="motivation_statement" :value="__('Why Jagomun (Motivation Statement - Optional)')" />
-                        <textarea id="motivation_statement" name="motivation_statement" rows="5" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">{{ old('motivation_statement') }}</textarea>
-                        <x-input-error :messages="$errors->get('motivation_statement')" class="mt-2" />
+                    <div class="md:col-span-2 mt-4">
+                        <x-input-label :value="__('Attendance Method')" class="mb-2" />
+                        <div class="flex items-center space-x-6">
+                            <label for="attendance_offline" class="flex items-center cursor-pointer">
+                                <input id="attendance_offline" type="radio" name="attendance_type" value="Offline" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" checked>
+                                <span class="ml-2 text-sm text-gray-700">Offline</span>
+                            </label>
+                            <label for="attendance_online" class="flex items-center cursor-pointer">
+                                <input id="attendance_online" type="radio" name="attendance_type" value="Online" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                                <span class="ml-2 text-sm text-gray-700">Online</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Section: Payment & Social Media Proof (Mirip Individual Delegate) --}}
+            {{-- Section: Package Selection --}}
             <div class="border border-gray-300 p-6 rounded-lg mb-8 bg-orange-50 bg-opacity-20">
-                <h2 class="text-2xl font-semibold text-gray-700 mb-6">Payment & Social Media Proof</h2>
-
-                <div class="mb-6">
-                    <p class="text-sm text-gray-600 mb-2">
-                        Please refer to Indonesia MUN Official Instagram (@indonesiamun) for the prices.
-                        Transfer the registration payment to:
-                        <br>
-                        **Rekening Bank:** Mahisa Akib 747373067600 (CIMB Niaga)
-                        <br>
-                        **PayPal:** nanasiyah0@gmail.com (PayPal)
-                    </p>
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6">Package Selection</h2>
+                <div class="space-y-4">
+                    <x-input-label :value="__('Please select your package')" />
+                    <div id="package-list" class="space-y-2">
+                        {{-- Pilihan paket akan dibuat oleh JavaScript di sini --}}
+                    </div>
+                    <x-input-error :messages="$errors->get('package_type')" class="mt-2" />
                 </div>
 
-                {{-- Payment Proof Upload --}}
-                <div class="mb-6">
-                    <x-input-label for="payment_proof" :value="__('Payment Proof Upload')" />
-                    <label for="payment_proof" class="flex items-center justify-center border-2 border-dashed border-gray-400 rounded-lg p-6 cursor-pointer hover:border-blue-500 hover:bg-gray-50 transition duration-150 ease-in-out">
-                        <div class="text-center">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            <p class="mt-1 text-sm text-gray-600" id="payment_proof_filename">Please upload your file. Max size 2 MB.</p>
-                            <p class="text-xs text-gray-500">Upload a proof of payment</p>
-                        </div>
-                        <input id="payment_proof" name="payment_proof" type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" />
+                <div id="package-details-container" class="mt-4">
+                    <div id="details-full" class="package-details hidden p-4 bg-gray-50 rounded-md border border-gray-200">
+                        <h4 class="font-semibold text-gray-800 mb-2">What you get:</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>Hotel Accommodation (4 Days, 3 Nights)</li><li>Airport/Station Transfer</li><li>Transportation during the event</li><li>Full Access to All Conference Sessions</li><li>Delegate Kit & Certificate</li><li>Coffee Breaks & Meals</li><li>Social Night & Gala Dinner Access</li>
+                        </ul>
+                    </div>
+                    <div id="details-non" class="package-details hidden p-4 bg-gray-50 rounded-md border border-gray-200">
+                        <h4 class="font-semibold text-gray-800 mb-2">What you get:</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>Full Access to All Conference Sessions</li><li>Delegate Kit & Certificate</li><li>Coffee Breaks & Meals</li><li>Social Night & Gala Dinner Access</li><li class="text-gray-500"><em>(Does not include hotel, airport transfer, and local transportation)</em></li>
+                        </ul>
+                    </div>
+                     <div id="details-online" class="package-details hidden p-4 bg-gray-50 rounded-md border border-gray-200">
+                        <h4 class="font-semibold text-gray-800 mb-2">What you get:</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>Full Access to All Conference Sessions via Zoom/Platform</li><li>Digital Delegate Kit</li><li>E-Certificate</li><li>Opportunity to win awards</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <label for="needs_accommodation" class="flex items-center cursor-pointer">
+                        <input type="hidden" name="needs_accommodation" value="0">
+                        <input id="needs_accommodation" type="checkbox" name="needs_accommodation" value="1" class="h-4 w-4 rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
+                        <span class="ml-2 text-sm text-gray-700">{{ __('I need accommodation') }}</span>
                     </label>
-                    <x-input-error :messages="$errors->get('payment_proof')" class="mt-2" />
-                </div>
-
-                {{-- Social Media Upload (Optional for Observer) --}}
-                <div class="mb-6">
-                    <x-input-label for="social_media_proof" :value="__('Social Media Upload (Optional - Click ')" />
-                    <a href="#" target="_blank" class="text-blue-600 hover:underline">to see the petition template</a>)
-                    <label for="social_media_proof" class="flex items-center justify-center border-2 border-dashed border-gray-400 rounded-lg p-6 cursor-pointer hover:border-blue-500 hover:bg-gray-50 transition duration-150 ease-in-out">
-                        <div class="text-center">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            <p class="mt-1 text-sm text-gray-600" id="social_media_proof_filename">Please upload your file. Max size 2 MB.</p>
-                            <p class="text-xs text-gray-500">Upload a proof of social media post/share</p>
-                        </div>
-                        <input id="social_media_proof" name="social_media_proof" type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" />
-                    </label>
-                    <x-input-error :messages="$errors->get('social_media_proof')" class="mt-2" />
-                </div>
-
-                {{-- Referral Code --}}
-                <div class="mb-6">
-                    <x-input-label for="referral_code" :value="__('Referral Code (Optional, leave blank if you don\'t have one)')" />
-                    <x-text-input id="referral_code" class="block mt-1 w-full" type="text" name="referral_code" :value="old('referral_code')" placeholder="Enter your Referral Code Here" />
-                    <x-input-error :messages="$errors->get('referral_code')" class="mt-2" />
                 </div>
             </div>
 
+            {{-- Tombol Lanjut Pembayaran --}}
+            <div id="continue-button-container" class="flex items-center justify-end mt-4">
+                 <button type="button" id="lanjut-bayar-btn" class="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors">
+                    Lanjutkan ke Pembayaran
+                </button>
+            </div>
+
+            {{-- Section: Payment & Social Media Proof (HIDDEN BY DEFAULT) --}}
+            <div id="payment-section" class="hidden mt-8">
+                <div class="border border-gray-300 p-6 rounded-lg mb-8 bg-orange-50 bg-opacity-20">
+
+                    {{-- DYNAMIC PRICE DISPLAY --}}
+                    <div id="total-pembayaran-display" class="bg-blue-100 border-l-4 border-blue-500 text-blue-800 p-4 rounded-md mb-8" role="alert">
+                        <p class="font-bold">Total yang harus dibayar:</p>
+                        <p id="biaya-paket" class="text-3xl font-extrabold"></p>
+                        <p id="nama-paket" class="text-sm mt-1"></p>
+                    </div>
+
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-6">Payment & Social Media Proof</h2>
+                    <div class="mb-6">
+                        <p class="text-sm text-gray-600 mb-2">
+                            Please refer to Indonesia MUN Official Instagram (@indonesiamun) for the prices. Transfer the registration payment to:
+                            <br><strong>Rekening Bank:</strong> Mahisa Akib 747373067600 (CIMB Niaga)
+                            <br><strong>PayPal:</strong> nanasiyah0@gmail.com (PayPal)
+                        </p>
+                    </div>
+                    <div class="mb-6">
+                           <x-input-label for="payment_proof" :value="__('Payment Proof Upload')" />
+                           <label for="payment_proof" class="flex items-center justify-center border-2 border-dashed border-gray-400 rounded-lg p-6 cursor-pointer hover:border-blue-500 hover:bg-gray-50 transition duration-150 ease-in-out">
+                               <div class="text-center">
+                                   <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                                   <p class="mt-1 text-sm text-gray-600" id="payment_proof_filename">Please upload your file. Max size 2 MB.</p>
+                               </div>
+                               <input id="payment_proof" name="payment_proof" type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" required/>
+                           </label>
+                           <x-input-error :messages="$errors->get('payment_proof')" class="mt-2" />
+                    </div>
+                    <div class="mb-6">
+                           <x-input-label for="social_media_proof" :value="__('Social Media Upload (Optional)')" />
+                           <label for="social_media_proof" class="flex items-center justify-center border-2 border-dashed border-gray-400 rounded-lg p-6 cursor-pointer hover:border-blue-500 hover:bg-gray-50 transition duration-150 ease-in-out">
+                               <div class="text-center">
+                                   <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                                   <p class="mt-1 text-sm text-gray-600" id="social_media_proof_filename">Please upload your file. Max size 2 MB.</p>
+                               </div>
+                               <input id="social_media_proof" name="social_media_proof" type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" />
+                           </label>
+                           <x-input-error :messages="$errors->get('social_media_proof')" class="mt-2" />
+                    </div>
+                </div>
+            </div>
+
+            {{-- Tombol Submit Akhir (HIDDEN BY DEFAULT) --}}
             <div class="flex items-center justify-end mt-4">
-                <x-primary-button class="ml-4">
-                    {{ __('Submit Observer Registration') }}
-                </x-primary-button>
+                 <button type="submit" id="submit-btn" class="hidden ml-4 px-8 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors">
+                     {{ __('Submit Observer Registration') }}
+                 </button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Handle file name display for payment proof
-        const paymentInput = document.getElementById('payment_proof');
-        if (paymentInput) {
-            paymentInput.addEventListener('change', function() {
-                const filenameDisplay = document.getElementById('payment_proof_filename');
-                if (this.files && this.files.length > 0) {
-                    filenameDisplay.textContent = this.files[0].name;
-                } else {
-                    filenameDisplay.textContent = 'Please upload your file. Max size 2 MB.';
-                }
-            });
+document.addEventListener('DOMContentLoaded', function() {
+
+    // ===================================================================
+    // BAGIAN PENGATURAN DAN DEFINISI ELEMEN
+    // ===================================================================
+    const packagePrices = {
+        'Full Accommodation': 1250000,
+        'Non-Accommodation': 650000,
+        'Online': 250000
+    };
+
+    const lanjutBtn = document.getElementById('lanjut-bayar-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const continueButtonContainer = document.getElementById('continue-button-container');
+    const paymentSection = document.getElementById('payment-section');
+    const biayaPaketEl = document.getElementById('biaya-paket');
+    const namaPaketEl = document.getElementById('nama-paket');
+
+    const attendanceOffline = document.getElementById('attendance_offline');
+    const attendanceOnline = document.getElementById('attendance_online');
+    const needsAccommodationCheckbox = document.getElementById('needs_accommodation');
+    const allDetails = document.querySelectorAll('.package-details');
+    const packageListContainer = document.getElementById('package-list');
+
+    // Buat elemen radio button paket secara dinamis
+    Object.keys(packagePrices).forEach((name, index) => {
+        const slug = name.toLowerCase().replace(/ /g, '-');
+        const price = packagePrices[name];
+        const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
+
+        const label = document.createElement('label');
+        label.htmlFor = `package_${slug}`;
+        label.className = "flex justify-between items-center cursor-pointer p-3 border rounded-md has-[:checked]:bg-blue-100 has-[:checked]:border-blue-400";
+
+        label.innerHTML = `
+            <div class="flex items-center">
+                <input id="package_${slug}" type="radio" name="package_type" value="${name}" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" ${index === 0 ? 'checked' : ''}>
+                <span class="ml-3 text-sm font-medium text-gray-800">${name}</span>
+            </div>
+            <span class="text-sm font-semibold text-indigo-700">${formattedPrice}</span>
+        `;
+        if(packageListContainer) packageListContainer.appendChild(label);
+    });
+
+    // Setelah dibuat, ambil referensi ke radio button yang baru
+    const allPackageRadios = document.querySelectorAll('input[name="package_type"]');
+    const packageFull = document.getElementById('package_full-accommodation');
+    const packageNon = document.getElementById('package_non-accommodation');
+    const packageOnline = document.getElementById('package_online');
+
+    // ===================================================================
+    // KUMPULAN FUNGSI-FUNGSI LOGIKA
+    // ===================================================================
+
+    function updatePriceDisplay() {
+        const selectedPackageInput = document.querySelector('input[name="package_type"]:checked');
+        if (!selectedPackageInput) return;
+        const selectedPackageName = selectedPackageInput.value;
+        const price = packagePrices[selectedPackageName];
+        const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
+        biayaPaketEl.textContent = formattedPrice;
+        namaPaketEl.textContent = `For package: ${selectedPackageName}`;
+    }
+
+    function updatePackageDetails() {
+        allDetails.forEach(detail => detail.classList.add('hidden'));
+        const selectedPackage = document.querySelector('input[name="package_type"]:checked');
+        if (!selectedPackage) return;
+
+        if (selectedPackage.value.includes('Full')) {
+            document.getElementById('details-full').classList.remove('hidden');
+        } else if (selectedPackage.value.includes('Non')) {
+            document.getElementById('details-non').classList.remove('hidden');
+        } else if (selectedPackage.value.includes('Online')) {
+            document.getElementById('details-online').classList.remove('hidden');
+        }
+    }
+
+    function updatePackageState() {
+        if (attendanceOnline.checked) {
+            if(packageOnline) packageOnline.checked = true;
+            if(packageFull) packageFull.disabled = true;
+            if(packageNon) packageNon.disabled = true;
+            if(packageOnline) packageOnline.disabled = false;
+        } else {
+            if(packageFull) packageFull.disabled = false;
+            if(packageNon) packageNon.disabled = false;
+            if(packageOnline) packageOnline.disabled = true;
+            if (packageOnline && packageOnline.checked) {
+                if(packageFull) packageFull.checked = true;
+            }
         }
 
-        // Handle file name display for social media proof
-        const socialInput = document.getElementById('social_media_proof');
-        if (socialInput) {
-            socialInput.addEventListener('change', function() {
-                const filenameDisplay = document.getElementById('social_media_proof_filename');
-                if (this.files && this.files.length > 0) {
-                    filenameDisplay.textContent = this.files[0].name;
-                } else {
-                    filenameDisplay.textContent = 'Please upload your file. Max size 2 MB.';
-                }
+        const currentSelected = document.querySelector('input[name="package_type"]:checked');
+        if (currentSelected && currentSelected.value.includes('Full') && !currentSelected.disabled) {
+            needsAccommodationCheckbox.checked = true;
+            needsAccommodationCheckbox.disabled = true;
+        } else {
+            needsAccommodationCheckbox.checked = false;
+            needsAccommodationCheckbox.disabled = true;
+        }
+
+        updatePackageDetails();
+        if (!paymentSection.classList.contains('hidden')) {
+            updatePriceDisplay();
+        }
+    }
+
+    // ===================================================================
+    // KUMPULAN EVENT LISTENERS
+    // ===================================================================
+
+    if (lanjutBtn) {
+        lanjutBtn.addEventListener('click', function() {
+            if (!document.querySelector('input[name="package_type"]:checked')) {
+                alert('Please select your package first!');
+                return;
+            }
+            updatePriceDisplay();
+            paymentSection.classList.remove('hidden');
+            submitBtn.classList.remove('hidden');
+            continueButtonContainer.classList.add('hidden');
+            paymentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    }
+
+    [attendanceOffline, attendanceOnline, ...allPackageRadios].forEach(el => {
+        if(el) el.addEventListener('change', updatePackageState);
+    });
+
+    function setupFileUpload(inputId, textId) {
+        const input = document.getElementById(inputId);
+        const text = document.getElementById(textId);
+        if(input && text) {
+            input.addEventListener('change', () => {
+                text.textContent = input.files.length > 0 ? input.files[0].name : 'Please upload your file. Max size 2 MB.';
             });
         }
-    });
+    }
+    setupFileUpload('payment_proof', 'payment_proof_filename');
+    setupFileUpload('social_media_proof', 'social_media_proof_filename');
+
+    updatePackageState();
+});
 </script>
 @endsection

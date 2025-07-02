@@ -43,7 +43,7 @@
                         <a href="/" class="text-white hover:text-[color:var(--color-gold)] transition-colors duration-300">Home</a>
                         <a href="{{ route('about') }}" class="text-white hover:text-[color:var(--color-gold)] transition-colors duration-300">About</a>
                         <a href="{{ route('councils') }}" class="text-white hover:text-[color:var(--color-gold)] transition-colors duration-300">Councils</a>
-                        <a href="{{ route('contact.index') }}" class="text-white hover:text-[color:var(--color-gold)] transition-colors duration-300">FAQ</a>
+                        <a href="{{ route('packages') }}" class="text-white hover:text-[color:var(--color-gold)] transition-colors duration-300">Packages</a>
                     </div>
                     <div class="hidden lg:flex">
                         <a href="{{ route('registration.chooseType') }}" class="text-white hover:text-[color:var(--color-gold)] transition-colors duration-300">
@@ -64,7 +64,7 @@
                     <a href="/" class="mobile-link block px-3 py-2 text-white hover:text-[color:var(--color-gold)]">Home</a>
                     <a href="{{ route('about') }}" class="mobile-link block px-3 py-2 text-white hover:text-[color:var(--color-gold)]">About</a>
                     <a href="{{ route('councils') }}" class="mobile-link block px-3 py-2 text-white hover:text-[color:var(--color-gold)]">Councils</a>
-                    <a href="{{ route('contact.index') }}" class="mobile-link block px-3 py-2 text-white hover:text-[color:var(--color-gold)]">FAQ</a>
+                    <a href="{{ route('packages') }}" class="mobile-link block px-3 py-2 text-white hover:text-[color:var(--color-gold)]">Packages</a>
                     <a href="{{ route('registration.chooseType') }}" class="mobile-link block mt-2 mx-2 px-3 py-2" style="background-color: var(--color-gold); color: var(--color-navy); text-align: center; border-radius: 0.5rem; font-weight: 600;">Register Now</a>
                 </div>
             </div>

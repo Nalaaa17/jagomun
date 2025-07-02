@@ -28,46 +28,27 @@
 
         /* CSS untuk Lightbox */
         .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* Latar belakang gelap semi-transparan */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease; /* Transisi untuk fade in/out */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
             padding: 1rem;
         }
         .lightbox.active {
-            opacity: 1;
-            visibility: visible;
+            opacity: 1; visibility: visible;
         }
         .lightbox-content {
-            max-width: 95%;
-            max-height: 95%;
+            max-width: 95%; max-height: 95%;
         }
         .lightbox-content img {
-            display: block;
-            width: auto;
-            max-height: 90vh; /* Maksimal tinggi gambar agar tidak keluar layar */
-            margin: 0 auto;
-            border-radius: 0.5rem;
+            display: block; width: auto; max-height: 90vh;
+            margin: 0 auto; border-radius: 0.5rem;
         }
         .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 3rem;
-            font-weight: bold;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s ease;
+            position: absolute; top: 20px; right: 30px;
+            color: white; font-size: 3rem; font-weight: bold;
+            cursor: pointer; opacity: 0.7; transition: opacity 0.2s ease;
         }
         .lightbox-close:hover {
             opacity: 1;
@@ -107,6 +88,9 @@
                     <h1 class="text-3xl font-bold text-gray-800">Detail Pendaftaran</h1>
                     <p class="text-gray-500">Tinjau informasi lengkap untuk <span class="font-semibold text-indigo-600">{{ $registration->full_name ?? $registration->institution_name }}</span></p>
                 </div>
+                {{-- =============================================== --}}
+                {{-- PERUBAHAN DI SINI: Menambahkan Tombol Hapus --}}
+                {{-- =============================================== --}}
                 <div class="flex items-center gap-4 bg-white p-3 rounded-lg shadow-sm border">
                     <span id="verification-status-text" class="font-semibold {{ $registration->is_verified ? 'text-green-600' : 'text-red-600' }}">
                         Status: {{ $registration->is_verified ? 'Telah Diverifikasi' : 'Belum Diverifikasi' }}
@@ -114,6 +98,13 @@
                     <button id="toggle-verification-button" class="px-4 py-2 text-sm font-medium text-white rounded-md transition-colors {{ $registration->is_verified ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-green-600 hover:bg-green-700' }}">
                         {{ $registration->is_verified ? 'Batal Verifikasi' : 'Verifikasi Sekarang' }}
                     </button>
+                    <form action="{{ route('admin.registration.destroy', $registration->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this registration? This action cannot be undone.');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md transition-colors">
+                            Delete
+                        </button>
+                    </form>
                 </div>
             </div>
 
@@ -126,29 +117,52 @@
                         <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">ID Registrasi</dt><dd class="text-gray-800 font-semibold">{{ $registration->id }}</dd></div>
                         <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Daftar Sebagai</dt><dd class="text-gray-800">{{ $registration->registering_as }}</dd></div>
                         <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Tipe Delegasi</dt><dd class="text-gray-800">{{ $registration->delegate_type ?? '-' }}</dd></div>
-                        <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Nama Kontak</dt><dd class="text-gray-800">{{ $registration->full_name }}</dd></div>
-                        <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Email Kontak</dt><dd class="text-gray-800">{{ $registration->email }}</dd></div>
+                        <div class="space-y-1">
+                            <dt class="font-medium text-gray-500 text-sm">Jenis Paket</dt>
+                            <dd class="text-gray-800 font-semibold">{{ $registration->package_type ?? 'N/A for Delegation' }}</dd>
+                        </div>
+                        <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Nama Kontak</dt><dd class="text-gray-800">{{ $registration->full_name ?? '-' }}</dd></div>
+                        <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Email Kontak</dt><dd class="text-gray-800">{{ $registration->email ?? '-' }}</dd></div>
                         <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">No. Telepon</dt><dd class="text-gray-800">{{ $registration->phone ?? '-' }}</dd></div>
                         <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Institusi</dt><dd class="text-gray-800">{{ $registration->institution_name ?? '-' }}</dd></div>
-                        <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Butuh Akomodasi</dt><dd class="font-semibold {{ $registration->do_you_need_accommodation ? 'text-green-600' : 'text-red-600' }}">{{ $registration->do_you_need_accommodation ? 'Ya' : 'Tidak' }}</dd></div>
-                        <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Referral Code</dt><dd class="text-gray-800">{{ $registration->referral_code ?? '-' }}</dd></div>
-                        <div class="space-y-1 col-span-1 md:col-span-2"><dt class="font-medium text-gray-500 text-sm">Tanggal Daftar</dt><dd class="text-gray-800">{{ $registration->created_at->format('l, d F Y - H:i T') }}</dd></div>
+                        <div class="space-y-1">
+                            <dt class="font-medium text-gray-500 text-sm">
+                                @if(Str::contains($registration->delegate_type, 'National'))
+                                    Domisili
+                                @else
+                                    Kewarganegaraan
+                                @endif
+                            </dt>
+                            <dd class="text-gray-800">{{ $registration->nationality ?? '-' }}</dd>
+                        </div>
+                        <div class="space-y-1">
+                            <dt class="font-medium text-gray-500 text-sm">Butuh Akomodasi</dt>
+                            <dd class="font-semibold {{ $registration->do_you_need_accommodation ? 'text-green-600' : 'text-gray-700' }}">
+                                {{ $registration->do_you_need_accommodation ? 'Ya' : 'Tidak' }}
+                            </dd>
+                        </div>
+                        <div class="space-y-1">
+                            <dt class="font-medium text-gray-500 text-sm">Metode Kehadiran</dt>
+                            <dd class="font-medium">
+                                @if($registration->attendance_type == 'Offline')
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Offline</span>
+                                @else
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">Online</span>
+                                @endif
+                            </dd>
+                        </div>
+                        <div class="space-y-1 col-span-1 md:col-span-3"><dt class="font-medium text-gray-500 text-sm">Tanggal Daftar</dt><dd class="text-gray-800">{{ $registration->created_at->format('l, d F Y - H:i T') }}</dd></div>
                     </dl>
                 </div>
             </div>
 
-            @if($registration->registering_as != 'Delegation')
+            @if($registration->registering_as == 'Individual Delegate' || $registration->registering_as == 'Observer')
             <div class="bg-white overflow-hidden shadow-md rounded-lg">
                 <div class="p-6 border-b border-gray-200">
-                    <h2 class="text-xl font-semibold text-gray-800">Preferensi & Motivasi</h2>
+                    <h2 class="text-xl font-semibold text-gray-800">Preferensi Council</h2>
                 </div>
                 <div class="p-6 space-y-6">
                     <div>
-                        <h3 class="font-semibold text-gray-700 mb-2">Alasan Mengikuti Jagomun</h3>
-                        <p class="text-gray-600 bg-gray-50 p-4 rounded-lg border whitespace-pre-line break-words">{{ $registration->motivation_statement ?? 'Tidak ada.' }}</p>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-gray-700 mb-4">Preferensi Council</h3>
                         <div class="space-y-4">
                             <div class="border-l-4 border-blue-500 pl-4">
                                 <p class="font-semibold text-gray-800">Preferensi #1: {{ $registration->council_preference_1 ?? '-' }}</p>
@@ -159,11 +173,6 @@
                                 <p class="font-semibold text-gray-800">Preferensi #2: {{ $registration->council_preference_2 ?? '-' }}</p>
                                 <p class="text-sm text-gray-600">Negara: <span class="font-medium text-gray-700">{{ $registration->country_preference_2_1 ?? '-' }} & {{ $registration->country_preference_2_2 ?? '-' }}</span></p>
                                 <p class="text-sm text-gray-500 mt-1 italic">"{{ $registration->reason_for_first_country_preference_2 ?? '-' }}" & "{{ $registration->reason_for_second_country_preference_2 ?? '-' }}"</p>
-                            </div>
-                            <div class="border-l-4 border-yellow-500 pl-4">
-                                <p class="font-semibold text-gray-800">Preferensi #3: {{ $registration->council_preference_3 ?? '-' }}</p>
-                                <p class="text-sm text-gray-600">Negara: <span class="font-medium text-gray-700">{{ $registration->country_preference_3_1 ?? '-' }} & {{ $registration->country_preference_3_2 ?? '-' }}</span></p>
-                                <p class="text-sm text-gray-500 mt-1 italic">"{{ $registration->reason_for_first_country_preference_3 ?? '-' }}" & "{{ $registration->reason_for_second_country_preference_3 ?? '-' }}"</p>
                             </div>
                         </div>
                     </div>
@@ -202,83 +211,83 @@
             </div>
 
             @if($registration->registering_as == 'Delegation')
-<div class="bg-white overflow-hidden shadow-md rounded-lg">
-    <div class="p-6 border-b border-gray-200">
-        <h2 class="text-xl font-semibold text-gray-800">Daftar Anggota Delegasi <span class="text-base font-normal text-gray-500">({{ $registration->delegates->count() }} orang)</span></h2>
-    </div>
-    <div class="p-6 space-y-6">
-        @forelse($registration->delegates as $delegate)
-        {{-- Kartu utama untuk setiap delegasi --}}
-        <div class="bg-gray-50 border border-gray-200 p-6 rounded-lg">
-            <h3 class="text-xl font-bold text-indigo-700 mb-6 border-b border-indigo-200 pb-3">
-                Delegasi #{{ $delegate->delegate_number }}: {{ $delegate->full_name }}
-            </h3>
-
-            <div class="space-y-6">
-
-                <div>
-                    <h4 class="font-semibold text-gray-700 mb-3">Informasi Personal</h4>
-                    <dl class="text-sm grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-3">
-                        <div class="sm:col-span-1 font-medium text-gray-500">Email</div>
-                        <div class="sm:col-span-2 font-medium text-gray-800">{{ $delegate->email }}</div>
-
-                        <div class="sm:col-span-1 font-medium text-gray-500">Telepon</div>
-                        <div class="sm:col-span-2 font-medium text-gray-800">{{ $delegate->phone }}</div>
-
-                        <div class="sm:col-span-1 font-medium text-gray-500">Kewarganegaraan</div>
-                        <div class="sm:col-span-2 font-medium text-gray-800">{{ $delegate->nationality }}</div>
-
-                        <div class="sm:col-span-1 font-medium text-gray-500">Pengalaman MUN</div>
-                        <div class="sm:col-span-2 font-medium text-gray-800">{{ $delegate->mun_experience ?? '-' }}</div>
-                    </dl>
+            <div class="bg-white overflow-hidden shadow-md rounded-lg">
+                <div class="p-6 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-800">Daftar Anggota Delegasi <span class="text-base font-normal text-gray-500">({{ $registration->delegates->count() }} orang)</span></h2>
                 </div>
+                <div class="p-6 space-y-6">
+                    @forelse($registration->delegates as $delegate)
+                    <div class="bg-gray-50 border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-xl font-bold text-indigo-700 mb-6 border-b border-indigo-200 pb-3">
+                            Delegasi #{{ $delegate->delegate_number }}: {{ $delegate->full_name }}
+                        </h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-semibold text-gray-700 mb-3">Informasi Personal</h4>
+                                <dl class="text-sm grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-3">
+                                    <div class="sm:col-span-1 font-medium text-gray-500">Email</div>
+                                    <div class="sm:col-span-2 font-medium text-gray-800">{{ $delegate->email }}</div>
 
-                {{-- Pemisah visual antar kartu --}}
-                <hr class="border-gray-200">
+                                    <div class="sm:col-span-1 font-medium text-gray-500">Telepon</div>
+                                    <div class="sm:col-span-2 font-medium text-gray-800">{{ $delegate->phone }}</div>
 
-                <div>
-                    <h4 class="font-semibold text-gray-700 mb-3">Preferensi Council</h4>
-                    <div class="space-y-4">
-                        <div class="border-l-4 border-blue-500 pl-4">
-                            <p class="font-semibold text-gray-800">Preferensi #1: {{ $delegate->council_preference_1 ?? '-' }}</p>
-                            <p class="text-sm text-gray-600">Negara: {{ $delegate->country_preference_1_1 ?? '-' }} & {{ $delegate->country_preference_1_2 ?? '-' }}</p>
-                            <p class="text-sm text-gray-500 italic">"{{ $delegate->reason_for_first_country_preference_1 ?? '-' }}" & "{{ $delegate->reason_for_second_country_preference_1 ?? '-' }}"</p>
-                        </div>
-                        <div class="border-l-4 border-green-500 pl-4">
-                            <p class="font-semibold text-gray-800">Preferensi #2: {{ $delegate->council_preference_2 ?? '-' }}</p>
-                            <p class="text-sm text-gray-600">Negara: {{ $delegate->country_preference_2_1 ?? '-' }} & {{ $delegate->country_preference_2_2 ?? '-' }}</p>
-                            <p class="text-sm text-gray-500 italic">"{{ $delegate->reason_for_first_country_preference_2 ?? '-' }}" & "{{ $delegate->reason_for_second_country_preference_2 ?? '-' }}"</p>
-                        </div>
-                        <div class="border-l-4 border-yellow-500 pl-4">
-                            <p class="font-semibold text-gray-800">Preferensi #3: {{ $delegate->council_preference_3 ?? '-' }}</p>
-                            <p class="text-sm text-gray-600">Negara: {{ $delegate->country_preference_3_1 ?? '-' }} & {{ $delegate->country_preference_3_2 ?? '-' }}</p>
-                            <p class="text-sm text-gray-500 italic">"{{ $delegate->reason_for_first_country_preference_3 ?? '-' }}" & "{{ $delegate->reason_for_second_country_preference_3 ?? '-' }}"</p>
+                                    <div class="sm:col-span-1 font-medium text-gray-500">
+                                        @if(Str::contains($registration->delegate_type, 'National'))
+                                            Domisili
+                                        @else
+                                            Kewarganegaraan
+                                        @endif
+                                    </div>
+                                    <div class="sm:col-span-2 font-medium text-gray-800">{{ $delegate->nationality ?? '-' }}</div>
+
+                                    <div class="sm:col-span-1 font-medium text-gray-500">Jenis Paket</div>
+                                    <div class="sm:col-span-2 font-medium text-gray-800">{{ $delegate->package_type ?? '-' }}</div>
+
+                                    <div class="sm:col-span-1 font-medium text-gray-500">Butuh Akomodasi</div>
+                                    <div class="sm:col-span-2 font-medium text-gray-800">
+                                        @if($delegate->do_you_need_accommodation)
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Ya</span>
+                                        @else
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Tidak</span>
+                                        @endif
+                                    </div>
+                                </dl>
+                            </div>
+                            <hr class="border-gray-200">
+                            <div>
+                                <h4 class="font-semibold text-gray-700 mb-3">Preferensi Council</h4>
+                                <div class="space-y-4">
+                                    <div class="border-l-4 border-blue-500 pl-4">
+                                        <p class="font-semibold text-gray-800">Preferensi #1: {{ $delegate->council_preference_1 ?? '-' }}</p>
+                                        <p class="text-sm text-gray-600">Negara: {{ $delegate->country_preference_1_1 ?? '-' }} & {{ $delegate->country_preference_1_2 ?? '-' }}</p>
+                                        <p class="text-sm text-gray-500 italic">"{{ $delegate->reason_for_first_country_preference_1 ?? '-' }}" & "{{ $delegate->reason_for_second_country_preference_1 ?? '-' }}"</p>
+                                    </div>
+                                    <div class="border-l-4 border-green-500 pl-4">
+                                        <p class="font-semibold text-gray-800">Preferensi #2: {{ $delegate->council_preference_2 ?? '-' }}</p>
+                                        <p class="text-sm text-gray-600">Negara: {{ $delegate->country_preference_2_1 ?? '-' }} & {{ $delegate->country_preference_2_2 ?? '-' }}</p>
+                                        <p class="text-sm text-gray-500 italic">"{{ $delegate->reason_for_first_country_preference_2 ?? '-' }}" & "{{ $delegate->reason_for_second_country_preference_2 ?? '-' }}"</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="border-gray-200">
+                            <div>
+                                <h4 class="font-semibold text-gray-700 mb-3">Bukti Media Sosial</h4>
+                                @if($delegate->social_media_upload && Storage::disk('public')->exists($delegate->social_media_upload))
+                                    <a href="{{ asset('storage/' . $delegate->social_media_upload) }}" class="lightbox-trigger inline-block">
+                                        <img src="{{ asset('storage/' . $delegate->social_media_upload) }}" alt="Bukti Medsos Delegasi" class="h-48 w-auto object-contain border border-gray-200 bg-white p-1 rounded-md shadow-sm cursor-pointer hover:shadow-md transition-shadow">
+                                    </a>
+                                @else
+                                    <p class="text-gray-400 text-sm italic">Tidak ada bukti.</p>
+                                @endif
+                            </div>
                         </div>
                     </div>
+                    @empty
+                        <div class="text-center py-10 border-2 border-dashed rounded-lg text-gray-400">Tidak ada anggota delegasi yang terdaftar.</div>
+                    @endforelse
                 </div>
-
-                {{-- Pemisah visual antar kartu --}}
-                <hr class="border-gray-200">
-
-                <div>
-                    <h4 class="font-semibold text-gray-700 mb-3">Bukti Media Sosial</h4>
-                    @if($delegate->social_media_upload && Storage::disk('public')->exists($delegate->social_media_upload))
-                        <a href="{{ asset('storage/' . $delegate->social_media_upload) }}" class="lightbox-trigger inline-block">
-                            <img src="{{ asset('storage/' . $delegate->social_media_upload) }}" alt="Bukti Medsos Delegasi" class="h-48 w-auto object-contain border border-gray-200 bg-white p-1 rounded-md shadow-sm cursor-pointer hover:shadow-md transition-shadow">
-                        </a>
-                    @else
-                        <p class="text-gray-400 text-sm italic">Tidak ada bukti.</p>
-                    @endif
-                </div>
-
             </div>
-        </div>
-        @empty
-            <div class="text-center py-10 border-2 border-dashed rounded-lg text-gray-400">Tidak ada anggota delegasi yang terdaftar.</div>
-        @endforelse
-    </div>
-</div>
-@endif
+            @endif
 
         </div>
     </main>
@@ -300,9 +309,7 @@
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': csrfToken
                         },
-                        body: JSON.stringify({
-                            verified: nextStatus
-                        })
+                        body: JSON.stringify({ verified: nextStatus })
                     })
                     .then(response => {
                         if (!response.ok) throw new Error('Gagal memperbarui status');

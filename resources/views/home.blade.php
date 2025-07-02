@@ -57,8 +57,6 @@
             from { opacity: 0; transform: translateX(50px); }
             to { opacity: 1; transform: translateX(0); }
         }
-
-        /* Animasi untuk background slideshow */
         @keyframes imageFade {
             0% { opacity: 0; }
             15% { opacity: 1; }
@@ -95,7 +93,6 @@
             overflow: hidden;
             border-right: 3px solid #B4976B;
             white-space: nowrap;
-            /* Modifikasi: Sinkronisasi durasi animasi agar kursor menghilang tepat waktu */
             animation: typing 3.5s steps(40, end) forwards, blink-caret 0.5s step-end 0 forwards;
         }
         @keyframes typing {
@@ -121,12 +118,11 @@
         /* Carousel styles */
         .carousel-container {
             display: flex;
-            transition: transform 0.5s ease-in-out;
+            transition: transform 0.8s ease-in-out; /* Perhalus transisi */
             will-change: transform;
         }
         .carousel-item {
             flex: 0 0 100%;
-            white-space: nowrap;
         }
         @media (min-width: 768px) {
             .carousel-item {
@@ -148,8 +144,239 @@
             flex: 0 0 100%;
             padding: 1rem;
             box-sizing: border-box;
-            scroll-snap-align: start; /* For smooth scrolling behavior if manual scroll is enabled */
         }
+
+        /* [PERFORMA] MODIFIKASI UNTUK EFEK PARALLAX YANG LEBIH RINGAN */
+        .parallax-section {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .parallax-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            /* Menggunakan background-attachment untuk efek parallax yang kompatibel */
+            background-attachment: fixed;
+        }
+        #deck-container {
+    perspective: 1500px; /* Tambahkan perspektif untuk efek 3D yang lebih baik */
+    position: relative;
+}
+
+.deck-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 1.5rem; /* 24px */
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    /* Hapus transisi utama, kita akan kontrol dengan animasi */
+    will-change: transform, opacity;
+}
+
+.deck-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* === KEYFRAMES UNTUK ANIMASI YANG LEBIH NYATA === */
+@keyframes toss-away {
+    0% { transform: translate3d(0, 0, 0) rotate(0); }
+    30% { transform: translate3d(20%, -10%, 0) rotate(5deg) scale(1.05); } /* Angkat sedikit */
+    100% { transform: translate3d(150%, 20%, -200px) rotate(35deg) scale(0.5); opacity: 0; } /* Lempar melengkung */
+}
+
+@keyframes return-from-side {
+    0% { transform: translate3d(-150%, 0, -200px) rotate(-35deg) scale(0.7); opacity: 0; }
+    70% { transform: translate3d(0, 0, 0) rotate(0) scale(1.05); opacity: 1; } /* Mendarat dengan overshoot */
+    100% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+}
+
+@keyframes settle-in-front {
+    0% { transform: translate3d(0, 2%, 0) scale(0.9); z-index: 2; }
+    70% { transform: translate3d(0, 0, 0) scale(1.05); z-index: 3; }
+    100% { transform: translate3d(0, 0, 0) scale(1); z-index: 3; }
+}
+
+@keyframes move-to-next {
+    from { transform: translate3d(0, 0, 0) scale(1); z-index: 3;}
+    to { transform: translate3d(0, 2%, 0) scale(0.9); z-index: 2;}
+}
+
+/* KELAS UNTUK MENGONTROL STATE & ANIMASI */
+.card--active {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+    z-index: 3;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card--next {
+    transform: translate3d(0, 2%, 0) scale(0.9);
+    opacity: 1;
+    z-index: 2;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card--hidden {
+    transform: translate3d(0, 4%, 0) scale(0.8);
+    opacity: 0;
+    z-index: 1;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
+}
+
+/* Kelas temporer untuk memicu animasi */
+.is-tossing {
+    animation: toss-away 0.7s forwards cubic-bezier(0.6, 0.04, 0.98, 0.335);
+}
+.is-returning {
+    animation: return-from-side 0.7s forwards cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 4 !important; /* Pastikan ia terbang di atas segalanya */
+}
+.is-settling {
+    animation: settle-in-front 0.6s forwards cubic-bezier(0.23, 1, 0.32, 1);
+}
+.is-moving-back {
+    animation: move-to-next 0.6s forwards cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* CSS untuk Council Split-View */
+
+/* Gaya untuk tombol menu di sisi kiri */
+#menu-selector {
+    /* Transisi untuk animasi sliding yang mulus di desktop */
+    transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.council-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem; /* Padding disesuaikan */
+    border-radius: 0.75rem; /* 12px */
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    /* Aturan untuk Mobile: Lebar item dan jangan menyusut */
+    flex-shrink: 0;
+    width: 180px; /* Lebar setiap item di barisan mobile */
+
+    /* Aturan untuk Desktop: Kembali ke lebar penuh */
+    md:width: 100%;
+}
+
+/* Hilangkan efek hover di desktop, karena sudah ada selector */
+@media (min-width: 768px) {
+    .council-menu-item:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+}
+
+/* Gaya untuk menu yang sedang AKTIF */
+.council-menu-item.active {
+    /* Di Mobile: Beri background pada item itu sendiri */
+    background-color: rgba(180, 151, 107, 0.2); /* bg-gold/20 */
+
+    /* Di Desktop: Buat background transparan karena ada selector */
+    md:bg-transparent;
+}
+
+/* Ubah warna teks judul saat aktif */
+.council-menu-item.active .council-title {
+    color: #D6C4A4; /* Warna champagne */
+}
+
+/* Gaya untuk panel konten detail di sisi kanan */
+.council-detail-content {
+    /* Default (Mobile): Sembunyikan sepenuhnya */
+    display: none;
+    padding: 1.5rem 1rem; /* Padding untuk mobile */
+    background-color: rgba(45, 59, 97, 0.3); /* bg-royal/30 */
+    border-radius: 1rem;
+    animation: fadeIn 0.5s ease; /* Animasi fade-in sederhana */
+}
+
+/* Tampilkan HANYA panel yang aktif di mobile */
+.council-detail-content.active {
+    display: block;
+}
+
+/* Aturan untuk Desktop (md ke atas) */
+@media (min-width: 768px) {
+    .council-detail-content {
+        /* Kembalikan ke posisi absolut untuk transisi samping */
+        position: absolute;
+        inset: 0;
+        display: block; /* Tampilkan semua di DOM untuk transisi */
+        padding: 2rem;
+        background-color: transparent; /* Latar belakang diatur oleh parent di desktop */
+        border-radius: 0;
+
+        /* Atur ulang state default untuk transisi desktop */
+        opacity: 0;
+        transform: translateX(20px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* Aturan aktif untuk Desktop */
+    .council-detail-content.active {
+        opacity: 1;
+        transform: translateX(0);
+        z-index: 10;
+        pointer-events: auto;
+    }
+    #council-display-panel {
+    /* Memberi jarak 120px dari atas layar saat scroll otomatis. */
+    /* Nilai ini bisa Anda sesuaikan (misal: 140px) agar pas dengan tinggi Navbar Anda. */
+    scroll-margin-top: 120px;
+    }
+}
+
+/* Keyframe untuk animasi fade-in sederhana di mobile */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+no-scrollbar::-webkit-scrollbar {
+    display: none; /* Untuk Chrome, Safari, dan Opera */
+}
+.no-scrollbar {
+    -ms-overflow-style: none;  /* Untuk IE dan Edge */
+    scrollbar-width: none;  /* Untuk Firefox */
+}
+/* Tambahkan ini ke dalam tag <style> Anda */
+
+.section-separator {
+    position: relative;
+}
+
+.section-separator::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(to right,
+        transparent,
+        rgba(180, 151, 107, 0.35), /* Opacity sedikit dinaikkan agar lebih jelas */
+        transparent
+    );
+
+    /* PERBAIKAN: Tambahkan z-index untuk mengangkat garis ke atas lapisan lain */
+    z-index: 10;
+}
     </style>
 </head>
 <body class="bg-ivory text-royal">
@@ -157,21 +384,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-8">
                 <a href="#home">
-                <img src="{{ asset('images/logo.png') }}"
-                    alt="JAGOMUN 2025 Logo"
-                    class="h-20 w-auto">
+                    <img src="{{ asset('images/logo.png') }}" alt="JAGOMUN 2025 Logo" class="h-20 w-auto">
                 </a>
                 <div class="hidden lg:flex items-center space-x-8">
                     <a href="#home" class="text-white hover:text-gold transition-colors duration-300">Home</a>
                     <a href="{{ route('about') }}" class="text-white hover:text-gold transition-colors duration-300">About</a>
-                    <a href="#experience" class="text-white hover:text-gold transition-colors duration-300">Previously On</a>
                     <a href="{{ route('councils') }}" class="text-white hover:text-gold transition-colors duration-300">Councils</a>
                     <a href="{{ route('contact.index') }}" class="text-white hover:text-gold transition-colors duration-300">FAQ</a>
+                    <a href="{{ route('packages') }}" class="text-white hover:text-gold transition-colors duration-300">Packages</a>
                 </div>
                 <div class="hidden lg:flex">
-                    <a href="{{ route('registration.chooseType') }}" class="text-white hover:text-gold transition-colors duration-300">
-                        Register Now
-                    </a>
+                    <a href="{{ route('registration.chooseType') }}" class="text-white hover:text-gold transition-colors duration-300">Register Now</a>
                 </div>
                 <div class="lg:hidden">
                     <button id="mobile-menu-button" class="text-white p-2">
@@ -186,9 +409,9 @@
             <div class="px-2 pt-2 pb-3 space-y-1">
                 <a href="#home" class="mobile-link block px-3 py-2 text-white hover:text-gold">Home</a>
                 <a href="{{ route('about') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">About</a>
-                <a href="#experience" class="mobile-link block px-3 py-2 text-white hover:text-gold">Previously On</a>
                 <a href="{{ route('councils') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">Councils</a>
                 <a href="{{ route('contact.index') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">FAQ</a>
+                <a href="{{ route('packages') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">Packages</a>
                 <a href="{{ route('registration.chooseType') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">Register Now</a>
             </div>
         </div>
@@ -203,7 +426,6 @@
             </div>
             <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
         </div>
-
         <div class="relative z-10 max-w-7xl mx-auto px-4 py-24 lg:py-32 flex flex-col justify-center min-h-screen">
             <div class="text-center animate-fadeInUp">
                 <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
@@ -217,183 +439,306 @@
                 </p>
                 <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
                     <a href="{{ route('registration.chooseType') }}" class="group relative inline-flex items-center justify-center px-10 py-4 text-lg font-semibold text-navy bg-gradient-to-r from-gold to-champagne rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                        <span class="mr-3">Register as Delegate</span>
-                        {{-- <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg> --}}
+                        <span class="mr-3">Register Here</span>
                     </a>
                 </div>
             </div>
             <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                    class="w-8 h-8 text-white/70">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8 text-white/70">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
             </div>
-    </section>
+        </section>
 
-    <section id="news" class="py-20 scroll-reveal relative overflow-hidden" style="background-image: url('/images/komodo.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    <div class="absolute inset-0 z-0" style="background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4));"></div>
+    <section id="news" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('/images/raja.jpg');">
+    <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
+    {{-- <div class="absolute inset-0 z-[-1]" style="background: linear-gradient(to bottom, #1E2233 0%, #151826 100%);"></div> --}}
 
-    <div class="max-w-7xl mx-auto px-4 relative z-10">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Latest <span class="gradient-text">News</span></h2> <p class="text-xl text-white max-w-4xl mx-auto">Stay updated with the latest announcements regarding JAGOMUN 2025.</p>
-        </div>
-
-        <div class="relative overflow-hidden">
-            <div class="news-carousel-container" id="news-carousel-container">
-                <div class="news-carousel-item bg-white/90 p-6 rounded-lg shadow-md border-b-4 border-gold">
-                    <h3 class="text-xl font-semibold text-navy mb-2">Registration Opens Soon!</h3>
-                    <p class="text-royal">Get ready! Delegate registration for JAGOMUN 2025 is set to open on July 1st, 2025. Prepare your applications and secure your spot early!</p>
-                </div>
-                <div class="news-carousel-item bg-white/90 p-6 rounded-lg shadow-md border-b-4 border-royal">
-                    <h3 class="text-xl font-semibold text-navy mb-2">Early Bird Discount Announcement</h3>
-                    <p class="text-royal">Exciting news! We'll be offering early bird discounts for the first 50 delegates who register. Don't miss out on this limited-time offer!</p>
-                </div>
-                <div class="news-carousel-item bg-white/90 p-6 rounded-lg shadow-md border-b-4 border-champagne">
-                    <h3 class="text-xl font-semibold text-navy mb-2">Committee Topics Revealed Next Week!</h3>
-                    <p class="text-royal">Curious about the topics? The detailed committee agendas for all councils will be released next week. Stay tuned to our social media for updates.</p>
-                </div>
-                <div class="news-carousel-item bg-white/90 p-6 rounded-lg shadow-md border-b-4 border-gold">
-                    <h3 class="text-xl font-semibold text-navy mb-2">Partnership with Ministry of Education</h3>
-                    <p class="text-royal">We are proud to announce our new partnership with the Ministry of Education to promote youth engagement in global affairs through JAGOMUN 2025.</p>
-                </div>
-                <div class="news-carousel-item bg-white/90 p-6 rounded-lg shadow-md border-b-4 border-royal">
-                    <h3 class="text-xl font-semibold text-navy mb-2">Keynote Speaker Sneak Peek!</h3>
-                    <p class="text-royal">We are thrilled to hint at a distinguished international figure joining us as a keynote speaker. More details to follow soon!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <section id="about" class="py-20 scroll-reveal relative overflow-hidden" style="background-image: url('/images/nusa.jpg'); background-size: cover; background-position: center;">
-    <div class="absolute inset-0 z-0" style="background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));"></div>
-
-    <div class="max-w-7xl mx-auto px-4 relative z-10">
-        <div class="text-center mb-16">
-               <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Words of Remark from <br class="sm:hidden"/> <span class="gradient-text">Secretary General</span></h2>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
-            <div class="lg:col-span-1">
-                <div class="relative">
-                    <div class="absolute -inset-2 bg-gradient-to-r from-gold to-champagne rounded-full transform rotate-3 -z-10"></div>
-                    <img src="https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=600" class="relative rounded-full shadow-xl w-64 h-64 mx-auto object-cover" alt="Secretary General">
-                </div>
-            </div>
-            <div class="lg:col-span-2 text-center lg:text-left">
-                <h3 class="text-3xl font-bold text-white mb-2">Razita Zaafarani Zahran</h3>
-                <p class="text-white mb-6">
-                    "Youth are the main pioneers in bringing change to the world. The small steps taken by youth can mean a lot for the next 5-10 years. We hope that the Jember Annual Global Model United Nation help young people to realize their role in society. So, small movements and conference forums that we organize can contribute to the involvement of youth for future generations."
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <section id="experience" class="py-20 scroll-reveal relative overflow-hidden" style="background-image: url('/images/penida.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
-    <div class="absolute inset-0 z-0" style="background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4));"></div>
-
-    <div class="max-w-7xl mx-auto px-4 relative z-10">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6"> Previously on <span class="gradient-text">JAGOMUN 2024</span>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-20 scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                News <span class="gradient-text">JAGOMUN 2025</span>
             </h2>
-            <p class="text-xl text-white max-w-4xl mx-auto">
-                JAGOMUN 2024 was a great success, attracting 100+ delegates from 9 countries and receiving support from the Ministry of Foreign Affairs, UNHCR Indonesia, and many other distinguished institutions.
+            <p class="text-xl text-white/80 max-w-3xl mx-auto">Follow our journey and stay updated with key announcements.</p>
+        </div>
+
+        <div class="relative">
+            <div class="absolute left-0 top-1/2 w-full h-1 -translate-y-1/2 bg-gradient-to-r from-transparent via-gold to-transparent opacity-30"></div>
+
+            <div class="relative flex flex-col lg:flex-row justify-between items-center w-full gap-12 lg:gap-8">
+
+                <div class="w-full lg:w-1/3 scroll-reveal">
+                    <div class="relative text-center">
+                        <div class="absolute left-1/2 -translate-x-1/2 -top-4 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
+                            <i class="fas fa-calendar-check text-gold text-xs"></i>
+                        </div>
+                        <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover" style="--glow-color: 180, 151, 107;">
+                            <div class="overflow-hidden">
+                                <img src="https://images.pexels.com/photos/4439444/pexels-photo-4439444.jpeg" alt="Registration" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Registration Opens Soon!</h3>
+                                <p class="text-white/80 text-sm">Get ready! Delegate registration is set to open on **July 1st, 2025**. Prepare your applications and secure your spot early!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/3 scroll-reveal" style="transition-delay: 200ms;">
+                    <div class="relative text-center">
+                         <div class="absolute left-1/2 -translate-x-1/2 -top-4 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
+                             <i class="fas fa-dollar-sign text-gold text-xs"></i>
+                        </div>
+                        <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover" style="--glow-color: 180, 151, 107;">
+                            <div class="overflow-hidden">
+                                <img src="https://images.pexels.com/photos/5625130/pexels-photo-5625130.jpeg" alt="Discount" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Early Bird Discount</h3>
+                                <p class="text-white/80 text-sm">Exciting news! We'll be offering early bird discounts for the **first 50 delegates** who register. Don't miss this limited-time offer!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/3 scroll-reveal" style="transition-delay: 400ms;">
+                    <div class="relative text-center">
+                        <div class="absolute left-1/2 -translate-x-1/2 -top-4 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
+                             <i class="fas fa-book-open text-gold text-xs"></i>
+                        </div>
+                        <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover" style="--glow-color: 180, 151, 107;">
+                           <div class="overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop" alt="Topics" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Topics Revealed Next Week!</h3>
+                                <p class="text-white/80 text-sm">Curious about the topics? The detailed committee agendas for all councils will be released next week. Stay tuned!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="about" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('/images/raja.jpg');">
+    <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
+
+    <div class="max-w-7xl mx-auto px-4 relative z-10">
+        <div class="text-center mb-16 scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Words of Remark from <br class="sm:hidden"/> <span class="gradient-text">Secretary General</span></h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+
+            <div class="lg:col-span-2 flex justify-center scroll-reveal" data-reveal="left">
+                <div class="relative group">
+                    <div class="absolute -inset-3 bg-gradient-to-br from-gold to-champagne rounded-full transform-gpu transition-all duration-700 group-hover:rotate-12 group-hover:scale-105"></div>
+                    <img src="https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=600" class="relative rounded-full shadow-2xl w-64 h-64 md:w-80 md:h-80 mx-auto object-cover border-4 border-navy" alt="Secretary General">
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 scroll-reveal" data-reveal="right">
+                <div class="bg-royal/50 backdrop-blur-xl rounded-2xl p-8 lg:p-10 border border-gold/20 shadow-2xl shadow-black/30 relative">
+
+                    <i class="fa-solid fa-quote-left text-7xl text-gold/20 absolute top-4 left-6 -z-10"></i>
+
+                    <h3 class="text-3xl font-bold text-white mb-4 relative z-10">Razita Zaafarani Zahran</h3>
+
+                    <div class="text-white/90 space-y-4 leading-relaxed">
+                        <p class="font-semibold italic">
+                            "Youth are the main pioneers in bringing change to the world. The small steps taken by youth can mean a lot for the next 5-10 years. We hope that the Jember Annual Global Model United Nation help young people to realize their role in society. So, small movements and conference forums that we organize can contribute to the involvement of youth for future generations."
+                        </p>
+
+                        <p class="pt-4 border-t border-gold/20">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        </p>
+                        <p>
+                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="experience" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('/images/raja.jpg');">
+    <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
+
+    <div class="max-w-7xl mx-auto px-4 relative z-10">
+        <div class="text-center mb-16 scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Previously on <span class="gradient-text">JAGOMUN 2024</span></h2>
+            <p class="text-xl text-white/90 max-w-4xl mx-auto">
+                JAGOMUN 2024 was a great success, attracting 100+ delegates from 9 countries and receiving support from many distinguished institutions.
             </p>
         </div>
 
-        <div class="relative z-0">
-            <div class="overflow-hidden relative" id="carousel-wrapper">
-                <div class="carousel-container" id="carousel-container">
-                    <div class="carousel-item p-2">
-                        <img src="/images/event1.jpg" class="rounded-xl shadow-lg w-full h-80 object-cover" alt="Event photo 1">
-                        </div>
-                    <div class="carousel-item p-2"><img src="/images/event2.jpg" class="rounded-xl shadow-lg w-full h-80 object-cover" alt="Event photo 2"></div>
-                    <div class="carousel-item p-2"><img src="/images/event3.jpg" class="rounded-xl shadow-lg w-full h-80 object-cover" alt="Event photo 3"></div>
-                    <div class="carousel-item p-2"><img src="/images/event4.jpg" class="rounded-xl shadow-lg w-full h-80 object-cover" alt="Event photo 4"></div>
-                    <div class="carousel-item p-2"><img src="/images/event5.jpg" class="rounded-xl shadow-lg w-full h-80 object-cover" alt="Event photo 5"></div>
-                    <div class="carousel-item p-2"><img src="/images/event6.jpg" class="rounded-xl shadow-lg w-full h-80 object-cover" alt="Event photo 6"></div>
-                    <div class="carousel-item p-2"><img src="/images/event7.jpg" class="rounded-xl shadow-lg w-full h-80 object-cover" alt="Event photo 7"></div>
-                    <div class="carousel-item p-2"><img src="/images/event8.jpg" class="rounded-xl shadow-lg w-full h-80 object-cover" alt="Event photo 8"></div>
-                    <div class="carousel-item p-2"><img src="/images/event9.jpg" class="rounded-xl shadow-lg w-full h-80 object-cover" alt="Event photo 9"></div>
-                    <div class="carousel-item p-2"><img src="/images/event10.jpg" class="rounded-xl shadow-lg w-full h-80 object-cover" alt="Event photo 10"></div>
-                </div>
+        <div class="relative max-w-2xl mx-auto h-[450px] scroll-reveal" id="deck-container">
             </div>
 
-            <button id="prevBtn" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white/50 hover:bg-white p-3 rounded-full shadow-md z-20">
-                <svg class="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
+        <div class="flex justify-center items-center gap-6 mt-8">
+            <button id="prevBtnDeck" class="group w-16 h-16 bg-white/50 hover:bg-white border border-royal/20 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-105">
+                <i class="fas fa-arrow-left text-2xl text-royal transition-transform group-hover:-translate-x-1"></i>
             </button>
-            <button id="nextBtn" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white/50 hover:bg-white p-3 rounded-full shadow-md z-20">
-                <svg class="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
+            <button id="nextBtnDeck" class="group w-16 h-16 bg-white/50 hover:bg-white border border-royal/20 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-105">
+                <i class="fas fa-arrow-right text-2xl text-royal transition-transform group-hover:translate-x-1"></i>
             </button>
         </div>
     </div>
 </section>
 
-
-    <section id="councils" class="py-20 scroll-reveal relative overflow-hidden" style="background-image: url('/images/labuan.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    <div class="absolute inset-0 z-0" style="background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4));"></div>
+   <section id="councils" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('/images/raja.jpg');">
+    <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
 
     <div class="max-w-7xl mx-auto px-4 relative z-10">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Available <span class="gradient-text">Councils</span></h2>
-            <p class="text-xl text-white max-w-3xl mx-auto">Choose your committee and represent your assigned country in addressing critical global issues.</p>
+        <div class="text-center mb-12 scroll-reveal"> <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Available <span class="gradient-text">Councils</span></h2>
+            <p class="text-xl text-white/90 max-w-3xl mx-auto">Choose a committee to see the details and represent your assigned country.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="group card-hover bg-ivory/90 rounded-2xl p-8 h-full shadow-lg border-b-4 border-royal">
-                <h3 class="text-2xl font-bold text-navy mb-4">UN Security Council</h3>
-                <p class="text-royal mb-6">Address international peace and security challenges with the power to make binding decisions.</p>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:min-h-[550px]">
+
+            <div class="md:col-span-4">
+                <div id="council-menu-container" class="relative md:bg-royal/30 p-2 md:rounded-2xl flex md:block overflow-x-auto md:overflow-visible space-x-2 md:space-x-0 md:space-y-2 no-scrollbar">
+                    <div id="menu-selector" class="hidden md:block absolute bg-gold/20 border border-gold rounded-xl z-0"></div>
+                </div>
             </div>
-            <div class="group card-hover bg-ivory/90 rounded-2xl p-8 h-full shadow-lg border-b-4 border-gold">
-                <h3 class="text-2xl font-bold text-navy mb-4">UN General Assembly</h3>
-                <p class="text-royal mb-6">Participate in the main deliberative organ where all UN member states have equal representation.</p>
+
+            <div class="md:col-span-8 mt-4 md:mt-0"> <div id="council-display-panel" class="relative w-full md:h-full bg-royal/30 md:backdrop-blur-xl md:rounded-2xl md:border md:border-gold/20 md:shadow-2xl">
+                    </div>
             </div>
-            <div class="group card-hover bg-ivory/90 rounded-2xl p-8 h-full shadow-lg border-b-4 border-royal">
-                <h3 class="text-2xl font-bold text-navy mb-4">ECOSOC</h3>
-                <p class="text-royal mb-6">Focus on economic and social development, sustainable development goals, and humanitarian issues.</p>
-            </div>
-            <div class="group card-hover bg-ivory/90 rounded-2xl p-8 h-full shadow-lg border-b-4 border-green-600">
-                <h3 class="text-2xl font-bold text-navy mb-4">World Health Organization</h3>
-                <p class="text-royal mb-6">Address global health challenges, pandemic preparedness, and health equity worldwide.</p>
-            </div>
-            <div class="group card-hover bg-ivory/90 rounded-2xl p-8 h-full shadow-lg border-b-4 border-blue-500">
-                <h3 class="text-2xl font-bold text-navy mb-4">UNHCR</h3>
-                <p class="text-royal mb-6">Work on protecting refugees, forcibly displaced communities, and stateless people.</p>
-            </div>
-            <div class="group card-hover bg-ivory/90 rounded-2xl p-8 h-full shadow-lg border-b-4 border-purple-500">
-                <h3 class="text-2xl font-bold text-navy mb-4">UNESCO</h3>
-                <p class="text-royal mb-6">Promote international cooperation in education, sciences, culture and communication.</p>
-            </div>
+
         </div>
     </div>
 </section>
 
-    <section id="faq" class="py-20 scroll-reveal relative overflow-hidden" style="background-image: url('/images/raja.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    <div class="absolute inset-0 z-0" style="background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));"></div>
+    <section id="testimonials" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('/images/raja.jpg');">
+        <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white">
+                    Delegates <span class="gradient-text">Experience</span>
+                </h2>
+                <div class="w-24 h-1 bg-gold mx-auto mt-6 mb-16"></div>
+            </div>
 
-    <div class="max-w-4xl mx-auto px-4 relative z-10"> <div class="text-center mb-16">
-               <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Frequently Asked <span class="gradient-text">Questions</span></h2> <p class="text-xl text-white/90">Have questions? We've got answers.</p> </div>
-        <div class="space-y-4">
-            <div class="faq-item bg-white/80 p-6 rounded-lg shadow-md"> <button class="faq-question w-full text-left flex justify-between items-center">
-                    <span class="text-lg font-semibold text-navy">Who can participate in JAGOMUN 2025?</span>
-                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="faq-answer hidden mt-4 text-royal">
-                    JAGOMUN is open to all university students and high school students aged 17-25, regardless of their field of study. We welcome both beginners and experienced MUN delegates.
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+                <div class="flex flex-col items-center text-center">
+                    <blockquote class="text-lg text-ivory/90 leading-relaxed italic">
+                        <p>"JAGOMUN provides an unforgettable experience. JAGOMUN offers new things by bringing the nuances and characteristic of the beautiful Jember district. Apart from that, the commite works very profesionally and reliably so that we delegates feel comfortable when participating in JAGOMUN. I highly recommend you to join JAGOMUN this year."</p>
+                    </blockquote>
+                    <div class="mt-8 flex flex-col items-center">
+                        <img class="h-20 w-20 rounded-full object-cover border-2 border-gold" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Avatar of Naufal Ammar Fathan Suahrol">
+                        <div class="mt-4">
+                            <p class="text-xl font-semibold text-champagne">Naufal Ammar Fathan Suahrol</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center text-center">
+                     <blockquote class="text-lg text-ivory/90 leading-relaxed italic">
+                        <p>"As the closing of my highschool MUN journey, JAGOMUN 2023 was a valuable experience and treasured memory until now. The conference offered an oppurtunity for me to delve deeper into how intense MUN could be; I cloud really feel how much is at stake when going through heated debates and back-to-back negotiations between blocs. I've not only improved my problem solving and diplomacy skills, but also my research abilities in ensuring a substantive debate. I wholeheartedly recommend future delegates to join JAGOMUN 2024 if you're in search for refreshing and engaging experience in MUN, regardless of whether you're a beginner or an advantage delegates."</p>
+                    </blockquote>
+                    <div class="mt-8 flex flex-col items-center">
+                        <img class="h-20 w-20 rounded-full object-cover border-2 border-gold" src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Avatar of Mitalia Habsari Suwanda">
+                        <div class="mt-4">
+                            <p class="text-xl font-semibold text-champagne">Mitalia Habsari Suwanda</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-               <div class="faq-item bg-white/80 p-6 rounded-lg shadow-md"> <button class="faq-question w-full text-left flex justify-between items-center">
-                    <span class="text-lg font-semibold text-navy">What is included in the registration fee?</span>
-                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </div>
+    </section>
+    <section id="faq" class="py-24 bg-navy relative overflow-hidden parallax-section section-separator" style="--bg-image: url('/images/raja.jpg');">
+    <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
+
+    <div class="max-w-4xl mx-auto px-4 relative z-10">
+        <div class="text-center mb-16 scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Frequently Asked <span class="gradient-text">Questions</span></h2>
+            <p class="text-xl text-white/90">Have questions? We've got answers.</p>
+        </div>
+
+        <div class="space-y-4 scroll-reveal">
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">Who can participate in JAGOMUN 2025?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                <div class="faq-answer hidden mt-4 text-royal">
-                    The registration fee typically includes entry to all committee sessions, delegate kits, lunch for the conference days, and access to social events. Accommodation is not included unless specified in a package.
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>JAGOMUN is open to all university students and high school students aged 17-25, regardless of their field of study. We welcome both beginners and experienced MUN delegates.</p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">What is included in the registration fee?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>The registration fee typically includes entry to all committee sessions, delegate kits, lunch for the conference days, and access to social events. Accommodation is not included unless specified in a package.</p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">What is the official dress code?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>The official dress code for all committee sessions is Western Business Attire. This includes suits, blazers with formal trousers or skirts, formal shirts with ties (optional for women), and formal shoes. Casual wear such as T-shirts, jeans, shorts, sneakers, and sandals are not permitted in committee rooms.</p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">Do I need to write a Position Paper?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>Yes, submitting a Position Paper is mandatory for all delegates who wish to be considered for awards. It is a crucial part of your preparation that outlines your assigned country's stance on the topics. The deadline for submission will be announced along with the release of the study guides.</p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">I'm a first-timer. Can I join?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>Absolutely! JAGOMUN is open to delegates of all experience levels. We highly recommend beginner councils like ECOSOC or DISEC for first-timers. Additionally, we will provide training materials and a workshop session to help you understand the Rules of Procedure and basic MUN concepts.</p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">When will the Study Guides be released?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>The Study Guides for each council, which contain detailed background information on the topics, will be released approximately one month before the conference date. All registered delegates will be notified via email and can download them from the official website.</p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">What social events are planned?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>We believe in "work hard, play hard"! JAGOMUN 2025 will feature several social events including an opening ceremony, a cultural night where delegates can showcase their heritage, and a formal closing dinner and gala night. These events are designed for networking and relaxation after intense committee sessions.</p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">Is accommodation included?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>Accommodation is not included in the standard delegate registration fee. However, to assist our out-of-town delegates, we will release an official accommodation guide with a list of recommended hotels near the conference venue that offer special rates for JAGOMUN participants.</p>
                 </div>
             </div>
         </div>
@@ -420,144 +765,329 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Navbar Scroll Effect
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('bg-navy', 'shadow-lg');
-                } else {
-                    navbar.classList.remove('bg-navy', 'shadow-lg');
-                }
-            });
+document.addEventListener('DOMContentLoaded', () => {
 
-            // Mobile Menu Toggle
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileLinks = document.querySelectorAll('.mobile-link');
+    // =========================================================================
+    //  1. FUNGSI DASAR (NAVBAR, MOBILE MENU, FAQ, COUNCIL MODAL)
+    // =========================================================================
 
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
+    // --- Navbar & Mobile Menu ---
+    const navbar = document.getElementById('navbar');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-            // Scroll Reveal Animation
-            const scrollObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('revealed');
-                    }
-                });
-            }, { threshold: 0.1 });
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('bg-navy', window.scrollY > 50);
+        navbar.classList.toggle('shadow-lg', window.scrollY > 50);
+    }, { passive: true });
 
-            document.querySelectorAll('.scroll-reveal').forEach(el => {
-                scrollObserver.observe(el);
-            });
-
-            // Hero Background Slideshow
-            const slides = document.querySelectorAll('.hero-bg-slideshow > div');
-            let currentSlide = 0;
-            if (slides.length > 0) {
-                slides[0].classList.add('opacity-100');
-                setInterval(() => {
-                    slides[currentSlide].classList.remove('opacity-100');
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    slides[currentSlide].classList.add('opacity-100');
-                }, 5000); // Change image every 5 seconds
-            }
-
-            // Carousel "Previously On"
-            const carouselContainer = document.getElementById('carousel-container');
-            if (carouselContainer) {
-                const prevBtn = document.getElementById('prevBtn');
-                const nextBtn = document.getElementById('nextBtn');
-                const items = carouselContainer.querySelectorAll('.carousel-item');
-                const totalItems = items.length;
-                let currentIndex = 0;
-
-                function getVisibleItemsCount() {
-                    const wrapperWidth = document.getElementById('carousel-wrapper').offsetWidth;
-                    const itemWidth = items[0].offsetWidth;
-                    return Math.round(wrapperWidth / itemWidth);
-                }
-
-                function updateCarousel() {
-                    const itemWidth = items[0].offsetWidth;
-                    const newTransform = -currentIndex * itemWidth;
-                    carouselContainer.style.transform = `translateX(${newTransform}px)`;
-                }
-
-                function goToNextSlide() {
-                    const visibleItems = getVisibleItemsCount();
-                    currentIndex = (currentIndex + 1) % (totalItems - visibleItems + 1);
-                    updateCarousel();
-                }
-
-                function goToPrevSlide() {
-                    const visibleItems = getVisibleItemsCount();
-                    currentIndex = (currentIndex - 1 + (totalItems - visibleItems + 1)) % (totalItems - visibleItems + 1);
-                    updateCarousel();
-                }
-
-                nextBtn.addEventListener('click', goToNextSlide);
-                prevBtn.addEventListener('click', goToPrevSlide);
-                window.addEventListener('resize', updateCarousel);
-
-                setInterval(goToNextSlide, 3000); // Auto-slide every 3 seconds
-
-                updateCarousel(); // Initial render
-            }
-
-            // News Carousel (New Feature)
-            const newsCarouselContainer = document.getElementById('news-carousel-container');
-            if (newsCarouselContainer) {
-                const newsItems = newsCarouselContainer.querySelectorAll('.news-carousel-item');
-                let currentNewsIndex = 0;
-
-                function updateNewsCarousel() {
-                    const itemWidth = newsItems[0].offsetWidth;
-                    // For a true "slide one at a time" where content might vary in width:
-                    // You'd calculate the accumulated width of previous items.
-                    // For simplicity with equal width items, just use index * itemWidth
-                    newsCarouselContainer.style.transform = `translateX(${-currentNewsIndex * itemWidth}px)`;
-                }
-
-                function slideNews() {
-                    currentNewsIndex = (currentNewsIndex + 1) % newsItems.length;
-                    updateNewsCarousel();
-                }
-
-                // Set initial transform
-                updateNewsCarousel();
-                // Auto-slide every 4 seconds
-                setInterval(slideNews, 4000);
-            }
-
-
-            // FAQ Accordion
-            const faqItems = document.querySelectorAll('.faq-item');
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                const answer = item.querySelector('.faq-answer');
-                const icon = question.querySelector('svg');
-
-                question.addEventListener('click', () => {
-                    const isOpen = !answer.classList.contains('hidden');
-                    faqItems.forEach(otherItem => {
-                        if (otherItem !== item) {
-                            otherItem.querySelector('.faq-answer').classList.add('hidden');
-                            otherItem.querySelector('.faq-question svg').classList.remove('rotate-180');
-                        }
-                    });
-                    answer.classList.toggle('hidden');
-                    icon.classList.toggle('rotate-180');
-                });
-            });
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
-    </script>
+    }
+
+    // --- FAQ Accordion ---
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question?.addEventListener('click', () => {
+            const answer = item.querySelector('.faq-answer');
+            const icon = question.querySelector('svg');
+            const isOpen = !answer.classList.contains('hidden');
+
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.querySelector('.faq-answer')?.classList.add('hidden');
+                    otherItem.querySelector('.faq-question svg')?.classList.remove('rotate-180');
+                }
+            });
+
+            answer?.classList.toggle('hidden', isOpen);
+            icon?.classList.toggle('rotate-180', !isOpen);
+        });
+    });
+
+   // GANTI SCRIPT COUNCIL MODAL LAMA ANDA DENGAN INI
+// --- SCRIPT UNTUK COUNCIL SPLIT-VIEW ---
+// GANTI BLOK SCRIPT COUNCIL SPLIT-VIEW LAMA ANDA DENGAN INI
+
+// --- SCRIPT UNTUK COUNCIL SPLIT-VIEW (DENGAN RESPONSIVE FIX LENGKAP) ---
+    // GANTI OBJEK councilData LAMA ANDA DENGAN VERSI LENGKAP INI
+
+const councilData = {
+    unsc: {
+        title: 'UN Security Council', short_title: 'UNSC',
+        logo: 'https://tse2.mm.bing.net/th/id/OIP.mBJkRXSTo45TAqR8S5svGAHaHZ?pid=Api&P=0&h=180',
+        description: 'The UNSC is the primary body for maintaining international peace and security. Delegates in this advanced committee will tackle high-stakes crises, deliberate on sanctions, and authorize peacekeeping missions. This council demands sharp negotiation skills and a deep understanding of geopolitical dynamics.',
+        topics: ['The Situation in the Middle East', 'Cybersecurity and International Threats'],
+
+    },
+    ecosoc: {
+        title: 'UN Economic and Social Council', short_title: 'ECOSOC',
+        logo: 'https://tse3.mm.bing.net/th/id/OIP.a23X3RtcH0SGIjD1qzLWZwHaE5?pid=Api&P=0&h=180',
+        description: 'The Economic and Social Council is at the heart of the UN’s work on sustainable development. Delegates will formulate policies on economic, social, and environmental issues, working towards achieving the Sustainable Development Goals (SDGs) and fostering international cooperation for development.',
+        topics: ['Financing for Sustainable Development Goals', 'The Role of Digital Technologies in Eradicating Poverty'],
+
+    },
+    who: {
+        title: 'World Health Organization', short_title: 'WHO',
+        logo: 'https://tse1.mm.bing.net/th/id/OIP.ssNqyFvwMyHfh2FpfL6hvgHaHa?pid=Api&P=0&h=180',
+        description: 'As the leading authority on international health, the WHO directs and coordinates responses to global health emergencies. Delegates will address topics like pandemic preparedness, vaccine equity, and strengthening health systems in developing nations.',
+        topics: ['Global Pandemic Preparedness Treaty', 'Mental Health in a Post-Pandemic Era'],
+
+    },
+    unhcr: {
+        title: 'UN High Commissioner for Refugees', short_title: 'UNHCR',
+        logo: 'https://tse1.mm.bing.net/th/id/OIP.chwlFJWrT6PgCAEqBrMksgHaGf?pid=Api&P=0&h=180',
+        description: 'The UN Refugee Agency is mandated to protect and support refugees. In this council, delegates will focus on the rights and well-being of displaced persons, addressing issues of asylum, resettlement, and finding durable solutions to refugees crises worldwide.',
+        topics: ['Protection of Climate Refugees', 'Rohingya Crisis: Pathways to Solutions'],
+
+    },
+
+    // --- DATA BARU DITAMBAHKAN DI SINI ---
+    unesco: {
+        title: 'UNESCO', short_title: 'UNESCO',
+        logo: 'https://tse2.mm.bing.net/th/id/OIP.7uNQPIlL4yHzGpnRKUzNewHaFn?pid=Api&P=0&h=180',
+        description: 'The United Nations Educational, Scientific and Cultural Organization seeks to build peace through international cooperation. Topics will range from protecting world heritage sites and providing freedom of expression to advancing science for sustainable development.',
+        topics: ['Preserving World Heritage Sites', 'Promoting Freedom of Expression Online'],
+
+    },
+    disec: {
+        title: 'UN General Assembly (DISEC)', short_title: 'DISEC',
+        logo: 'https://static.wixstatic.com/media/d9e4c7_adbad2ce2830482b936a6208b4e1326e~mv2.png/v1/fill/w_255,h_206,al_c,q_85,usm_2.00_1.00_0.00,enc_auto/DISEC_Logo.png', // Menggunakan logo utama PBB untuk GA
+        description: 'As the First Committee of the UNGA, DISEC deals with disarmament and threats to peace that affect the international community. Delegates will discuss issues like nuclear non-proliferation, the arms trade, and preventing an arms race in outer space.',
+        topics: ['Nuclear Non-Proliferation', 'Regulation of the International Arms Trade'],
+
+    }
+};
+
+    const menuContainer = document.getElementById('council-menu-container');
+    const displayPanel = document.getElementById('council-display-panel');
+    const menuSelector = document.getElementById('menu-selector');
+
+    if (menuContainer && displayPanel && menuSelector) {
+
+        function moveSelector(targetElement) {
+            if (!targetElement || window.innerWidth < 768) {
+                menuSelector.style.display = 'none';
+                return;
+            };
+            menuSelector.style.display = 'block';
+            menuSelector.style.top = `${targetElement.offsetTop}px`;
+            menuSelector.style.height = `${targetElement.offsetHeight}px`;
+            menuSelector.style.left = `${targetElement.offsetLeft}px`;
+            menuSelector.style.width = `${targetElement.offsetWidth}px`;
+        }
+
+        Object.keys(councilData).forEach((key, index) => {
+            const council = councilData[key];
+
+            const menuItem = document.createElement('button');
+            menuItem.className = 'council-menu-item';
+            menuItem.dataset.council = key;
+            menuItem.innerHTML = `
+                <img src="${council.logo}" alt="${council.short_title} Logo" class="h-10 w-10 mr-4 bg-white p-1 rounded-full object-contain flex-shrink-0">
+                <div>
+                    <h4 class="text-lg font-bold text-white transition-colors council-title">${council.short_title}</h4>
+                </div>
+            `;
+            menuContainer.appendChild(menuItem);
+
+            const contentPanel = document.createElement('div');
+            contentPanel.className = 'council-detail-content';
+            contentPanel.id = `detail-${key}`;
+            contentPanel.innerHTML = `
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-2xl font-bold text-gold mb-2">About ${council.title}</h3>
+                        <p class="text-white/80 leading-relaxed break-words">${council.description}</p>
+                    </div>
+                    <div class="bg-navy/50 p-4 rounded-lg">
+                        <h4 class="font-bold text-white mb-3 flex items-center"><i class="fas fa-book-open mr-2 text-gold"></i>Topics of Discussion</h4>
+                        <ul class="list-disc list-inside text-white/80 space-y-1">
+                            ${council.topics.map(topic => `<li>${topic}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            displayPanel.appendChild(contentPanel);
+
+            if (index === 0) {
+                menuItem.classList.add('active');
+                contentPanel.classList.add('active');
+                setTimeout(() => moveSelector(menuItem), 100);
+            }
+        });
+
+        menuContainer.addEventListener('click', (e) => {
+            const clickedItem = e.target.closest('.council-menu-item');
+            if (!clickedItem) return;
+
+            const councilId = clickedItem.dataset.council;
+            moveSelector(clickedItem);
+
+            menuContainer.querySelectorAll('.council-menu-item').forEach(item => item.classList.remove('active'));
+            displayPanel.querySelectorAll('.council-detail-content').forEach(content => content.classList.remove('active'));
+
+            clickedItem.classList.add('active');
+            document.getElementById(`detail-${councilId}`).classList.add('active');
+
+            // TIDAK ADA LAGI SCROLL OTOMATIS DI SINI
+        });
+
+        window.addEventListener('resize', () => {
+            const activeItem = menuContainer.querySelector('.council-menu-item.active');
+            moveSelector(activeItem);
+        });
+    }
+
+
+    // =========================================================================
+    //  2. EFEK VISUAL & ANIMASI
+    // =========================================================================
+
+    // --- Hero Background Slideshow ---
+    const heroSlides = document.querySelectorAll('.hero-bg-slideshow > div');
+    if (heroSlides.length > 0) {
+        let currentHeroSlide = 0;
+        heroSlides[0].classList.add('opacity-100');
+        setInterval(() => {
+            heroSlides[currentHeroSlide].classList.remove('opacity-100');
+            currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+            heroSlides[currentHeroSlide].classList.add('opacity-100');
+        }, 5000);
+    }
+
+    // --- Parallax Background Loader ---
+    document.querySelectorAll('.parallax-section').forEach(section => {
+        const bgImage = section.style.getPropertyValue('--bg-image');
+        if (bgImage) {
+            const pseudoStyle = section.ownerDocument.createElement('style');
+            pseudoStyle.innerHTML = `#${section.id}::before { background-image: ${bgImage}; }`;
+            section.appendChild(pseudoStyle);
+        }
+    });
+
+    // --- Slider Dek Kartu "Previously On" (VERSI ANIMASI BARU) ---
+    const deckContainer = document.getElementById('deck-container');
+    if (deckContainer) {
+        const nextBtn = document.getElementById('nextBtnDeck');
+        const prevBtn = document.getElementById('prevBtnDeck');
+        const images = [
+            '/images/event1.jpg', '/images/event2.jpg', '/images/event3.jpg',
+            '/images/event4.jpg', '/images/event5.jpg', '/images/event6.jpg',
+            '/images/event7.jpg', '/images/event8.jpg', '/images/event9.jpg', '/images/event10.jpg'
+        ];
+
+        let cards = [];
+        let currentIndex = 0;
+        let isAnimating = false;
+        let autoPlayDeckInterval;
+
+        function applyCardClasses() {
+            const N = cards.length;
+            cards.forEach((card, index) => {
+                card.classList.remove('card--active', 'card--next', 'card--hidden', 'is-settling');
+                if (index === currentIndex) {
+                    card.classList.add('card--active');
+                } else if (index === (currentIndex + 1) % N) {
+                    card.classList.add('card--next');
+                } else {
+                    card.classList.add('card--hidden');
+                }
+            });
+        }
+
+        function initDeck() {
+            images.forEach((src, index) => {
+                const card = document.createElement('div');
+                card.className = 'deck-card';
+                card.innerHTML = `<img src="${src}" alt="Event photo ${index + 1}" loading="lazy">`;
+                deckContainer.appendChild(card);
+                cards.push(card);
+            });
+            applyCardClasses();
+        }
+
+        function handleNext() {
+            if (isAnimating) return;
+            isAnimating = true;
+            const activeCard = cards[currentIndex];
+            const nextCard = cards[(currentIndex + 1) % cards.length];
+            activeCard.classList.add('is-tossing');
+            nextCard.classList.add('is-settling');
+            currentIndex = (currentIndex + 1) % cards.length;
+            setTimeout(() => {
+                activeCard.classList.remove('is-tossing');
+                applyCardClasses();
+                isAnimating = false;
+            }, 700);
+        }
+
+        function handlePrev() {
+            if (isAnimating) return;
+            isAnimating = true;
+            const N = cards.length;
+            const prevIndex = (currentIndex - 1 + N) % N;
+            const prevCard = cards[prevIndex];
+            const activeCard = cards[currentIndex];
+            activeCard.classList.add('is-moving-back');
+            prevCard.classList.add('is-returning');
+            currentIndex = prevIndex;
+            setTimeout(() => {
+                activeCard.classList.remove('is-moving-back');
+                prevCard.classList.remove('is-returning');
+                applyCardClasses();
+                isAnimating = false;
+            }, 700);
+        }
+
+        function startAutoPlayDeck() {
+            stopAutoPlayDeck();
+            autoPlayDeckInterval = setInterval(handleNext, 4000);
+        }
+
+        function stopAutoPlayDeck() {
+            clearInterval(autoPlayDeckInterval);
+        }
+
+        nextBtn?.addEventListener('click', () => { stopAutoPlayDeck(); handleNext(); });
+        prevBtn?.addEventListener('click', () => { stopAutoPlayDeck(); handlePrev(); });
+
+        initDeck();
+    }
+
+
+    // =========================================================================
+    //  3. MASTER INTERSECTION OBSERVER (Untuk semua animasi saat scroll)
+    // =========================================================================
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.target.classList.contains('scroll-reveal')) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            }
+
+            if (entry.target.id === 'experience') {
+                if (entry.isIntersecting) {
+                    if (typeof startAutoPlayDeck === 'function') startAutoPlayDeck();
+                } else {
+                    if (typeof stopAutoPlayDeck === 'function') stopAutoPlayDeck();
+                }
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    document.querySelectorAll('.scroll-reveal, #experience').forEach(el => {
+        observer.observe(el);
+    });
+
+});
+</script>
 </body>
 </html>

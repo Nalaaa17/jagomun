@@ -68,8 +68,8 @@
                 <div class="hidden lg:flex items-center space-x-8">
                     <a href="/" class="text-white hover:text-gold transition-colors duration-300">Home</a>
                     <a href="{{ route('about') }}" class="text-white hover:text-gold transition-colors duration-300">About</a>
-                    <a href="#" class="text-white hover:text-gold transition-colors duration-300">Councils</a>
                     <a href="{{ route('contact.index') }}" class="text-white hover:text-gold transition-colors duration-300">FAQ</a>
+                    <a href="{{ route('packages') }}" class="text-white hover:text-gold transition-colors duration-300">Packages</a>
                 </div>
                 <div class="hidden lg:flex">
                     <a href="{{ route('registration.chooseType') }}" class="text-white hover:text-gold transition-colors duration-300">
@@ -90,7 +90,7 @@
                 <a href="/" class="block px-3 py-2 text-white hover:text-gold">Home</a>
                 <a href="{{ route('about') }}" class="block px-3 py-2 text-white hover:text-gold">About</a>
                 <a href="#" class="block px-3 py-2 text-white hover:text-gold">Councils</a>
-                <a href="{{ route('contact.index') }}" class="block px-3 py-2 text-white hover:text-gold">FAQ</a>
+                <a href="{{ route('packages') }}" class="block px-3 py-2 text-white hover:text-gold">Packages</a>
                 <a href="{{ route('registration.chooseType') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">Register Now</a>
             </div>
         </div>

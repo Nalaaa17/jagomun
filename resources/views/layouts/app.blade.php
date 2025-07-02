@@ -9,87 +9,115 @@
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    @yield('styles')
+    @livewireStyles
 
     <style>
-        /* Pastikan padding top untuk menghindari konten ketutupan navbar */
-        main {
-            padding-top: 4.5rem;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F2EFEA; /* Menggunakan warna bg-ivory sebagai default */
         }
+        main {
+            padding-top: 6rem; /* Menyesuaikan padding untuk navbar yang lebih tinggi */
+        }
+        .text-navy { color: #1E2233; }
+        .bg-navy { background-color: #1E2233; }
+        .text-gold { color: #B4976B; }
+        .bg-gold { background-color: #B4976B; }
     </style>
+
+    @yield('styles')
 </head>
-<body class="font-sans antialiased bg-gray-100">
-    <div class="min-h-screen">
-        <nav class="sticky top-0 w-full z-50 bg-[#1E2233] shadow-lg">
+<body class="font-sans antialiased">
+    <div class="min-h-screen bg-gray-100">
+
+        <nav class="fixed w-full z-50 bg-navy shadow-lg" id="navbar">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center py-8">
-                    <div class="flex-shrink-0">
-                    <a href="{{ route('home') }}">
-                        <img src="{{ asset('images/logo.png') }}"
-                            alt="JAGOMUN 2025 Logo"
-                            class="h-20 w-auto">
-                    </a>
-                </div>
+                <div class="flex justify-between items-center h-24">
 
-                    {{-- Tombol Toggle di Mobile --}}
-                    <div class="lg:hidden">
-                        <button id="toggleBackBtn" class="text-white p-2 focus:outline-none">
-                            <svg id="icon-open" class="w-6 h-6 block" fill="none" stroke="currentColor" stroke-width="2"
-                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-                            </svg>
-                            <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2"
-                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    {{-- Tombol Kembali --}}
-                    <div id="backButtonWrapper" class="hidden lg:flex">
-                        <a href="javascript:history.back()" class="flex items-center text-white hover:text-[#B4976B] transition-colors duration-300 font-semibold px-3 py-2 rounded-md">
-                            {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                            </svg> --}}
-                            Back
+                    <!-- Kolom Kiri (Logo) -->
+                    <div class="flex-1 flex justify-start">
+                        <a href="{{ route('home') }}">
+                            <img src="{{ asset('images/logo.png') }}" alt="JAGOMUN 2025 Logo" class="h-20 w-auto">
                         </a>
                     </div>
+
+                    <!-- Kolom Tengah (Menu Utama - Desktop) -->
+                    <div class="hidden lg:flex flex-1 justify-center items-center space-x-8">
+                        <a href="{{ route('home') }}" class="text-white hover:text-gold transition-colors duration-300">Home</a>
+                        <a href="#" class="text-white hover:text-gold transition-colors duration-300">About</a>
+                        <a href="#" class="text-white hover:text-gold transition-colors duration-300">Councils</a>
+                        <a href="#" class="text-white hover:text-gold transition-colors duration-300">FAQ</a>
+                    </div>
+
+                    <!-- Kolom Kanan (Tombol Menu Mobile) -->
+                    <div class="flex-1 flex justify-end items-center">
+                        {{-- Tombol Register Now (Desktop) Dihapus --}}
+
+                        <!-- Tombol Menu Mobile -->
+                        <div class="lg:hidden">
+                            <button id="mobile-menu-button" class="text-white p-2 focus:outline-none">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            {{-- Menu responsif tombol back --}}
-            <div id="mobileBackButton" class="lg:hidden hidden bg-[#1E2233] px-4 pb-4">
-                <a href="javascript:history.back()" class="block text-white hover:text-[#B4976B] font-semibold">
-                    ← Back
-                </a>
+            {{-- Menu Mobile --}}
+            <div id="mobile-menu" class="lg:hidden hidden bg-navy/95 backdrop-blur-sm">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="{{ route('home') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gold hover:bg-gray-700">Home</a>
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gold hover:bg-gray-700">About</a>
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gold hover:bg-gray-700">Councils</a>
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gold hover:bg-gray-700">FAQ</a>
+                    {{-- Tombol Register Now (Mobile) Dihapus --}}
+                </div>
             </div>
         </nav>
 
         <main>
             @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mx-auto mt-4 max-w-7xl" role="alert">
-                    <strong class="font-bold">Success!</strong>
-                    <span class="block sm:inline">{{ session('success') }}</span>
+                <div class="bg-green-100 border-t-4 border-green-500 rounded-b text-green-900 px-4 py-3 shadow-md max-w-7xl mx-auto mb-6" role="alert">
+                    <div class="flex">
+                        <div class="py-1"><svg class="fill-current h-6 w-6 text-green-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                        <div>
+                            <p class="font-bold">Success!</p>
+                            <p class="text-sm">{{ session('success') }}</p>
+                        </div>
+                    </div>
                 </div>
             @endif
             @if (session('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mx-auto mt-4 max-w-7xl" role="alert">
-                    <strong class="font-bold">Error!</strong>
-                    <span class="block sm:inline">{{ session('error') }}</span>
+                 <div class="bg-red-100 border-t-4 border-red-500 rounded-b text-red-900 px-4 py-3 shadow-md max-w-7xl mx-auto mb-6" role="alert">
+                    <div class="flex">
+                        <div class="py-1"><svg class="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                        <div>
+                            <p class="font-bold">Error!</p>
+                            <p class="text-sm">{{ session('error') }}</p>
+                        </div>
+                    </div>
                 </div>
             @endif
             @if ($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mx-auto mt-4 max-w-7xl" role="alert">
-                    <strong class="font-bold">Whoops!</strong>
-                    <span class="block sm:inline">There were some problems with your input.</span>
-                    <ul class="mt-3 list-disc list-inside text-sm">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                <div class="bg-red-100 border-t-4 border-red-500 rounded-b text-red-900 px-4 py-3 shadow-md max-w-7xl mx-auto mb-6" role="alert">
+                    <div class="flex">
+                        <div class="py-1"><svg class="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                        <div>
+                            <p class="font-bold">Whoops! There were some problems with your input.</p>
+                               <ul class="mt-2 list-disc list-inside text-sm">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             @endif
 
@@ -97,28 +125,26 @@
         </main>
     </div>
 
-    <footer class="bg-[#1E2233] py-12">
+    <footer class="bg-navy py-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
             <p>&copy; {{ date('Y') }} JAGOMUN. All Rights Reserved.</p>
             <p class="text-sm">Organized by UKM UNEJ Model United Nations Club</p>
         </div>
     </footer>
 
+    @livewireScripts
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const toggleBtn = document.getElementById('toggleBackBtn');
-            const mobileBack = document.getElementById('mobileBackButton');
-            const iconOpen = document.getElementById('icon-open');
-            const iconClose = document.getElementById('icon-close');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
 
-            toggleBtn.addEventListener('click', function () {
-                mobileBack.classList.toggle('hidden');
-                iconOpen.classList.toggle('hidden');
-                iconClose.classList.toggle('hidden');
-            });
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
         });
     </script>
-
     @stack('scripts')
 </body>
 </html>

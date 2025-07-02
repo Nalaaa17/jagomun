@@ -25,10 +25,10 @@ class DelegationRegistration extends Model
         'phone',
         'nationality',
         'do_you_need_accommodation',
-        'motivation_statement',
+        'attendance_type',
+        'package_type',
         'payment_proof_path',
         'social_media_proof_path',
-        'referral_code',
 
         // --- TAMBAHKAN SEMUA KOLOM BARU DI SINI ---
         'council_preference_1',
