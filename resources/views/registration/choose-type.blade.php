@@ -103,7 +103,7 @@
 
                                 </div>
                                 <p class="text-xl font-semibold text-navy">Delegation</p>
-                                <p class="text-sm text-royal">(min. 4 people)</p>
+                                <p class="text-sm text-royal">(min. 2 people)</p>
                             </div>
                         </label>
 

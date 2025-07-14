@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use App\Events\NewRegistrationCreated;
 use App\MailServices\PHPMailerService;
+use Maatwebsite\Excel\Facades\Excel; // <-- JANGAN LUPA IMPORT FACADE EXCEL
+use App\Exports\RegistrationsExport;
+use Illuminate\Support\Facades\DB; // <-- JANGAN LUPA IMPORT CLASS EXPORT ANDA
 
 class RegistrationController extends Controller
 {
@@ -117,54 +120,84 @@ class RegistrationController extends Controller
         $validatedData = $request->validate([
             'delegate_type' => ['required', Rule::in(['National Delegate', 'International Delegate'])],
             'full_name' => 'required|string|max:255',
+            'date_of_birth' => 'required|date',
+            'age' => 'required|integer|min:1',
+            'gender' => ['required', Rule::in(['Male', 'Female'])],
             'email' => 'required|email|max:255|unique:delegation_registrations,email',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|string|max:25',
             'nationality' => 'required|string|max:100',
-            'institution' => 'required|string|max:255',
-            'needs_accommodation' => 'nullable|boolean',
-            'package_type' => 'required|string|max:255',
+            'institution_name' => 'required|string|max:255',
+            'full_address' => 'required|string',
             'attendance_type' => ['required', Rule::in(['Online', 'Offline'])],
-            'payment_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'social_media_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'previous_mun_experience' => 'nullable|string',
+            'mun_awards' => 'nullable|string',
+            'student_id' => 'required|file|mimes:pdf|max:2048',
+            'parental_consent' => 'nullable|file|mimes:pdf|max:2048',
+            'partnership_code' => 'required|string|max:100',
             'council_preference_1' => 'required|string|max:255',
             'country_preference_1_1' => 'required|string|max:255',
             'country_preference_1_2' => 'required|string|max:255',
-            'reason_for_first_country_preference_1' => 'required|string',
-            'reason_for_second_country_preference_1' => 'required|string',
+            'reason_for_council_preference_1' => 'required|string',
             'council_preference_2' => 'required|string|max:255',
             'country_preference_2_1' => 'required|string|max:255',
             'country_preference_2_2' => 'required|string|max:255',
-            'reason_for_first_country_preference_2' => 'required|string',
-            'reason_for_second_country_preference_2' => 'required|string',
+            'reason_for_council_preference_2' => 'required|string',
+            'package_type' => 'required|string|max:255',
+            'payment_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'social_media_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'info_confirmation' => 'required|accepted',
+            'data_usage_agreement' => 'required|accepted',
         ]);
+
+        $packageType = $validatedData['package_type'];
+        $needsAccommodation = ($packageType === 'Full Accommodation');
+
+        $packagePrices = [
+            'Full Accommodation' => 1145000,
+            'Non-Accommodation' => 505000,
+            'Online' => 95000
+        ];
+        $price = $packagePrices[$packageType] ?? 0;
 
         $paymentProofPath = $request->file('payment_proof')->store('proofs/payment', 'public');
         $socialMediaProofPath = $request->file('social_media_proof')->store('proofs/social_media', 'public');
+        $studentIdPath = $request->file('student_id')->store('documents/student_ids', 'public');
+        $parentalConsentPath = $request->hasFile('parental_consent') ? $request->file('parental_consent')->store('documents/parental_consents', 'public') : null;
 
         $registration = DelegationRegistration::create([
             'registering_as' => 'Individual Delegate',
             'delegate_type' => $validatedData['delegate_type'],
             'full_name' => $validatedData['full_name'],
+            'date_of_birth' => $validatedData['date_of_birth'],
+            'age' => $validatedData['age'],
+            'gender' => $validatedData['gender'],
             'email' => $validatedData['email'],
             'phone' => $validatedData['phone'],
             'nationality' => $validatedData['nationality'],
-            'institution_name' => $validatedData['institution'] ,
-            'do_you_need_accommodation' => $request->has('needs_accommodation'),
+            'institution_name' => $validatedData['institution_name'],
+            'full_address' => $validatedData['full_address'],
             'attendance_type' => $validatedData['attendance_type'],
-            'package_type' => $validatedData['package_type'],
-            'payment_proof_path' => $paymentProofPath,
-            'social_media_proof_path' => $socialMediaProofPath,
+            'package_type' => $packageType,
+            'total_price' => $price,
+            'previous_mun_experience' => $validatedData['previous_mun_experience'],
+            'mun_awards' => $validatedData['mun_awards'],
             'council_preference_1' => $validatedData['council_preference_1'],
             'country_preference_1_1' => $validatedData['country_preference_1_1'],
             'country_preference_1_2' => $validatedData['country_preference_1_2'],
-            'reason_for_first_country_preference_1' => $validatedData['reason_for_first_country_preference_1'],
-            'reason_for_second_country_preference_1' => $validatedData['reason_for_second_country_preference_1'],
+            'reason_for_council_preference_1' => $validatedData['reason_for_council_preference_1'],
             'council_preference_2' => $validatedData['council_preference_2'],
             'country_preference_2_1' => $validatedData['country_preference_2_1'],
             'country_preference_2_2' => $validatedData['country_preference_2_2'],
-            'reason_for_first_country_preference_2' => $validatedData['reason_for_first_country_preference_2'],
-            'reason_for_second_country_preference_2' => $validatedData['reason_for_second_country_preference_2'],
+            'reason_for_council_preference_2' => $validatedData['reason_for_council_preference_2'],
+            'payment_proof_path' => $paymentProofPath,
+            'social_media_proof_path' => $socialMediaProofPath,
+            'student_id_path' => $studentIdPath,
+            'parental_consent_path' => $parentalConsentPath,
+            'partnership_code' => $validatedData['partnership_code'],
+            'info_confirmation' => $request->boolean('info_confirmation'),
+            'data_usage_agreement' => $request->boolean('data_usage_agreement'),
         ]);
+        // --- AKHIR MODIFIKASI ---
 
         NewRegistrationCreated::dispatch();
         $mailer = new PHPMailerService();
@@ -185,7 +218,6 @@ class RegistrationController extends Controller
             'phone' => 'required|string|max:20',
             'nationality' => 'required|string|max:100',
             'institution' => 'required|string|max:255',
-            'needs_accommodation' => 'nullable|boolean',
             'attendance_type' => ['required', Rule::in(['Online', 'Offline'])],
             'package_type' => 'required|string|max:255',
             'payment_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
@@ -203,7 +235,6 @@ class RegistrationController extends Controller
             'phone' => $validatedData['phone'],
             'nationality' => $validatedData['nationality'],
             'institution_name' => $validatedData['institution'],
-            'do_you_need_accommodation' => $request->has('needs_accommodation'),
             'attendance_type' => $validatedData['attendance_type'],
             'package_type' => $validatedData['package_type'],
             'payment_proof_path' => $paymentProofPath,
@@ -230,92 +261,130 @@ class RegistrationController extends Controller
         $validatedData = $request->validate([
             'delegate_type' => ['required', Rule::in(['National Delegate', 'International Delegate'])],
             'institution_name' => 'required|string|max:255',
+            'package_type' => ['required', Rule::in(['Full Accommodation', 'Non-Accommodation', 'Online'])],
+            'delegate_count' => 'required|integer|min:2|max:5',
             'payment_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'delegates' => 'required|array|min:2',
+
+            'delegates' => 'required|array',
             'delegates.*.full_name' => 'required|string|max:255',
-            'delegates.*.email' => 'required|email',
-            'delegates.*.phone' => 'required|string|max:20',
+            'delegates.*.date_of_birth' => 'required|date',
+            'delegates.*.age' => 'required|integer|min:1',
+            'delegates.*.gender' => ['required', Rule::in(['Male', 'Female'])],
             'delegates.*.nationality' => 'required|string|max:100',
-            'delegates.*.package_type' => ['required', Rule::in(['Full Accommodation', 'Non-Accommodation', 'Online'])],
-            'delegates.*.needs_accommodation' => 'nullable|boolean',
-            'delegates.*.social_media_upload' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'delegates.*.council_preference_1' => 'required|string',
-            'delegates.*.country_preference_1_1' => 'required|string',
-            'delegates.*.country_preference_1_2' => 'required|string',
-            'delegates.*.reason_for_first_country_preference_1' => 'required|string',
-            'delegates.*.reason_for_second_country_preference_1' => 'required|string',
-            'delegates.*.council_preference_2' => 'required|string',
-            'delegates.*.country_preference_2_1' => 'required|string',
-            'delegates.*.country_preference_2_2' => 'required|string',
-            'delegates.*.reason_for_first_country_preference_2' => 'required|string',
-            'delegates.*.reason_for_second_country_preference_2' => 'required|string',
+            'delegates.*.full_address' => 'required|string',
+            'delegates.*.phone' => 'required|string|max:25',
+            'delegates.*.email' => 'required|email|max:255',
+            'delegates.*.student_id' => 'required|file|mimes:pdf|max:2048',
+            'delegates.*.parental_consent' => 'nullable|file|mimes:pdf|max:2048',
+            'delegates.*.partnership_code' => 'required|string|max:100',
+            'delegates.*.previous_mun_experience' => 'nullable|string',
+            'delegates.*.mun_awards' => 'nullable|string',
+            'delegates.*.council_preference_1' => 'required|string|max:255',
+            'delegates.*.reason_for_council_preference_1' => 'required|string',
+            'delegates.*.country_preference_1_1' => 'required|string|max:255',
+            'delegates.*.country_preference_1_2' => 'required|string|max:255',
+            'delegates.*.council_preference_2' => 'required|string|max:255',
+            'delegates.*.reason_for_council_preference_2' => 'required|string',
+            'delegates.*.country_preference_2_1' => 'required|string|max:255',
+            'delegates.*.country_preference_2_2' => 'required|string|max:255',
+            'delegates.*.info_confirmation' => 'required|accepted',
+            'delegates.*.data_usage_agreement' => 'required|accepted',
+            'delegates.*.social_media_proof_path' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        $paymentProofPath = $request->file('payment_proof')->store('proofs/payment', 'public');
+        $pricing = [
+            'Full Accommodation' => [ 2 => 2240000, 3 => 3360000, 4 => 4480000, 5 => 5600000 ],
+            'Non-Accommodation' => [ 2 => 990000, 3 => 1485000, 4 => 1980000, 5 => 2475000 ],
+            'Online' => [ 2 => 180000, 3 => 261000, 4 => 340000, 5 => 410000 ]
+        ];
+        $delegateCount = (int)$validatedData['delegate_count'];
+        $packageType = $validatedData['package_type'];
+        $price = $pricing[$packageType][$delegateCount] ?? 0;
+        $needsAccommodation = ($packageType === 'Full Accommodation');
+        $attendanceType = ($packageType === 'Online') ? 'Online' : 'Offline';
 
-        $delegatesArray = $request->input('delegates', []);
-        $anyDelegateNeedsAccommodation = collect($delegatesArray)->contains('needs_accommodation', '1');
+        DB::beginTransaction();
+        try {
+            $paymentProofPath = $request->file('payment_proof')->store('proofs/payment', 'public');
+            $mainContact = $validatedData['delegates'][0];
 
-        // Menentukan attendance_type berdasarkan pilihan paket
-        $isOnlineDelegation = collect($delegatesArray)->every(fn($delegate) => $delegate['package_type'] === 'Online');
-        $attendanceType = $isOnlineDelegation ? 'Online' : 'Offline';
+            $delegationRegistration = DelegationRegistration::create([
+                'registering_as' => 'Delegation',
+                'delegate_type' => $validatedData['delegate_type'],
+                'institution_name' => $validatedData['institution_name'],
+                'delegate_count' => $delegateCount,
+                'package_type' => $packageType,
+                'total_price' => $price,
+                'attendance_type' => $attendanceType,
+                'full_name' => $mainContact['full_name'],
+                'email' => $mainContact['email'],
+                'phone' => $mainContact['phone'],
+                'payment_proof_path' => $paymentProofPath,
+                'is_verified' => false,
+            ]);
 
-        $delegationRegistration = DelegationRegistration::create([
-            'registering_as' => 'Delegation',
-            'delegate_type' => $validatedData['delegate_type'],
-            'institution_name' => $validatedData['institution_name'],
-            'delegate_count' => count($validatedData['delegates']),
-            'full_name' => $validatedData['delegates'][0]['full_name'],
-            'email' => $validatedData['delegates'][0]['email'],
-            'phone' => $validatedData['delegates'][0]['phone'],
-            'do_you_need_accommodation' => $anyDelegateNeedsAccommodation,
-            'attendance_type' => $attendanceType, // Menggunakan variabel yang sudah kita tentukan
-            'payment_proof_path' => $paymentProofPath,
-        ]);
+            foreach ($validatedData['delegates'] as $index => $delegateData) {
+                $studentIdPath = $request->file("delegates.{$index}.student_id")->store("documents/delegates/student_ids", 'public');
+                $parentalConsentPath = $request->hasFile("delegates.{$index}.parental_consent") ? $request->file("delegates.{$index}.parental_consent")->store("documents/delegates/parental_consents", 'public') : null;
+                $socialMediaProofPath = $request->hasFile("delegates.{$index}.social_media_proof_path") ? $request->file("delegates.{$index}.social_media_proof_path")->store("proofs/delegates/social_media", 'public') : null;
 
-        foreach ($validatedData['delegates'] as $index => $delegateData) {
-            $socialMediaProofPath = null;
-            if ($request->hasFile("delegates.{$index}.social_media_upload")) {
-                $socialMediaProofPath = $request->file("delegates.{$index}.social_media_upload")->store("proofs/social_media/delegates", 'public');
+                $delegationRegistration->delegates()->create([
+                    'delegate_number' => $index + 1,
+                    'full_name' => $delegateData['full_name'],
+                    'email' => $delegateData['email'],
+                    'phone' => $delegateData['phone'],
+                    'date_of_birth' => $delegateData['date_of_birth'],
+                    'age' => $delegateData['age'],
+                    'gender' => $delegateData['gender'],
+                    'nationality' => $delegateData['nationality'],
+                    'full_address' => $delegateData['full_address'],
+                    'package_type' => $packageType, // Menggunakan paket utama
+                    'attendance_type' => $attendanceType, // Menggunakan tipe kehadiran utama
+                    'previous_mun_experience' => $delegateData['previous_mun_experience'],
+                    'mun_awards' => $delegateData['mun_awards'],
+                    'council_preference_1' => $delegateData['council_preference_1'],
+                    'country_preference_1_1' => $delegateData['country_preference_1_1'],
+                    'country_preference_1_2' => $delegateData['country_preference_1_2'],
+                    'reason_for_council_preference_1' => $delegateData['reason_for_council_preference_1'],
+                    'council_preference_2' => $delegateData['council_preference_2'],
+                    'country_preference_2_1' => $delegateData['country_preference_2_1'],
+                    'country_preference_2_2' => $delegateData['country_preference_2_2'],
+                    'reason_for_council_preference_2' => $delegateData['reason_for_council_preference_2'],
+                    'student_id_path' => $studentIdPath,
+                    'parental_consent_path' => $parentalConsentPath,
+                    'social_media_proof_path' => $socialMediaProofPath,
+                    'partnership_code' => $delegateData['partnership_code'],
+                    'info_confirmation' => $request->boolean("delegates.{$index}.info_confirmation"),
+                    'data_usage_agreement' => $request->boolean("delegates.{$index}.data_usage_agreement"),
+                ]);
             }
 
-            // Menentukan status akomodasi untuk setiap delegasi
-            $needsAccommodation = ($delegateData['package_type'] === 'Full Accommodation');
+            DB::commit();
 
-            $delegationRegistration->delegates()->create([
-                'delegate_number' => $index + 1,
-                'full_name' => $delegateData['full_name'],
-                'email' => $delegateData['email'],
-                'phone' => $delegateData['phone'],
-                'nationality' => $delegateData['nationality'],
-                'package_type' => $delegateData['package_type'],
+            NewRegistrationCreated::dispatch();
+            $mailer = new PHPMailerService();
+            $mailer->sendMail(
+                $delegationRegistration->email,
+                'Konfirmasi Pendaftaran Delegasi JagoMUN',
+                '<p>Halo Tim dari ' . $delegationRegistration->institution_name . ',</p><p>Terima kasih telah mendaftarkan delegasi Anda di JagoMUN. Kami akan segera memproses pendaftaran Anda.</p>'
+            );
 
-                // ===============================================
-                // PERUBAHAN DI SINI: Menyimpan data ke kolom baru
-                // ===============================================
-                'attendance_type' => $delegateData['package_type'] === 'Online' ? 'Online' : 'Offline',
-                'do_you_need_accommodation' => $needsAccommodation,
+            return redirect()->route('registration.success')->with('success', 'Delegation registration successful!');
 
-                'social_media_upload' => $socialMediaProofPath,
-                'council_preference_1' => $delegateData['council_preference_1'],
-                'country_preference_1_1' => $delegateData['country_preference_1_1'],
-                'country_preference_1_2' => $delegateData['country_preference_1_2'],
-                'reason_for_first_country_preference_1' => $delegateData['reason_for_first_country_preference_1'],
-                'reason_for_second_country_preference_1' => $delegateData['reason_for_second_country_preference_1'],
-                'council_preference_2' => $delegateData['council_preference_2'],
-                'country_preference_2_1' => $delegateData['country_preference_2_1'],
-                'country_preference_2_2' => $delegateData['country_preference_2_2'],
-                'reason_for_first_country_preference_2' => $delegateData['reason_for_first_country_preference_2'],
-                'reason_for_second_country_preference_2' => $delegateData['reason_for_second_country_preference_2'],
-            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Delegation Registration Failed: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses pendaftaran. Silakan coba lagi.')->withInput();
         }
-
-        NewRegistrationCreated::dispatch();
-        return redirect()->route('registration.success')->with('success', 'Delegation registration successful!');
     }
 
     public function success()
     {
         return view('registration.succes');
+    }
+    public function export()
+    {
+        // Panggil class Export Anda di sini
+        return Excel::download(new RegistrationsExport, 'data-pendaftaran.xlsx');
     }
 }

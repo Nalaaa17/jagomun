@@ -38,26 +38,18 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-24">
 
-                    <!-- Kolom Kiri (Logo) -->
-                    <div class="flex-1 flex justify-start">
+                    <div class="flex-shrink-0">
                         <a href="{{ route('home') }}">
                             <img src="{{ asset('images/logo.png') }}" alt="JAGOMUN 2025 Logo" class="h-20 w-auto">
                         </a>
                     </div>
 
-                    <!-- Kolom Tengah (Menu Utama - Desktop) -->
-                    <div class="hidden lg:flex flex-1 justify-center items-center space-x-8">
-                        <a href="{{ route('home') }}" class="text-white hover:text-gold transition-colors duration-300">Home</a>
-                        <a href="#" class="text-white hover:text-gold transition-colors duration-300">About</a>
-                        <a href="#" class="text-white hover:text-gold transition-colors duration-300">Councils</a>
-                        <a href="#" class="text-white hover:text-gold transition-colors duration-300">FAQ</a>
-                    </div>
-
-                    <!-- Kolom Kanan (Tombol Menu Mobile) -->
-                    <div class="flex-1 flex justify-end items-center">
-                        {{-- Tombol Register Now (Desktop) Dihapus --}}
-
-                        <!-- Tombol Menu Mobile -->
+                    <div>
+                        <div class="hidden lg:flex items-center space-x-8">
+                            <a href="javascript:history.back()" class="flex items-center space-x-2 text-white hover:text-gold transition-colors duration-300">
+                                <span>Back</span>
+                            </a>
+                        </div>
                         <div class="lg:hidden">
                             <button id="mobile-menu-button" class="text-white p-2 focus:outline-none">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -70,16 +62,15 @@
                 </div>
             </div>
 
-            {{-- Menu Mobile --}}
+            {{-- AWAL PERUBAHAN: Menu "Back" untuk Mobile --}}
             <div id="mobile-menu" class="lg:hidden hidden bg-navy/95 backdrop-blur-sm">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <a href="{{ route('home') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gold hover:bg-gray-700">Home</a>
-                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gold hover:bg-gray-700">About</a>
-                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gold hover:bg-gray-700">Councils</a>
-                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gold hover:bg-gray-700">FAQ</a>
-                    {{-- Tombol Register Now (Mobile) Dihapus --}}
+                    <a href="javascript:history.back()" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-white hover:text-gold hover:bg-gray-700">
+                        Back
+                    </a>
                 </div>
             </div>
+            {{-- AKHIR PERUBAHAN --}}
         </nav>
 
         <main>
@@ -111,7 +102,7 @@
                         <div class="py-1"><svg class="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
                         <div>
                             <p class="font-bold">Whoops! There were some problems with your input.</p>
-                               <ul class="mt-2 list-disc list-inside text-sm">
+                                <ul class="mt-2 list-disc list-inside text-sm">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
@@ -128,7 +119,7 @@
     <footer class="bg-navy py-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
             <p>&copy; {{ date('Y') }} JAGOMUN. All Rights Reserved.</p>
-            <p class="text-sm">Organized by UKM UNEJ Model United Nations Club</p>
+            <p class="text-sm">Organized by UNEJ Model United Nations Club</p>
         </div>
     </footer>
 

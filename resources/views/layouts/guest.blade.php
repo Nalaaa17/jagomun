@@ -101,7 +101,7 @@
     <footer style="background-color: var(--color-navy);" class="py-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
             <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
-            <p class="text-sm">Organized by UKM UNEJ Model United Nations Club</p>
+            <p class="text-sm">Organized by UNEJ Model United Nations Club</p>
         </div>
     </footer>
 

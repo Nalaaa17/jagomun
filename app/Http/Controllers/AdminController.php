@@ -87,8 +87,9 @@ class AdminController extends Controller
     // Redirect kembali ke dashboard dengan pesan sukses
     return redirect()->route('admin.dashboard')->with('success', 'Pendaftaran berhasil dihapus.');
 }
-public function export()
-    {
-        return Excel::download(new RegistrationsExport, 'rekap-pendaftar-jagomun.xlsx');
-    }
+public function exports()
+{
+    return Excel::download(new RegistrationsExport, 'rekap-pendaftar-jagomun.xlsx');
+}
+
 }

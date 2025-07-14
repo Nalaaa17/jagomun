@@ -56,14 +56,13 @@
 </head>
 <body class="bg-ivory">
 
-    <!-- Navigation -->
     <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-8">
                 <a href="#home">
                 <img src="{{ asset('images/logo.png') }}"
-                    alt="JAGOMUN 2025 Logo"
-                    class="h-20 w-auto">
+                       alt="JAGOMUN 2025 Logo"
+                       class="h-20 w-auto">
                 </a>
                 <div class="hidden lg:flex items-center space-x-8">
                     <a href="/" class="text-white hover:text-gold transition-colors duration-300">Home</a>
@@ -118,58 +117,94 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                    <!-- Card Dewan 1: UNSC -->
-                    <div class="bg-ivory rounded-2xl shadow-lg p-8 scroll-reveal card-hover">
-                        <h3 class="text-3xl font-bold text-navy mb-3">UN Security Council</h3>
-                        <p class="text-royal mb-4">The UNSC is the primary body for maintaining international peace and security. Delegates in this advanced committee will tackle high-stakes crises, deliberate on sanctions, and authorize peacekeeping missions. This council demands sharp negotiation skills and a deep understanding of geopolitical dynamics.</p>
-                        <span class="font-semibold text-gold">Level: Advanced</span>
+                    <div class="bg-ivory rounded-2xl shadow-lg p-8 scroll-reveal card-hover flex flex-col">
+                        <div class="flex items-center mb-4">
+                            <div class="h-20 w-20 flex-shrink-0 mr-4 flex items-center justify-center rounded-full bg-white shadow-sm">
+                                <img src="https://tse3.mm.bing.net/th/id/OIP.QRGvfYVr95-0jZVT5Qmf4gHaHa?pid=Api&P=0&h=180"
+                                     alt="UNEP Logo"
+                                     class="h-12 w-12 object-contain">
+                            </div>
+                            <h3 class="text-3xl font-bold text-navy">UNEP</h3>
+                        </div>
+                        <div class="flex-grow">
+                            <p class="text-royal mb-4">The United Nations Environment Programme (UNEP), established in 1972 after the Stockholm Conference, serves as the leading global body for environmental action. Its mission includes monitoring environmental trends, supporting evidence-based policies, and coordinating international responses to ecological challenges. Over the years, UNEP has supported projects like pollution control in Serbia, flood protection in North Macedonia, and green economy efforts in Belarus. Yet today, the environmental crisis remains severe. Forests continue to disappear, waters are increasingly polluted, and the Global South bears the burden of a green transition it struggles to join. The climate emergency now reveals not only ecological danger but deep-rooted global inequality. Many of the systems driving the green economy still rely on exploitative practices. Without a course correction, the green transition risks repeating the injustices it claims to solve. UNEP must now lead with urgency and clarity. The time for bold, inclusive environmental action is now.</p>
+                        </div>
+                        <div>
+                            <span class="block font-semibold text-gold"> • Topic : Bridging the Green Divide: Ensuring Equitable Access and Just Transitions In the Global Green Economy</span>
+                            <span class="block font-semibold text-gold"> • Single Delegate</span>
+                            <span class="block font-semibold text-gold"> • Level: Beginner</span>
+                            <span class="block font-semibold text-gold"> • Venue: Offline</span>
+                        </div>
                     </div>
 
-                    <!-- Card Dewan 2: ECOSOC -->
-                    <div class="bg-ivory rounded-2xl shadow-lg p-8 scroll-reveal card-hover" style="animation-delay: 100ms;">
-                        <h3 class="text-3xl font-bold text-navy mb-3">ECOSOC</h3>
-                        <p class="text-royal mb-4">The Economic and Social Council is at the heart of the UN's work on sustainable development. Delegates will formulate policies on economic, social, and environmental issues, working towards achieving the Sustainable Development Goals (SDGs) and fostering international cooperation for development.</p>
-                        <span class="font-semibold text-gold">Level: Intermediate</span>
+                    <div class="bg-ivory rounded-2xl shadow-lg p-8 scroll-reveal card-hover flex flex-col" style="animation-delay: 100ms;">
+                        <div class="flex items-center mb-4">
+                            <div class="h-20 w-20 flex-shrink-0 mr-4 flex items-center justify-center rounded-full bg-white shadow-sm">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeBKFnOyTd9ArXORpIJhqONLcTMJYpqCghMM6FzjQ_jdsn2FypvPBLw0mzSlguhq9WerQ&usqp=CAU"
+                                     alt="UNHRC Logo"
+                                     class="h-12 w-12 object-contain">
+                            </div>
+                            <h3 class="text-3xl font-bold text-navy">UNHRC</h3>
+                        </div>
+                        <div class="flex-grow">
+                            <p class="text-royal mb-4">The United Nations Human Rights Council, or UNHRC, was established in 2006 to protect and promote human rights globally. It replaced the former Commission on Human Rights and was created to respond to serious violations and support those whose rights are under threat. The council’s main mission is to uphold dignity and freedom for all people, regardless of identity or background. It brings together governments to discuss challenges and work toward shared solutions. Key responsibilities include investigating abuses, addressing urgent human rights situations, and conducting Universal Periodic Reviews to help countries improve. In a world where rights are still denied to many, its work is more urgent than ever.</p>
+                        </div>
+                        <div>
+                            <span class="block font-semibold text-gold"> • Topic : Ensuring the Right to Gender Identity Recognition Across Borders</span>
+                            <span class="block font-semibold text-gold"> • Single Delegate</span>
+                            <span class="block font-semibold text-gold"> • Level: Beginner</span>
+                            <span class="block font-semibold text-gold"> • Venue: Online</span>
+                        </div>
                     </div>
 
-                    <!-- Card Dewan 3: WHO -->
-                    <div class="bg-ivory rounded-2xl shadow-lg p-8 scroll-reveal card-hover" style="animation-delay: 200ms;">
-                        <h3 class="text-3xl font-bold text-navy mb-3">World Health Organization</h3>
-                        <p class="text-royal mb-4">As the leading authority on international health, the WHO directs and coordinates responses to global health emergencies. Delegates will address topics like pandemic preparedness, vaccine equity, and strengthening health systems in developing nations.</p>
-                        <span class="font-semibold text-gold">Level: Intermediate</span>
+                    <div class="bg-ivory rounded-2xl shadow-lg p-8 scroll-reveal card-hover flex flex-col" style="animation-delay: 200ms;">
+                         <div class="flex items-center mb-4">
+                            <div class="h-20 w-20 flex-shrink-0 mr-4 flex items-center justify-center rounded-full bg-white shadow-sm">
+                                <img src="https://tse3.mm.bing.net/th/id/OIP.U11ynEbQ70OF3eIQpiaufgHaHa?pid=Api&P=0&h=180"
+                                     alt="IAEA Logo"
+                                     class="h-12 w-12 object-contain">
+                            </div>
+                            <h3 class="text-3xl font-bold text-navy">IAEA</h3>
+                        </div>
+                        <div class="flex-grow">
+                             <p class="text-royal mb-4">The International Atomic Energy Agency (IAEA), founded in 1957 after President Eisenhower’s “Atoms for Peace” speech, promotes the peaceful use of nuclear energy while preventing the spread of nuclear weapons. The IAEA works to ensure that nuclear materials are not misused and do not pose threats to global security. In the Middle East, the IAEA has been involved in discussions and technical studies to support the creation of a Nuclear-Weapon-Free Zone (NWFZ). Since 1988, the agency has led consultations and encouraged states in the region to accept full-scope safeguards. These safeguards aim to ensure transparency and prevent the misuse of nuclear programs. Despite decades of dialogue, progress has been limited due to political disagreements over the terms of verification and obligations.</p>
+                        </div>
+                        <div>
+                            <span class="block font-semibold text-gold"> • Topic : Establishing a Nuclear-Weapon-Free Zone (NWFZ) in the Middle East</span>
+                            <span class="block font-semibold text-gold"> • Single Delegate</span>
+                            <span class="block font-semibold text-gold"> • Level: Intermediate</span>
+                            <span class="block font-semibold text-gold"> • Venue: Online</span>
+                        </div>
                     </div>
 
-                    <!-- Card Dewan 4: UNHCR -->
-                    <div class="bg-ivory rounded-2xl shadow-lg p-8 scroll-reveal card-hover" style="animation-delay: 300ms;">
-                        <h3 class="text-3xl font-bold text-navy mb-3">UNHCR</h3>
-                        <p class="text-royal mb-4">The UN Refugee Agency is mandated to protect and support refugees. In this council, delegates will focus on the rights and well-being of displaced persons, addressing issues of asylum, resettlement, and finding durable solutions to refugee crises worldwide.</p>
-                        <span class="font-semibold text-gold">Level: Beginner - Intermediate</span>
+                    <div class="bg-ivory rounded-2xl shadow-lg p-8 scroll-reveal card-hover flex flex-col" style="animation-delay: 300ms;">
+                        <div class="flex items-center mb-4">
+                           <div class="h-20 w-20 flex-shrink-0 mr-4 flex items-center justify-center rounded-full bg-white shadow-sm">
+                                <img src="https://tse4.mm.bing.net/th/id/OIP.aNjw8-Xrz8JfQTRj2p_gOAHaG_?pid=Api&P=0&h=180"
+                                     alt="NATO Logo"
+                                     class="h-12 w-12 object-contain">
+                            </div>
+                            <h3 class="text-3xl font-bold text-navy">NATO</h3>
+                        </div>
+                        <div class="flex-grow">
+                            <p class="text-royal mb-4">Established on April 4, 1949, NATO is a political and military alliance founded to deter Soviet expansion, prevent the resurgence of militarism in Europe, and promote political integration across the Atlantic. Today, the Alliance includes 32 member states united by the principle of collective defense—an attack on one is considered an attack on all, as outlined in Article 5 of the North Atlantic Treaty. At its core, NATO functions through the North Atlantic Council (NAC), the highest decision-making body chaired by the Secretary General, where all decisions are made by consensus. While initially created to counter Cold War threats, NATO’s role has evolved to include crisis management, cybersecurity, counterterrorism, and cooperative security with global partners. In light of recent geopolitical tensions,  especially Russia’s aggression in Ukraine, NATO has expanded its military presence on the eastern flank, launched major joint exercises like Steadfast Dart and BALTOPS. NATO also emphasizes strategic flexibility and innovation to confront emerging challenges while upholding its core values of democracy, collective security, and transatlantic unity.</p>
+                        </div>
+                        <div>
+                            <span class="block font-semibold text-gold"> • Topic : Establishing a Nuclear-Weapon-Free Zone (NWFZ) in the Middle East</span>
+                            <span class="block font-semibold text-gold"> • Single Delegate</span>
+                            <span class="block font-semibold text-gold"> • Level: Advanced</span>
+                            <span class="block font-semibold text-gold"> • Venue: Online</span>
+                        </div>
                     </div>
-
-                    <!-- Card Dewan 5: UNESCO -->
-                    <div class="bg-ivory rounded-2xl shadow-lg p-8 scroll-reveal card-hover" style="animation-delay: 400ms;">
-                        <h3 class="text-3xl font-bold text-navy mb-3">UNESCO</h3>
-                        <p class="text-royal mb-4">The United Nations Educational, Scientific and Cultural Organization seeks to build peace through international cooperation. Topics will range from protecting world heritage sites and promoting freedom of expression to advancing science for sustainable development.</p>
-                        <span class="font-semibold text-gold">Level: Beginner</span>
-                    </div>
-
-                    <!-- Card Dewan 6: UN General Assembly (DISEC) -->
-                    <div class="bg-ivory rounded-2xl shadow-lg p-8 scroll-reveal card-hover" style="animation-delay: 500ms;">
-                        <h3 class="text-3xl font-bold text-navy mb-3">UN General Assembly (DISEC)</h3>
-                        <p class="text-royal mb-4">As the First Committee of the UNGA, DISEC deals with disarmament and threats to peace that affect the international community. Delegates will discuss issues like nuclear non-proliferation, the arms trade, and preventing an arms race in outer space.</p>
-                        <span class="font-semibold text-gold">Level: Beginner</span>
-                    </div>
-
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-navy py-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
             <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
-            <p class="text-sm">Organized by UKM UNEJ Model United Nations Club</p>
+            <p class="text-sm">Organized by UNEJ Model United Nations Club</p>
         </div>
     </footer>
 

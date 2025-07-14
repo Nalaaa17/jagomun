@@ -478,7 +478,7 @@ no-scrollbar::-webkit-scrollbar {
                             </div>
                             <div class="p-6">
                                 <h3 class="text-xl font-bold text-white mb-2">Registration Opens Soon!</h3>
-                                <p class="text-white/80 text-sm">Get ready! Delegate registration is set to open on **July 1st, 2025**. Prepare your applications and secure your spot early!</p>
+                                <p class="text-white/80 text-sm">Get ready! Delegate registration is set to open on 21 Juli 2025. Prepare your applications and secure your spot early!</p>
                             </div>
                         </div>
                     </div>
@@ -494,8 +494,8 @@ no-scrollbar::-webkit-scrollbar {
                                 <img src="https://images.pexels.com/photos/5625130/pexels-photo-5625130.jpeg" alt="Discount" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                             </div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Early Bird Discount</h3>
-                                <p class="text-white/80 text-sm">Exciting news! We'll be offering early bird discounts for the **first 50 delegates** who register. Don't miss this limited-time offer!</p>
+                                <h3 class="text-xl font-bold text-white mb-2">Early Bird Cashback </h3>
+                                <p class="text-white/80 text-sm">Exciting news! We'll be offering early bird cashback for the first 5 delegates who register got cashback 5%!!</p>
                             </div>
                         </div>
                     </div>
@@ -511,8 +511,8 @@ no-scrollbar::-webkit-scrollbar {
                                 <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop" alt="Topics" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                             </div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Topics Revealed Next Week!</h3>
-                                <p class="text-white/80 text-sm">Curious about the topics? The detailed committee agendas for all councils will be released next week. Stay tuned!</p>
+                                <h3 class="text-xl font-bold text-white mb-2">Topics Revealed!</h3>
+                                <p class="text-white/80 text-sm">Curious about the topics? The detailed information for all councils and their topics can be found in the “Council” menu.</p>
                             </div>
                         </div>
                     </div>
@@ -527,43 +527,55 @@ no-scrollbar::-webkit-scrollbar {
     <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
 
     <div class="max-w-7xl mx-auto px-4 relative z-10">
-        <div class="text-center mb-16 scroll-reveal">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Words of Remark from <br class="sm:hidden"/> <span class="gradient-text">Secretary General</span></h2>
+    <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Words of Remark from <br class="sm:hidden"/> <span class="gradient-text">Secretary General</span></h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+
+        <div class="lg:col-span-2 flex justify-center scroll-reveal" data-reveal="left">
+            <div class="relative group">
+                <div class="absolute -inset-3 bg-gradient-to-br from-gold to-champagne rounded-full transform-gpu transition-all duration-700 group-hover:rotate-12 group-hover:scale-105"></div>
+                <div class="absolute -inset-3 rounded-full bg-[url('/images/awan.png')] bg-repeat opacity-10 z-0"></div>
+                <img src="{{ asset('images/sg.png') }}" class="relative rounded-full shadow-2xl w-64 h-64 md:w-80 md:h-80 mx-auto object-cover border-4 border-navy z-10" alt="Secretary General">
+            </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+        <div class="lg:col-span-3 scroll-reveal" data-reveal="right">
+            <div class="bg-royal/50 backdrop-blur-xl rounded-2xl p-8 lg:p-10 border border-gold/20 shadow-2xl shadow-black/30 relative">
 
-            <div class="lg:col-span-2 flex justify-center scroll-reveal" data-reveal="left">
-                <div class="relative group">
-                    <div class="absolute -inset-3 bg-gradient-to-br from-gold to-champagne rounded-full transform-gpu transition-all duration-700 group-hover:rotate-12 group-hover:scale-105"></div>
-                    <img src="https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=600" class="relative rounded-full shadow-2xl w-64 h-64 md:w-80 md:h-80 mx-auto object-cover border-4 border-navy" alt="Secretary General">
+                <i class="fa-solid fa-quote-left text-7xl text-gold/20 absolute top-4 left-6 -z-10"></i>
+
+                <h3 class="text-3xl font-bold text-white mb-4 relative z-10">Oktaviani Rosmala</h3>
+
+                <div class="text-white/90 space-y-4 leading-relaxed">
+                    <p class="font-semibold italic">
+                        "It is with great pride and heartfelt enthusiasm to introducing Jember Annual Global Model United Nations (JAGOMUN) 2025.
+
+                        This year’s theme, Bridging the Gap: Reimagining World Prosperity and Development Amid Shifting Global Forces,” calls upon us all to reflect, question, and act. We live in a time where global forces — from geopolitical tension — continue to reshape our shared future. In the face of uncertainty, the world needs bold, empathetic, and forward-thinking leaders more than ever.
+
+                        And that is where youths take the voice and action!"
+
+                    </p>
+
+                    <p class="pt-4 border-t border-gold/20">
+                        At JAGOMUN, we believe that young people are not just future leaders — you are today’s changemakers. Your ideas, your passion, and your voice have the power to influence discourse, bridge global divides, and reimagine development that is inclusive and sustainable.
+
+                        JAGOMUN is more than a simulation; it is a living, breathing space for youth to sharpen their diplomacy, build cross-cultural understanding, and take responsibility as global citizens.
+
+                    </p>
+                    <p>
+                        This conference is your platform to grow, challenge perspectives, and become catalysts for real-world change. Whether you are speaking in committee sessions, drafting resolutions, or engaging in cultural exchange — your role here matters.
+
+                        Welcome to JAGOMUN 2025 — where youth lead the conversation, diplomacy drives action, and the future begins with you
+
+                    </p>
                 </div>
-            </div>
 
-            <div class="lg:col-span-3 scroll-reveal" data-reveal="right">
-                <div class="bg-royal/50 backdrop-blur-xl rounded-2xl p-8 lg:p-10 border border-gold/20 shadow-2xl shadow-black/30 relative">
-
-                    <i class="fa-solid fa-quote-left text-7xl text-gold/20 absolute top-4 left-6 -z-10"></i>
-
-                    <h3 class="text-3xl font-bold text-white mb-4 relative z-10">Razita Zaafarani Zahran</h3>
-
-                    <div class="text-white/90 space-y-4 leading-relaxed">
-                        <p class="font-semibold italic">
-                            "Youth are the main pioneers in bringing change to the world. The small steps taken by youth can mean a lot for the next 5-10 years. We hope that the Jember Annual Global Model United Nation help young people to realize their role in society. So, small movements and conference forums that we organize can contribute to the involvement of youth for future generations."
-                        </p>
-
-                        <p class="pt-4 border-t border-gold/20">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </p>
-                        <p>
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida.
-                        </p>
-                    </div>
-
-                </div>
             </div>
         </div>
     </div>
+</div>
 </section>
 
     <section id="experience" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('/images/raja.jpg');">
@@ -668,7 +680,7 @@ no-scrollbar::-webkit-scrollbar {
                     <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>JAGOMUN is open to all university students and high school students aged 17-25, regardless of their field of study. We welcome both beginners and experienced MUN delegates.</p>
+                    <p>JAGOMUN is open to all university students and high school students aged 15-25.</p>
                 </div>
             </div>
 
@@ -678,47 +690,9 @@ no-scrollbar::-webkit-scrollbar {
                     <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>The registration fee typically includes entry to all committee sessions, delegate kits, lunch for the conference days, and access to social events. Accommodation is not included unless specified in a package.</p>
-                </div>
-            </div>
-
-            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
-                <button class="faq-question w-full text-left flex justify-between items-center">
-                    <span class="text-lg font-semibold text-white">What is the official dress code?</span>
-                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>The official dress code for all committee sessions is Western Business Attire. This includes suits, blazers with formal trousers or skirts, formal shirts with ties (optional for women), and formal shoes. Casual wear such as T-shirts, jeans, shorts, sneakers, and sandals are not permitted in committee rooms.</p>
-                </div>
-            </div>
-
-            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
-                <button class="faq-question w-full text-left flex justify-between items-center">
-                    <span class="text-lg font-semibold text-white">Do I need to write a Position Paper?</span>
-                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>Yes, submitting a Position Paper is mandatory for all delegates who wish to be considered for awards. It is a crucial part of your preparation that outlines your assigned country's stance on the topics. The deadline for submission will be announced along with the release of the study guides.</p>
-                </div>
-            </div>
-
-            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
-                <button class="faq-question w-full text-left flex justify-between items-center">
-                    <span class="text-lg font-semibold text-white">I'm a first-timer. Can I join?</span>
-                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>Absolutely! JAGOMUN is open to delegates of all experience levels. We highly recommend beginner councils like ECOSOC or DISEC for first-timers. Additionally, we will provide training materials and a workshop session to help you understand the Rules of Procedure and basic MUN concepts.</p>
-                </div>
-            </div>
-
-            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
-                <button class="faq-question w-full text-left flex justify-between items-center">
-                    <span class="text-lg font-semibold text-white">When will the Study Guides be released?</span>
-                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>The Study Guides for each council, which contain detailed background information on the topics, will be released approximately one month before the conference date. All registered delegates will be notified via email and can download them from the official website.</p>
+                    <p>The facilities provided will depend on the package delegate choose. If delegate register with the Accommodation Package, we will provide lodging and local transportation during your stay in Jember, along with meals and full access to all conference sessions. For those who choose the
+                        Non-Accommodation Package we provide meals and full access to the conference, but accommodation and local transport are not included. Meanwhile, participants who register under the Online Packagewill receive full access to all conference sessions, materials, and activities virtually through our online platform.
+                    </p>
                 </div>
             </div>
 
@@ -728,17 +702,17 @@ no-scrollbar::-webkit-scrollbar {
                     <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>We believe in "work hard, play hard"! JAGOMUN 2025 will feature several social events including an opening ceremony, a cultural night where delegates can showcase their heritage, and a formal closing dinner and gala night. These events are designed for networking and relaxation after intense committee sessions.</p>
+                    <p>The event will commence with an Opening Ceremony,  featuring a talk show with distinguished speakers who are experts in their respective fields, accompanied by welcoming remarks delivered by prominent figures. The core of the event will be the Committee Sessions, where delegates will engage in structured debates, negotiations, and resolution drafting—simulating real diplomatic discussions. To encourage engagement and build meaningful connections among participants, the agenda will also include Social Nights and gala dinner, offering a space for informal interaction and camaraderie. The program will conclude with a Closing Ceremony and Awarding Session, which will be thoughtfully arranged and enhanced with entertainment segments to provide a memorable conclusion to the entire experience.</p>
                 </div>
             </div>
 
             <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
                 <button class="faq-question w-full text-left flex justify-between items-center">
-                    <span class="text-lg font-semibold text-white">Is accommodation included?</span>
+                    <span class="text-lg font-semibold text-white">I'm a first-timer. Can I join?</span>
                     <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>Accommodation is not included in the standard delegate registration fee. However, to assist our out-of-town delegates, we will release an official accommodation guide with a list of recommended hotels near the conference venue that offer special rates for JAGOMUN participants.</p>
+                    <p>Absolutely! JAGOMUN is open to delegates of all experience levels. We highly recommend beginner councils like UNEP or UNHCR for first-timers. Additionally, we will provide training materials and a workshop session to help you understand the Rules of Procedure and basic MUN concepts.</p>
                 </div>
             </div>
         </div>
@@ -747,9 +721,9 @@ no-scrollbar::-webkit-scrollbar {
 
     <section id="register" class="py-20" style="background: linear-gradient(135deg, #2D3B61 0%, #1E2233 100%);">
         <div class="max-w-4xl mx-auto px-4 text-center scroll-reveal">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ready to Take Your Seat at the Table?</h2>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Are You Ready to Speak, Lead, and  Embrace your Diplomacy?</h2>
             <p class="text-xl text-champagne mb-12">
-                Registration is now open. Secure your spot in one of the most anticipated MUN conferences of the year and start your journey toward becoming a global leader.
+                JAGOMUN 2025 registration is now open!  Don’t miss your chance to be part of the most anticipated and origin Model United Nations conference in East Java. Secure your seat at the table today!
             </p>
             <a href="#" class="group relative inline-flex items-center justify-center px-10 py-4 text-xl font-semibold text-navy bg-gradient-to-r from-gold to-champagne rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 Register Now
@@ -760,7 +734,7 @@ no-scrollbar::-webkit-scrollbar {
     <footer class="bg-navy py-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
             <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
-            <p class="text-sm">Organized by UKM UNEJ Model United Nations Club</p>
+            <p class="text-sm">Organized by UNEJ Model United Nations Club</p>
         </div>
     </footer>
 
@@ -817,50 +791,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // GANTI OBJEK councilData LAMA ANDA DENGAN VERSI LENGKAP INI
 
 const councilData = {
-    unsc: {
-        title: 'UN Security Council', short_title: 'UNSC',
-        logo: 'https://tse2.mm.bing.net/th/id/OIP.mBJkRXSTo45TAqR8S5svGAHaHZ?pid=Api&P=0&h=180',
-        description: 'The UNSC is the primary body for maintaining international peace and security. Delegates in this advanced committee will tackle high-stakes crises, deliberate on sanctions, and authorize peacekeeping missions. This council demands sharp negotiation skills and a deep understanding of geopolitical dynamics.',
-        topics: ['The Situation in the Middle East', 'Cybersecurity and International Threats'],
-
-    },
-    ecosoc: {
-        title: 'UN Economic and Social Council', short_title: 'ECOSOC',
-        logo: 'https://tse3.mm.bing.net/th/id/OIP.a23X3RtcH0SGIjD1qzLWZwHaE5?pid=Api&P=0&h=180',
-        description: 'The Economic and Social Council is at the heart of the UN’s work on sustainable development. Delegates will formulate policies on economic, social, and environmental issues, working towards achieving the Sustainable Development Goals (SDGs) and fostering international cooperation for development.',
-        topics: ['Financing for Sustainable Development Goals', 'The Role of Digital Technologies in Eradicating Poverty'],
-
-    },
-    who: {
-        title: 'World Health Organization', short_title: 'WHO',
-        logo: 'https://tse1.mm.bing.net/th/id/OIP.ssNqyFvwMyHfh2FpfL6hvgHaHa?pid=Api&P=0&h=180',
-        description: 'As the leading authority on international health, the WHO directs and coordinates responses to global health emergencies. Delegates will address topics like pandemic preparedness, vaccine equity, and strengthening health systems in developing nations.',
-        topics: ['Global Pandemic Preparedness Treaty', 'Mental Health in a Post-Pandemic Era'],
-
+    unep: {
+        title: ' The United Nations Environment Programme', short_title: 'UNEP',
+        logo: 'https://tse3.mm.bing.net/th/id/OIP.QRGvfYVr95-0jZVT5Qmf4gHaHa?pid=Api&P=0&h=180',
+        description: 'The United Nations Environment Programme (UNEP), established in 1972 after the Stockholm Conference, serves as the leading global body for environmental action. Its mission includes monitoring environmental trends, supporting evidence-based policies, and coordinating international responses to ecological challenges. Over the years, UNEP has supported projects like pollution control in Serbia, flood protection in North Macedonia, and green economy efforts in Belarus. Yet today, the environmental crisis remains severe. Forests continue to disappear, waters are increasingly polluted, and the Global South bears the burden of a green transition it struggles to join. The climate emergency now reveals not only ecological danger but deep-rooted global inequality. Many of the systems driving the green economy still rely on exploitative practices. Without a course correction, the green transition risks repeating the injustices it claims to solve. UNEP must now lead with urgency and clarity. The time for bold, inclusive environmental action is now.',
+        topics: ['Bridging the Green Divide: Ensuring Equitable Access and Just Transitions In the Global Green Economy'],
     },
     unhcr: {
-        title: 'UN High Commissioner for Refugees', short_title: 'UNHCR',
-        logo: 'https://tse1.mm.bing.net/th/id/OIP.chwlFJWrT6PgCAEqBrMksgHaGf?pid=Api&P=0&h=180',
-        description: 'The UN Refugee Agency is mandated to protect and support refugees. In this council, delegates will focus on the rights and well-being of displaced persons, addressing issues of asylum, resettlement, and finding durable solutions to refugees crises worldwide.',
-        topics: ['Protection of Climate Refugees', 'Rohingya Crisis: Pathways to Solutions'],
-
+        title: 'The United Nations Human Rights Council ', short_title: 'UNHRC',
+        logo: 'https://tse3.mm.bing.net/th/id/OIP.pAA__exQqJL4rCgEfVfkBAHaHa?pid=Api&P=0&h=180',
+        description: 'The United Nations Human Rights Council, or UNHRC, was established in 2006 to protect and promote human rights globally. It replaced the former Commission on Human Rights and was created to respond to serious violations and support those whose rights are under threat. The council’s main mission is to uphold dignity and freedom for all people, regardless of identity or background. It brings together governments to discuss challenges and work toward shared solutions. Key responsibilities include investigating abuses, addressing urgent human rights situations, and conducting Universal Periodic Reviews to help countries improve. The UNHRC has made major progress in defending LGBTQ+ rights through landmark resolutions and the creation of the Independent Expert on SOGI. Even today, discrimination and inequality remain widespread. The council plays a vital role in turning dialogue into action and holding states accountable. In a world where rights are still denied to many, its work is more urgent than ever.',
+        // PERBAIKAN: Tanda kutip penutup ditambahkan di akhir kalimat.
+        topics: ['Ensuring the Right to Gender Identity Recognition Across Borders'],
     },
-
-    // --- DATA BARU DITAMBAHKAN DI SINI ---
-    unesco: {
-        title: 'UNESCO', short_title: 'UNESCO',
-        logo: 'https://tse2.mm.bing.net/th/id/OIP.7uNQPIlL4yHzGpnRKUzNewHaFn?pid=Api&P=0&h=180',
-        description: 'The United Nations Educational, Scientific and Cultural Organization seeks to build peace through international cooperation. Topics will range from protecting world heritage sites and providing freedom of expression to advancing science for sustainable development.',
-        topics: ['Preserving World Heritage Sites', 'Promoting Freedom of Expression Online'],
-
+    iaea: {
+        title: ' The International Atomic Energy Agency', short_title: 'IAEA',
+        logo: 'https://tse3.mm.bing.net/th/id/OIP.U11ynEbQ70OF3eIQpiaufgHaHa?pid=Api&P=0&h=180',
+        description: 'The International Atomic Energy Agency (IAEA), founded in 1957 after President Eisenhower’s “Atoms for Peace” speech, promotes the peaceful use of nuclear energy while preventing the spread of nuclear weapons. The IAEA works to ensure that nuclear materials are not misused and do not pose threats to global security. In the Middle East, the IAEA has been involved in discussions and technical studies to support the creation of a Nuclear-Weapon-Free Zone (NWFZ). Since 1988, the agency has led consultations and encouraged states in the region to accept full-scope safeguards. These safeguards aim to ensure transparency and prevent the misuse of nuclear programs. Despite decades of dialogue, progress has been limited due to political disagreements over the terms of verification and obligations.',
+        topics: ['Establishing a Nuclear-Weapon-Free Zone (NWFZ) in the Middle East'],
     },
-    disec: {
-        title: 'UN General Assembly (DISEC)', short_title: 'DISEC',
-        logo: 'https://static.wixstatic.com/media/d9e4c7_adbad2ce2830482b936a6208b4e1326e~mv2.png/v1/fill/w_255,h_206,al_c,q_85,usm_2.00_1.00_0.00,enc_auto/DISEC_Logo.png', // Menggunakan logo utama PBB untuk GA
-        description: 'As the First Committee of the UNGA, DISEC deals with disarmament and threats to peace that affect the international community. Delegates will discuss issues like nuclear non-proliferation, the arms trade, and preventing an arms race in outer space.',
-        topics: ['Nuclear Non-Proliferation', 'Regulation of the International Arms Trade'],
-
-    }
+    nato: {
+        title: 'North Atlantic Treaty Organization ', short_title: 'NATO',
+        logo: 'https://tse1.mm.bing.net/th/id/OIP.qqZSrlThAQTkTa0pBKVJTAHaGu?pid=Api&P=0&h=180',
+        description: 'Established on April 4, 1949, NATO is a political and military alliance founded to deter Soviet expansion, prevent the resurgence of militarism in Europe, and promote political integration across the Atlantic. Today, the Alliance includes 32 member states united by the principle of collective defense—an attack on one is considered an attack on all, as outlined in Article 5 of the North Atlantic Treaty. At its core, NATO functions through the North Atlantic Council (NAC), the highest decision-making body chaired by the Secretary General, where all decisions are made by consensus. While initially created to counter Cold War threats, NATO’s role has evolved to include crisis management, cybersecurity, counterterrorism, and cooperative security with global partners. In light of recent geopolitical tensions,  especially Russia’s aggression in Ukraine, NATO has expanded its military presence on the eastern flank, launched major joint exercises like Steadfast Dart and BALTOPS. NATO also emphasizes strategic flexibility and innovation to confront emerging challenges while upholding its core values of democracy, collective security, and transatlantic unity.',
+        topics: ['Ambiguity and Assurance: Navigating Eastern Security Commitments within the Alliance'],
+    },
 };
 
     const menuContainer = document.getElementById('council-menu-container');

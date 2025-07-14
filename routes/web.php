@@ -52,6 +52,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 // --- ADMIN DASHBOARD ROUTES (PROTECTED) ---
 Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/registrations/export', [RegistrationController::class, 'export'])->name('registrations.export');
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/registrations/{registration}', [AdminController::class, 'showRegistrationDetail'])->name('registration.detail');
     Route::get('contacts', [ContactMessageController::class, 'index'])->name('contacts.index');
@@ -59,7 +60,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     // Mengarah ke AdminController dan fungsi toggleVerification
     Route::post('/registrations/{registration}/toggle-verification', [AdminController::class, 'toggleVerification'])->name('registration.toggleVerification');
     Route::delete('/registrations/{id}', [AdminController::class, 'destroy'])->name('registration.destroy');
-    Route::get('/registrations/export', [AdminController::class, 'export'])->name('registrations.export');
+
 });
 
 // Laravel Breeze Authentication Routes (jika masih diperlukan untuk user biasa)
@@ -73,3 +74,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/packages', [App\Http\Controllers\PageController::class, 'packages'])->name('packages');
+

@@ -1,274 +1,358 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8"
-     x-data="{
-        delegates: {{ json_encode(old('delegates', $delegates)) }},
-        paymentSectionVisible: false,
-        packagePrices: {
-            'Full Accommodation': 1500000,
-            'Non-Accommodation': 850000,
-            'Online': 350000
-        },
-        addDelegate() {
-            this.delegates.push({
-                full_name: '', email: '', phone: '', nationality: '',
-                package_type: 'Full Accommodation',
-                needs_accommodation: true,
-                council_preference_1: '', country_preference_1_1: '', country_preference_1_2: '', reason_for_first_country_preference_1: '', reason_for_second_country_preference_1: '',
-                council_preference_2: '', country_preference_2_1: '', country_preference_2_2: '', reason_for_first_country_preference_2: '', reason_for_second_country_preference_2: ''
-            });
-        },
-        removeDelegate(index) {
-            if (this.delegates.length > 2) {
-                this.delegates.splice(index, 1);
-            }
-        },
-        updateAccommodation(index) {
-            this.delegates[index].needs_accommodation = (this.delegates[index].package_type === 'Full Accommodation');
-        },
-        get totalPrice() {
-            return this.delegates.reduce((total, delegate) => {
-                return total + (this.packagePrices[delegate.package_type] || 0);
-            }, 0);
-        },
-        formatCurrency(amount) {
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(amount);
-        }
-     }">
-
+<div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
     <div class="bg-white shadow-xl rounded-lg p-8" style="background-color: #D2B48C; border: 2px solid #A0522D;">
         <div class="text-center mb-8">
             <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-600 text-white mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
+                    <path d="M14 14.252V22H4V14.252A4.5 4.5 0 0 1 8.5 10H14a4.5 4.5 0 0 1 4.5 4.5V22H16V14.5A2.5 2.5 0 0 0 13.5 12H9.5A2.5 2.5 0 0 0 7 14.5V22H6V14.252A4.5 4.5 0 0 1 9.5 10h4.001A4.5 4.5 0 0 1 14 14.252ZM8.5 9A3.5 3.5 0 1 1 8.5 2a3.5 3.5 0 0 1 0 7ZM15.5 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"></path>
+                </svg>
             </div>
             <h1 class="text-3xl font-bold text-gray-800">I am Registering as Delegation ({{ $delegateType }})</h1>
-            <p class="text-gray-700">Please fill out your institution details and delegate information below.</p>
+            <p class="text-gray-700">Please fill out your institution and all delegate details below.</p>
         </div>
 
-        <form method="POST" action="{{ route('registration.delegationSubmit') }}" enctype="multipart/form-data">
+        @if ($errors->any())
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-6" role="alert">
+                <p class="font-bold">Oops! There were some problems with your input.</p>
+                <ul class="mt-2 list-disc list-inside text-sm">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('registration.delegationSubmit') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="delegate_type" value="{{ $delegateType }}">
 
+            {{-- Institution Details --}}
             <div class="border border-gray-300 p-6 rounded-lg mb-8 bg-orange-50 bg-opacity-20">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-6">Institution Detail</h2>
-                <div>
-                    <x-input-label for="institution_name" :value="__('Institution Name')" />
-                    <x-text-input id="institution_name" class="block mt-1 w-full" type="text" name="institution_name" :value="old('institution_name')" required autofocus />
-                    <x-input-error :messages="$errors->get('institution_name')" class="mt-2" />
-                </div>
+                <x-input-label for="institution_name" :value="__('Institution Name')" />
+                <x-text-input id="institution_name" class="block mt-1 w-full" type="text" name="institution_name" :value="old('institution_name')" required />
+                <x-input-error :messages="$errors->get('institution_name')" class="mt-2" />
             </div>
 
-            <template x-for="(delegate, index) in delegates" :key="index">
-                <div class="border border-gray-300 p-6 rounded-lg mb-6 bg-orange-50 bg-opacity-20">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-semibold text-gray-700">Delegate <span x-text="index + 1"></span></h2>
-                        <button type="button" @click="removeDelegate(index)" x-show="delegates.length > 2" class="text-sm font-medium text-red-600 hover:text-red-800 transition-colors">
-                            Remove
-                        </button>
-                    </div>
+            {{-- AWAL PERUBAHAN: Bagian Pemilihan Paket dan Jumlah Delegasi --}}
+            <div class="border border-gray-300 p-6 rounded-lg mb-8 bg-orange-50 bg-opacity-20">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Delegation Information</h2>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label :for="'delegate_name_'+index" class="block font-medium text-sm text-gray-700">Full Name</label>
-                            <input type="text" :name="'delegates['+index+'][full_name]'" :id="'delegate_name_'+index" x-model="delegate.full_name" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                        </div>
-                        <div>
-                            <label :for="'delegate_email_'+index" class="block font-medium text-sm text-gray-700">Email</label>
-                            <input type="email" :name="'delegates['+index+'][email]'" :id="'delegate_email_'+index" x-model="delegate.email" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                        </div>
-                        <div>
-                            <label :for="'delegate_phone_'+index" class="block font-medium text-sm text-gray-700">Phone</label>
-                            <input type="text" :name="'delegates['+index+'][phone]'" :id="'delegate_phone_'+index" x-model="delegate.phone" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                        </div>
-                        <div>
-                            {{-- =============================================== --}}
-                            {{-- PERUBAHAN DI SINI: Label dinamis --}}
-                            {{-- =============================================== --}}
-                            <label :for="'delegate_nationality_'+index" class="block font-medium text-sm text-gray-700">
-                                @if(Str::contains($delegateType, 'International'))
-                                    Nationality
-                                @else
-                                    Domicile
-                                @endif
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="block font-medium text-sm text-gray-700 mb-3">Select Package Type for Delegation:</p>
+                        <div id="package-selector" class="space-y-2">
+                            <label for="package_type_full" class="flex items-center cursor-pointer">
+                                <input type="radio" id="package_type_full" name="package_type" value="Full Accommodation" class="h-4 w-4 text-indigo-600">
+                                <span class="ml-2 text-sm text-gray-800">Full Accommodation</span>
                             </label>
-                            <input type="text" :name="'delegates['+index+'][nationality]'" :id="'delegate_nationality_'+index" x-model="delegate.nationality" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                        </div>
-                    </div>
-
-                    <div class="mt-8">
-                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Package Selection</h3>
-                        <div class="space-y-2">
-                            <label class="flex justify-between items-center cursor-pointer p-3 border rounded-md" :class="{'bg-blue-100 border-blue-400': delegate.package_type === 'Full Accommodation'}">
-                                <div class="flex items-center">
-                                    <input type="radio" :name="'delegates['+index+'][package_type]'" value="Full Accommodation" x-model="delegate.package_type" @change="updateAccommodation(index)" class="h-4 w-4 text-indigo-600">
-                                    <span class="ml-3 text-sm font-medium text-gray-800">Full Accommodation</span>
-                                </div>
-                                <span class="text-sm font-semibold text-indigo-700" x-text="formatCurrency(packagePrices['Full Accommodation'])"></span>
+                            <label for="package_type_non" class="flex items-center cursor-pointer">
+                                <input type="radio" id="package_type_non" name="package_type" value="Non-Accommodation" class="h-4 w-4 text-indigo-600">
+                                <span class="ml-2 text-sm text-gray-800">Non-Accommodation</span>
                             </label>
-                            <label class="flex justify-between items-center cursor-pointer p-3 border rounded-md" :class="{'bg-blue-100 border-blue-400': delegate.package_type === 'Non-Accommodation'}">
-                                <div class="flex items-center">
-                                    <input type="radio" :name="'delegates['+index+'][package_type]'" value="Non-Accommodation" x-model="delegate.package_type" @change="updateAccommodation(index)" class="h-4 w-4 text-indigo-600">
-                                    <span class="ml-3 text-sm font-medium text-gray-800">Non-Accommodation</span>
-                                </div>
-                                <span class="text-sm font-semibold text-indigo-700" x-text="formatCurrency(packagePrices['Non-Accommodation'])"></span>
-                            </label>
-                            <label class="flex justify-between items-center cursor-pointer p-3 border rounded-md" :class="{'bg-blue-100 border-blue-400': delegate.package_type === 'Online'}">
-                                <div class="flex items-center">
-                                    <input type="radio" :name="'delegates['+index+'][package_type]'" value="Online" x-model="delegate.package_type" @change="updateAccommodation(index)" class="h-4 w-4 text-indigo-600">
-                                    <span class="ml-3 text-sm font-medium text-gray-800">Online</span>
-                                </div>
-                                <span class="text-sm font-semibold text-indigo-700" x-text="formatCurrency(packagePrices['Online'])"></span>
-                            </label>
-                        </div>
-                        <div class="mt-4">
-                            <label class="flex items-center">
-                                <input type="checkbox" :name="'delegates['+index+'][needs_accommodation]'" value="1" x-model="delegate.needs_accommodation" class="rounded border-gray-300" readonly>
-                                <span class="ml-2 text-sm text-gray-700">This delegate needs accommodation</span>
+                             <label for="package_type_online" class="flex items-center cursor-pointer">
+                                <input type="radio" id="package_type_online" name="package_type" value="Online" class="h-4 w-4 text-indigo-600">
+                                <span class="ml-2 text-sm text-gray-800">Online</span>
                             </label>
                         </div>
                     </div>
-
-                    <div class="mt-8">
-                         <label :for="'social_media_upload_'+index" class="block font-medium text-sm text-gray-700">Social Media Upload</label>
-                         <input type="file" :name="'delegates['+index+'][social_media_upload]'" :id="'social_media_upload_'+index" class="block mt-1 w-full">
-                    </div>
-
-                    <div class="mt-8">
-                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Council Preferences</h3>
-                        <div class="border-b border-gray-200 pb-6 mb-6">
-                            <h4 class="text-lg font-semibold text-gray-700 mb-4">Council Preference 1</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div>
-                                    <label :for="'council_preference_1_'+index" class="block font-medium text-sm text-gray-700">Council Preference</label>
-                                    <select :name="'delegates['+index+'][council_preference_1]'" :id="'council_preference_1_'+index" x-model="delegate.council_preference_1" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                                        <option value="">Select Council</option><option value="UNSC">UNSC</option><option value="UNHRC">UNHRC</option><option value="WHO">WHO</option><option value="ECOSOC">ECOSOC</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label :for="'country_preference_1_1_'+index" class="block font-medium text-sm text-gray-700">Country Preference 1</label>
-                                    <select :name="'delegates['+index+'][country_preference_1_1]'" :id="'country_preference_1_1_'+index" x-model="delegate.country_preference_1_1" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                                        <option value="">Select Country</option><option value="USA">USA</option><option value="China">China</option><option value="Indonesia">Indonesia</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label :for="'country_preference_1_2_'+index" class="block font-medium text-sm text-gray-700">Country Preference 2</label>
-                                    <select :name="'delegates['+index+'][country_preference_1_2]'" :id="'country_preference_1_2_'+index" x-model="delegate.country_preference_1_2" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                                        <option value="">Select Country</option><option value="Germany">Germany</option><option value="Japan">Japan</option><option value="Brazil">Brazil</option>
-                                    </select>
-                                </div>
-                                <div class="md:col-span-3">
-                                    <label :for="'reason_for_first_country_preference_1_'+index" class="block font-medium text-sm text-gray-700">Reason for First Country Preference</label>
-                                    <textarea :name="'delegates['+index+'][reason_for_first_country_preference_1]'" :id="'reason_for_first_country_preference_1_'+index" x-model="delegate.reason_for_first_country_preference_1" rows="3" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required></textarea>
-                                </div>
-                                <div class="md:col-span-3">
-                                    <label :for="'reason_for_second_country_preference_1_'+index" class="block font-medium text-sm text-gray-700">Reason for Second Country Preference</label>
-                                    <textarea :name="'delegates['+index+'][reason_for_second_country_preference_1]'" :id="'reason_for_second_country_preference_1_'+index" x-model="delegate.reason_for_second_country_preference_1" rows="3" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border-b border-gray-200 pb-6 mb-6">
-                            <h4 class="text-lg font-semibold text-gray-700 mb-4">Council Preference 2</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div>
-                                    <label :for="'council_preference_2_'+index" class="block font-medium text-sm text-gray-700">Council Preference</label>
-                                    <select :name="'delegates['+index+'][council_preference_2]'" :id="'council_preference_2_'+index" x-model="delegate.council_preference_2" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                                        <option value="">Select Council</option><option value="UNSC">UNSC</option><option value="UNHRC">UNHRC</option><option value="WHO">WHO</option><option value="ECOSOC">ECOSOC</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label :for="'country_preference_2_1_'+index" class="block font-medium text-sm text-gray-700">Country Preference 1</label>
-                                    <select :name="'delegates['+index+'][country_preference_2_1]'" :id="'country_preference_2_1_'+index" x-model="delegate.country_preference_2_1" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                                        <option value="">Select Country</option><option value="USA">USA</option><option value="China">China</option><option value="Indonesia">Indonesia</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label :for="'country_preference_2_2_'+index" class="block font-medium text-sm text-gray-700">Country Preference 2</label>
-                                    <select :name="'delegates['+index+'][country_preference_2_2]'" :id="'country_preference_2_2_'+index" x-model="delegate.country_preference_2_2" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                                        <option value="">Select Country</option><option value="Germany">Germany</option><option value="Japan">Japan</option><option value="Brazil">Brazil</option>
-                                    </select>
-                                </div>
-                                <div class="md:col-span-3">
-                                    <label :for="'reason_for_first_country_preference_2_'+index" class="block font-medium text-sm text-gray-700">Reason for First Country Preference</label>
-                                    <textarea :name="'delegates['+index+'][reason_for_first_country_preference_2]'" :id="'reason_for_first_country_preference_2_'+index" x-model="delegate.reason_for_first_country_preference_2" rows="3" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required></textarea>
-                                </div>
-                                <div class="md:col-span-3">
-                                    <label :for="'reason_for_second_country_preference_2_'+index" class="block font-medium text-sm text-gray-700">Reason for Second Country Preference</label>
-                                    <textarea :name="'delegates['+index+'][reason_for_second_country_preference_2]'" :id="'reason_for_second_country_preference_2_'+index" x-model="delegate.reason_for_second_country_preference_2" rows="3" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required></textarea>
-                                </div>
-                            </div>
+                    <div>
+                        <p class="block font-medium text-sm text-gray-700 mb-3">How many delegates are in your group?</p>
+                        <div id="delegate-selector" class="space-y-2">
+                            @foreach ([2, 3, 4, 5] as $count)
+                                <label for="delegate_count_{{ $count }}" class="flex items-center cursor-pointer">
+                                    <input type="radio" id="delegate_count_{{ $count }}" name="delegate_count" value="{{ $count }}" class="h-4 w-4 text-indigo-600">
+                                    <span class="ml-2 text-sm text-gray-800">{{ $count }} delegates</span>
+                                </label>
+                            @endforeach
                         </div>
                     </div>
                 </div>
-            </template>
+            </div>
+            {{-- AKHIR PERUBAHAN --}}
 
-            <div class="flex space-x-4 mt-6">
-                <button type="button" @click="addDelegate()" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors">+ Add Delegate</button>
+            {{-- Delegate Forms Container --}}
+            <div id="delegates-container" class="space-y-8">
+                {{-- JavaScript will populate this area --}}
             </div>
 
-            <div class="flex items-center justify-end mt-8" x-show="!paymentSectionVisible">
-                 <button type="button" @click.prevent="paymentSectionVisible = true" class="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-lg">
-                    Lanjutkan ke Pembayaran
-                </button>
-            </div>
-
-            <div x-show="paymentSectionVisible" x-transition class="mt-8">
-                <div class="border border-gray-300 p-6 rounded-lg mb-8 bg-orange-50 bg-opacity-20">
+            {{-- Payment Section --}}
+            <div class="mt-12">
+                <div class="border border-gray-300 p-6 rounded-lg bg-orange-50 bg-opacity-20">
                     <h2 class="text-2xl font-semibold text-gray-700 mb-6">Payment</h2>
-                    <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-800 p-4 rounded-md mb-8" role="alert">
-                        <p class="font-bold">Total yang harus dibayar (<span x-text="delegates.length"></span> Delegasi):</p>
-                        <p class="text-3xl font-extrabold" x-text="formatCurrency(totalPrice)"></p>
+
+                    {{-- AWAL PERUBAHAN: Tampilan Harga Dinamis --}}
+                    <div id="total-payment-display" class="bg-blue-100 border-l-4 border-blue-500 text-blue-800 p-4 rounded-md mb-8 hidden" role="alert">
+                        <p class="font-bold">Total yang harus dibayar</p>
+                        <p id="total-price" class="text-3xl font-extrabold"></p>
+                        <p id="price-breakdown" class="text-sm mt-1"></p>
                     </div>
+                    {{-- AKHIR PERUBAHAN --}}
 
                     <div class="mb-6">
-                        <p class="text-sm text-gray-600 mb-2">
-                            Please refer to Indonesia MUN Official Instagram (@indonesiamun) for the prices. Transfer the registration payment to:
-                            <br><strong>Rekening Bank:</strong> Mahisa Akib 747373067600 (CIMB Niaga)
-                            <br><strong>PayPal:</strong> nanasiyah0@gmail.com (PayPal)
-                        </p>
-                    </div>
-                    <div class="border border-gray-300 p-6 rounded-lg my-12 bg-orange-50 bg-opacity-20">
-                        <h2 class="text-2xl font-semibold text-gray-700 mb-6">Payment Proof</h2>
-                        <div>
-                           <x-input-label for="payment_proof">Payment Proof Upload</x-input-label>
-                           <label for="payment_proof" class="flex items-center justify-center border-2 border-dashed border-gray-400 rounded-lg p-6 cursor-pointer hover:border-blue-500 hover:bg-gray-50 transition duration-150 ease-in-out">
-                               <div class="text-center">
-                                   <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                                   <p class="mt-1 text-sm text-gray-600" id="payment_proof_filename">Please upload your file. Max size 2 MB.</p>
-                                   <p class="text-xs text-gray-500">Upload a proof of payment</p>
-                               </div>
-                               <input id="payment_proof" name="payment_proof" type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" />
-                           </label>
-                           <x-input-error :messages="$errors->get('payment_proof')" class="mt-2" />
-                        </div>
+                        <x-input-label for="payment_proof" :value="__('Payment Proof Upload (for the whole delegation)')" />
+                        <input id="payment_proof" name="payment_proof" type="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none mt-1" accept=".jpg,.jpeg,.png,.pdf" required/>
+                        <x-input-error :messages="$errors->get('payment_proof')" class="mt-2" />
                     </div>
                 </div>
             </div>
 
-            <div class="flex items-center justify-end mt-4" x-show="paymentSectionVisible">
-                 <x-primary-button type="submit" class="ml-4">Submit Delegation Registration</x-primary-button>
+            {{-- Submit Button --}}
+            <div class="flex items-center justify-end mt-8">
+                <button type="submit" class="w-full sm:w-auto px-8 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors">
+                    {{ __('Submit Delegation Registration') }}
+                </button>
             </div>
         </form>
     </div>
 </div>
 
+<!-- Template for a single delegate form -->
+<template id="delegate-template">
+    <div class="delegate-form-block border border-gray-300 p-6 rounded-lg bg-orange-50 bg-opacity-20 relative">
+        <div class="flex justify-between items-center mb-6 border-b border-gray-300 pb-4">
+            <h3 class="text-xl font-semibold text-gray-800 delegate-title">Delegate #</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+            {{-- Hidden inputs for package type and accommodation status --}}
+            <input type="hidden" name="delegates[__INDEX__][package_type]" value="">
+            <input type="hidden" name="delegates[__INDEX__][needs_accommodation]" value="">
+            <input type="hidden" name="delegates[__INDEX__][attendance_type]" value="">
+
+            {{-- Personal Info --}}
+            <h4 class="md:col-span-2 text-lg font-semibold text-gray-700 border-b pb-2">Personal Information</h4>
+            <div>
+                <x-input-label for="delegates[__INDEX__][full_name]" :value="__('Full Name')" />
+                <x-text-input class="block mt-1 w-full" type="text" name="delegates[__INDEX__][full_name]" required />
+            </div>
+            <div>
+                <x-input-label for="delegates[__INDEX__][email]" :value="__('Email')" />
+                <x-text-input class="block mt-1 w-full" type="email" name="delegates[__INDEX__][email]" required />
+            </div>
+            <div>
+                <x-input-label for="delegates[__INDEX__][date_of_birth]" :value="__('Date of Birth')" />
+                <x-text-input class="block mt-1 w-full" type="date" name="delegates[__INDEX__][date_of_birth]" required />
+            </div>
+             <div>
+                <x-input-label for="delegates[__INDEX__][age]" :value="__('Age')" />
+                <x-text-input class="block mt-1 w-full" type="number" name="delegates[__INDEX__][age]" required />
+            </div>
+            <div>
+                <x-input-label for="delegates[__INDEX__][gender]" :value="__('Gender')" />
+                <select name="delegates[__INDEX__][gender]" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" required>
+                    <option value="">Select Gender</option><option value="Male">Male</option><option value="Female">Female</option>
+                </select>
+            </div>
+            <div>
+                <x-input-label for="delegates[__INDEX__][phone]" :value="__('Contact Number')" />
+                <x-text-input class="block mt-1 w-full" type="text" name="delegates[__INDEX__][phone]" placeholder="+62 812..." required />
+            </div>
+            <div class="md:col-span-2">
+                <x-input-label for="delegates[__INDEX__][full_address]" :value="__('Full Address')" />
+                <textarea name="delegates[__INDEX__][full_address]" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" required></textarea>
+            </div>
+             <div>
+                <x-input-label for="delegates[__INDEX__][nationality]" :value="__('Nationality')" />
+                <x-text-input class="block mt-1 w-full" type="text" name="delegates[__INDEX__][nationality]" required />
+            </div>
+            <div>
+                <x-input-label for="delegates[__INDEX__][partnership_code]" :value="__('Partnership Code')" />
+                <x-text-input class="block mt-1 w-full" type="text" name="delegates[__INDEX__][partnership_code]" value="-" required />
+            </div>
+
+            {{-- Experience --}}
+            <h4 class="md:col-span-2 text-lg font-semibold text-gray-700 border-b pb-2 mt-4">Experience & Documents</h4>
+            <div class="md:col-span-2">
+                <x-input-label for="delegates[__INDEX__][previous_mun_experience]" :value="__('Previous MUN Experience (if any)')" />
+                <textarea name="delegates[__INDEX__][previous_mun_experience]" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"></textarea>
+            </div>
+            <div class="md:col-span-2">
+                <x-input-label for="delegates[__INDEX__][mun_awards]" :value="__('MUN Awards (if any)')" />
+                <textarea name="delegates[__INDEX__][mun_awards]" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"></textarea>
+            </div>
+            <div>
+                <x-input-label for="delegates[__INDEX__][student_id]" :value="__('Student ID (PDF)')" />
+                <input name="delegates[__INDEX__][student_id]" type="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none mt-1" accept=".pdf" required />
+            </div>
+            <div>
+                <x-input-label for="delegates[__INDEX__][parental_consent]" :value="__('Parental Consent (PDF, if <= 17 y.o)')" />
+                <input name="delegates[__INDEX__][parental_consent]" type="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none mt-1" accept=".pdf" />
+            </div>
+             <div class="md:col-span-2">
+                <x-input-label for="delegates[__INDEX__][social_media_proof_path]" :value="__('Social Media Proof (Optional)')" />
+                <input name="delegates[__INDEX__][social_media_proof_path]" type="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none mt-1" accept=".jpg,.jpeg,.png,.pdf" />
+            </div>
+
+            {{-- Council Preferences --}}
+            <h4 class="md:col-span-2 text-lg font-semibold text-gray-700 border-b pb-2 mt-4">Council Preferences</h4>
+            <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-gray-200 pb-6">
+                <div class="md:col-span-3 font-semibold">Council Preference 1</div>
+                <div>
+                    <x-input-label for="delegates[__INDEX__][council_preference_1]" :value="__('Council')" />
+                    <select name="delegates[__INDEX__][council_preference_1]" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" required>
+                         <option value="">Select Council</option><option value="UNEP">UNEP</option><option value="UNHRC">UNHRC</option><option value="IAEA">IAEA</option><option value="NATO">NATO</option>
+                    </select>
+                </div>
+                <div>
+                    <x-input-label for="delegates[__INDEX__][country_preference_1_1]" :value="__('Country 1')" />
+                    <x-text-input name="delegates[__INDEX__][country_preference_1_1]" class="block mt-1 w-full" type="text" required />
+                </div>
+                <div>
+                    <x-input-label for="delegates[__INDEX__][country_preference_1_2]" :value="__('Country 2')" />
+                    <x-text-input name="delegates[__INDEX__][country_preference_1_2]" class="block mt-1 w-full" type="text" required />
+                </div>
+                <div class="md:col-span-3">
+                    <x-input-label for="delegates[__INDEX__][reason_for_council_preference_1]" :value="__('Reason for Council Choice')" />
+                    <textarea name="delegates[__INDEX__][reason_for_council_preference_1]" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" required></textarea>
+                </div>
+            </div>
+            <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+                 <div class="md:col-span-3 font-semibold">Council Preference 2</div>
+                <div>
+                    <x-input-label for="delegates[__INDEX__][council_preference_2]" :value="__('Council')" />
+                    <select name="delegates[__INDEX__][council_preference_2]" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" required>
+                         <option value="">Select Council</option><option value="UNEP">UNEP</option><option value="UNHRC">UNHRC</option><option value="IAEA">IAEA</option><option value="NATO">NATO</option>
+                    </select>
+                </div>
+                <div>
+                    <x-input-label for="delegates[__INDEX__][country_preference_2_1]" :value="__('Country 1')" />
+                    <x-text-input name="delegates[__INDEX__][country_preference_2_1]" class="block mt-1 w-full" type="text" required />
+                </div>
+                <div>
+                    <x-input-label for="delegates[__INDEX__][country_preference_2_2]" :value="__('Country 2')" />
+                    <x-text-input name="delegates[__INDEX__][country_preference_2_2]" class="block mt-1 w-full" type="text" required />
+                </div>
+                <div class="md:col-span-3">
+                    <x-input-label for="delegates[__INDEX__][reason_for_council_preference_2]" :value="__('Reason for Council Choice')" />
+                    <textarea name="delegates[__INDEX__][reason_for_council_preference_2]" rows="3" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" required></textarea>
+                </div>
+            </div>
+
+             {{-- Confirmation --}}
+            <h4 class="md:col-span-2 text-lg font-semibold text-gray-700 border-b pb-2 mt-4">Confirmation</h4>
+            <div class="md:col-span-2 space-y-3">
+                <label class="flex items-start cursor-pointer">
+                    <input type="checkbox" name="delegates[__INDEX__][info_confirmation]" value="1" class="h-4 w-4 rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 mt-1" required>
+                    <span class="ml-2 text-sm text-gray-700">I confirm that all the information I have provided is true and correct.</span>
+                </label>
+                <label class="flex items-start cursor-pointer">
+                     <input type="checkbox" name="delegates[__INDEX__][data_usage_agreement]" value="1" class="h-4 w-4 rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 mt-1" required>
+                     <span class="ml-2 text-sm text-gray-700">I agree to allow the organizing committee to use my personal data for administrative and event-related purposes.</span>
+                 </label>
+            </div>
+        </div>
+    </div>
+</template>
+
+{{-- AWAL PERUBAHAN: Logika JavaScript Diperbarui Total --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const paymentInput = document.getElementById('payment_proof');
-        if (paymentInput) {
-            paymentInput.addEventListener('change', function() {
-                const filenameDisplay = document.getElementById('payment_proof_filename');
-                if (this.files && this.files.length > 0) {
-                    filenameDisplay.textContent = this.files[0].name;
-                } else {
-                    filenameDisplay.textContent = 'Please upload your file. Max size 2 MB.';
+document.addEventListener('DOMContentLoaded', function () {
+    const container = document.getElementById('delegates-container');
+    const template = document.getElementById('delegate-template');
+    const delegateSelector = document.getElementById('delegate-selector');
+    const packageSelector = document.getElementById('package-selector');
+
+    const paymentDisplay = document.getElementById('total-payment-display');
+    const totalPriceEl = document.getElementById('total-price');
+    const priceBreakdownEl = document.getElementById('price-breakdown');
+
+    // Data harga sesuai permintaan
+    const pricing = {
+        'Full Accommodation': { 2: 2240000, 3: 3360000, 4: 4480000, 5: 5600000 },
+        'Non-Accommodation': { 2: 990000, 3: 1485000, 4: 1980000, 5: 2475000 },
+        'Online': { 2: 180000, 3: 261000, 4: 340000, 5: 410000 }
+    };
+
+    const oldDelegates = {!! json_encode(old('delegates')) !!} || [];
+    const oldPackageType = "{{ old('package_type', 'Full Accommodation') }}";
+    const oldDelegateCount = "{{ old('delegate_count', 2) }}";
+
+    const renderForms = (count, packageType) => {
+        container.innerHTML = ''; // Hapus form yang ada
+        const needsAccommodation = packageType === 'Full Accommodation';
+        const attendanceType = packageType === 'Online' ? 'Online' : 'Offline';
+
+        for (let i = 0; i < count; i++) {
+            const clone = template.content.cloneNode(true);
+            const newBlock = clone.firstElementChild;
+            newBlock.innerHTML = newBlock.innerHTML.replace(/__INDEX__/g, i);
+
+            const title = newBlock.querySelector('.delegate-title');
+            if (title) title.textContent = `Delegate #${i + 1}`;
+
+            // Set hidden input values for each delegate
+            newBlock.querySelector(`[name="delegates[${i}][package_type]"]`).value = packageType;
+            newBlock.querySelector(`[name="delegates[${i}][needs_accommodation]"]`).value = needsAccommodation ? '1' : '0';
+            newBlock.querySelector(`[name="delegates[${i}][attendance_type]"]`).value = attendanceType;
+
+            container.appendChild(newBlock);
+        }
+    };
+
+    const updatePrice = () => {
+        const selectedPackage = document.querySelector('input[name="package_type"]:checked');
+        const selectedCount = document.querySelector('input[name="delegate_count"]:checked');
+
+        if (selectedPackage && selectedCount) {
+            const packageType = selectedPackage.value;
+            const delegateCount = parseInt(selectedCount.value, 10);
+            const price = pricing[packageType]?.[delegateCount] ?? 0;
+
+            totalPriceEl.textContent = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
+            priceBreakdownEl.textContent = `${delegateCount} delegates for ${packageType}`;
+            paymentDisplay.classList.remove('hidden');
+        } else {
+            paymentDisplay.classList.add('hidden');
+        }
+    };
+
+    const populateOldData = () => {
+        if (oldDelegates.length > 0) {
+            oldDelegates.forEach((data, index) => {
+                if (index < container.children.length) {
+                    const delegateBlock = container.children[index];
+                    Object.keys(data).forEach(key => {
+                        const input = delegateBlock.querySelector(`[name="delegates[${index}][${key}]"]`);
+                        if (input) {
+                            if (input.type === 'checkbox') input.checked = !!data[key];
+                            else input.value = data[key];
+                        }
+                    });
                 }
             });
         }
-    });
+    };
+
+    const updateAndRender = () => {
+        const selectedPackage = document.querySelector('input[name="package_type"]:checked');
+        const selectedCount = document.querySelector('input[name="delegate_count"]:checked');
+
+        if (selectedPackage && selectedCount) {
+            renderForms(parseInt(selectedCount.value, 10), selectedPackage.value);
+            populateOldData(); // Re-populate after rendering
+        } else {
+            container.innerHTML = ''; // Clear forms if nothing is selected
+        }
+        updatePrice();
+    };
+
+    // Event Listeners
+    packageSelector.addEventListener('change', updateAndRender);
+    delegateSelector.addEventListener('change', updateAndRender);
+
+    // Initial Setup
+    const initialPackageRadio = document.querySelector(`input[name="package_type"][value="${oldPackageType}"]`);
+    if (initialPackageRadio) initialPackageRadio.checked = true;
+
+    const initialCountRadio = document.getElementById(`delegate_count_${oldDelegateCount}`);
+    if (initialCountRadio) initialCountRadio.checked = true;
+
+    // Initial render based on old data or defaults
+    updateAndRender();
+});
 </script>
+{{-- AKHIR PERUBAHAN --}}
 @endsection

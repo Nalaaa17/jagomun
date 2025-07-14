@@ -15,39 +15,57 @@ class DelegationRegistration extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        // Kolom-kolom yang sudah ada
+        // Kolom-kolom yang sudah ada (disesuaikan)
         'registering_as',
         'delegate_type',
         'institution_name',
         'delegate_count',
+        'total_price',
+
+        // Informasi Pribadi (Lama + Baru)
         'full_name',
+        'date_of_birth',
+        'age',
+        'gender',
         'email',
         'phone',
         'nationality',
-        'do_you_need_accommodation',
+        'full_address',
+
+        // Kehadiran & Paket
         'attendance_type',
         'package_type',
-        'payment_proof_path',
-        'social_media_proof_path',
+        'needs_accommodation', // Ganti dari 'do_you_need_accommodation'
 
-        // --- TAMBAHKAN SEMUA KOLOM BARU DI SINI ---
+        // Pengalaman MUN
+        'previous_mun_experience',
+        'mun_awards',
+
+        // Preferensi Council (Disederhanakan menjadi 2 preferensi sesuai PDF)
         'council_preference_1',
         'country_preference_1_1',
         'country_preference_1_2',
-        'reason_for_first_country_preference_1',
-        'reason_for_second_country_preference_1',
+        'reason_for_council_preference_1', // Ganti nama
 
         'council_preference_2',
         'country_preference_2_1',
         'country_preference_2_2',
-        'reason_for_first_country_preference_2',
-        'reason_for_second_country_preference_2',
+        'reason_for_council_preference_2', // Ganti nama
 
-        'council_preference_3',
-        'country_preference_3_1',
-        'country_preference_3_2',
-        'reason_for_first_country_preference_3',
-        'reason_for_second_country_preference_3',
+        // Path File Upload
+        'payment_proof_path',
+        'social_media_proof_path',
+        'student_id_path',
+        'parental_consent_path',
+
+        // Lainnya
+        'partnership_code',
+
+        // Konfirmasi
+        'info_confirmation',
+        'data_usage_agreement',
+
+        // Status Verifikasi
         'is_verified',
     ];
 

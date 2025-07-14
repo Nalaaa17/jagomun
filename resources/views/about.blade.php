@@ -114,7 +114,7 @@
             <div class="relative max-w-7xl mx-auto">
                 <div class="text-center">
                     <h1 class="text-4xl tracking-tight font-extrabold sm:text-5xl md:text-6xl gradient-text">
-                        Who We Are?
+                        Who Are We ?
                     </h1>
                     <p class="mt-3 max-w-2xl mx-auto text-xl text-champagne sm:mt-4">
                         Jember Annual Global Model United Nations (JAGOMUN)
@@ -129,15 +129,17 @@
 
                 {{-- Deskripsi Jagomun --}}
                 <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12 mb-16 scroll-reveal">
-                    <p class="text-lg text-royal leading-relaxed mb-4">
-                        Jember Annual Global Model United Nations (JAGOMUN) is an international level United Nations assembly simulation held at Jember, which aims to train young people in expressing opinions and acting as professional diplomats representing a country.
-                    </p>
-                    <p class="text-lg text-royal leading-relaxed mb-4">
-                        JAGOMUN starts in 2021 and has been held annually since. This year marks the fourth event of JAGOMUN. JAGOMUN 2024 is determined to shape young people to act professionally, especially in the fields of negotiation, diplomacy, argumentation, debate, leadership, and writing. The main concept presents the Best for the 2024 delegates to be able to have a pleasant, comfortable and beautiful experience with JAGOMUN because for its distinctiveness which always provides refreshments and an overall experience that is different from other MUN conferences.
-                    </p>
-                    <p class="text-lg text-royal leading-relaxed">
-                        JAGOMUN represents many issues in the Model United Nations conference, starting from human rights, city issues, and an many more. Adding to that, JAGOMUN offers various choices of council from beginners to expert level. JAGOMUN's Daisies and Officers are former mainstream JAGOMUN conferences that are also attended by national or international delegates.
-                    </p>
+                <div class="text-lg text-royal leading-relaxed text-justify">
+                        <p class="mb-4">
+                            Jember Annual Global Model United Nations (JAGOMUN) is an international level United Nations assembly simulation held at Jember, which aims to train young people in expressing opinions and acting as professional diplomats representing a country.
+                        </p>
+                        <p class="mb-4">
+                            JAGOMUN starts in 2021 and has been held annually since. This year marks the fourth event of JAGOMUN. JAGOMUN 2025 is determined to shape young people to act professionally, especially in the fields of negotiation, diplomacy, argumentation, debate, leadership, and writing. The main concept presents the Best for the 2025 delegates to be able to have a pleasant, comfortable and beautiful experience with JAGOMUN because for its distinctiveness which always provides refreshments and an overall experience that is different from other MUN conferences.
+                        </p>
+                        <p>
+                            JAGOMUN represents many issues in the Model United Nations conference, starting from human rights, city issues, and an many more. Adding to that, JAGOMUN offers various choices of council from beginners to expert level. JAGOMUN's Daisies and Officers are former mainstream JAGOMUN conferences that are also attended by national or international delegates.
+                        </p>
+                    </div>
                 </div>
 
                 {{-- Galeri Foto --}}
@@ -193,7 +195,7 @@
     <footer class="bg-navy py-12 mt-16">
         <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
             <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
-            <p class="text-sm">Organized by UKM UNEJ Model United Nations Club</p>
+            <p class="text-sm">Organized by UNEJ Model United Nations Club</p>
         </div>
     </footer>
 
