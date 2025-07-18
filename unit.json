@@ -17,7 +17,7 @@
             "action": {
                 "share": "/var/www/jagomun/public$uri",
                 "fallback": {
-                    "pass": "applications/laravel"
+                    "pass": "applications/jagomun"
                 }
             }
         }
