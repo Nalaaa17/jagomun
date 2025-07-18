@@ -1,3 +1,214 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .gradient-text {
+        background: linear-gradient(135deg, #B4976B 0%, #D6C4A4 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .glassmorphism {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .typing-animation {
+        overflow: hidden;
+        border-right: 3px solid #B4976B;
+        white-space: nowrap;
+        animation: typing 3.5s steps(40, end) forwards, blink-caret 0.5s step-end infinite;
+    }
+
+    .parallax-section {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    .parallax-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+        background-attachment: fixed;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .section-separator {
+        position: relative;
+    }
+
+    .section-separator::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 1px;
+        background: linear-gradient(to right,
+            transparent,
+            rgba(180, 151, 107, 0.35),
+            transparent
+        );
+        z-index: 10;
+    }
+}
+
+@layer components {
+    .card-hover {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .scroll-reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease-out;
+    }
+    .scroll-reveal.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Deck Card Styles */
+    #deck-container {
+        perspective: 1500px;
+        position: relative;
+    }
+    .deck-card {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 1.5rem; /* 24px */
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        will-change: transform, opacity;
+    }
+    .deck-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .card--active {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 1;
+        z-index: 3;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card--next {
+        transform: translate3d(0, 2%, 0) scale(0.9);
+        opacity: 1;
+        z-index: 2;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card--hidden {
+        transform: translate3d(0, 4%, 0) scale(0.8);
+        opacity: 0;
+        z-index: 1;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
+    }
+    .is-tossing {
+        animation: toss-away 0.7s forwards cubic-bezier(0.6, 0.04, 0.98, 0.335);
+    }
+    .is-returning {
+        animation: return-from-side 0.7s forwards cubic-bezier(0.23, 1, 0.32, 1);
+        z-index: 4 !important;
+    }
+    .is-settling {
+        animation: settle-in-front 0.6s forwards cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .is-moving-back {
+        animation: move-to-next 0.6s forwards cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* Council Split-View Styles */
+    #menu-selector {
+        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .council-menu-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        border-radius: 0.75rem;
+        position: relative;
+        z-index: 10;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        flex-shrink: 0;
+        width: 180px;
+    }
+    @media (min-width: 768px) {
+        .council-menu-item {
+            width: 100%;
+        }
+        .council-menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    }
+    .council-menu-item.active {
+        background-color: rgba(180, 151, 107, 0.2); /* bg-gold/20 */
+    }
+    @media (min-width: 768px) {
+        .council-menu-item.active {
+            background-color: transparent;
+        }
+    }
+    .council-menu-item.active .council-title {
+        color: #D6C4A4; /* Warna champagne */
+    }
+    .council-detail-content {
+        display: none;
+        padding: 1.5rem 1rem;
+        background-color: rgba(45, 59, 97, 0.3); /* bg-royal/30 */
+        border-radius: 1rem;
+        animation: fadeIn 0.5s ease;
+    }
+    .council-detail-content.active {
+        display: block;
+    }
+    @media (min-width: 768px) {
+        #council-display-panel {
+            scroll-margin-top: 120px;
+        }
+        .council-detail-content {
+            position: absolute;
+            inset: 0;
+            display: block;
+            padding: 2rem;
+            background-color: transparent;
+            border-radius: 0;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .council-detail-content.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 10;
+            pointer-events: auto;
+        }
+    }
+}
