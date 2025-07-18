@@ -23,7 +23,7 @@ RUN echo "opcache.enable=1" > /usr/local/etc/php/conf.d/custom.ini \
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /var/www/jagomun
 
 # Copy entire Laravel project
 COPY . .
