@@ -1,46 +1,53 @@
-# Memulai dari image PHP 8.2 dengan FPM (FastCGI Process Manager)
-FROM php:8.2-fpm
+FROM unit:1.34.1-php8.3
 
-# Mengatur direktori kerja di dalam container
-WORKDIR /var/www/html
+# Install PHP & system dependencies + Node.js
+RUN apt update && apt install -y \
+    curl unzip git gnupg libicu-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libssl-dev \
+    default-mysql-client default-libmysqlclient-dev \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt install -y nodejs wget \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) pcntl opcache pdo pdo_mysql intl zip gd exif ftp bcmath \
+    && pecl install redis \
+    && docker-php-ext-enable redis
 
-# Menginstal dependensi sistem yang dibutuhkan oleh Laravel & Vite
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    git \
-    curl \
-    libonig-dev \
-    libzip-dev
+# PHP configuration
+RUN echo "opcache.enable=1" > /usr/local/etc/php/conf.d/custom.ini \
+    && echo "opcache.jit=tracing" >> /usr/local/etc/php/conf.d/custom.ini \
+    && echo "opcache.jit_buffer_size=256M" >> /usr/local/etc/php/conf.d/custom.ini \
+    && echo "memory_limit=512M" >> /usr/local/etc/php/conf.d/custom.ini \
+    && echo "upload_max_filesize=64M" >> /usr/local/etc/php/conf.d/custom.ini \
+    && echo "post_max_size=64M" >> /usr/local/etc/php/conf.d/custom.ini
 
-# Menginstal ekstensi PHP yang umum digunakan Laravel
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Menginstal Composer (dependency manager untuk PHP)
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Set working directory
+WORKDIR /var/www/jagomun
 
-# Menyalin semua file proyek Anda ke dalam container
+# Copy entire Laravel project
 COPY . .
 
-# Menginstal dependensi composer (tanpa paket development)
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+# Set proper permissions
+RUN chown -R unit:unit . && chmod -R ug+rwX storage bootstrap/cache
 
-# Menjalankan build untuk Vite
-RUN npm install && npm run build
+# Install Laravel dependencies
+RUN composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
 
-# Mengatur izin folder agar Laravel bisa menulis file cache dan storage
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Install frontend dependencies and build
+RUN npm ci && npm run build
 
-# Memberitahu Docker bahwa container akan berjalan di port 8000
-EXPOSE 8000
+# Laravel cache optimizations
+RUN php artisan config:clear \
+ && php artisan config:cache \
+ && php artisan route:cache \
+ && php artisan view:cache
 
-# Perintah untuk menjalankan server saat container dimulai
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+# Copy NGINX Unit config
+COPY unit.json /docker-entrypoint.d/unit.json
+
+# Expose NGINX Unit port
+EXPOSE 8001
+
+# Start Unit
+CMD ["unitd", "--no-daemon"]
