@@ -1,0 +1,33 @@
+{
+    "listeners": {
+        "*:8001": {
+            "pass": "routes",
+            "forwarded": {
+                "protocol": "X-Forwarded-Proto",
+                "source": ["0.0.0.0/0"]
+            }
+        }
+    },
+
+    "routes": [
+        {
+            "match": {
+                "uri": "/*"
+            },
+            "action": {
+                "share": "/var/www/jagomun/public$uri",
+                "fallback": {
+                    "pass": "applications/laravel"
+                }
+            }
+        }
+    ],
+
+    "applications": {
+        "jagomun": {
+            "type": "php",
+            "root": "/var/www/jagomun/public/",
+            "script": "index.php"
+        }
+    }
+}
