@@ -2,12 +2,12 @@ FROM unit:1.34.1-php8.3
 
 # Install PHP & system dependencies + Node.js
 RUN apt update && apt install -y \
-    curl unzip git gnupg libicu-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libssl-dev libpq-dev \
+    curl unzip git gnupg libicu-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libssl-dev \
+    default-mysql-client default-libmysqlclient-dev \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt install -y nodejs \
-    && apt install -y wget \
+    && apt install -y nodejs wget \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) pcntl opcache pdo pdo_pgsql intl zip gd exif ftp bcmath \
+    && docker-php-ext-install -j$(nproc) pcntl opcache pdo pdo_mysql intl zip gd exif ftp bcmath \
     && pecl install redis \
     && docker-php-ext-enable redis
 
@@ -43,10 +43,10 @@ RUN php artisan config:clear \
  && php artisan route:cache \
  && php artisan view:cache
 
-# Copy Nginx Unit config
+# Copy NGINX Unit config
 COPY unit.json /docker-entrypoint.d/unit.json
 
-# Expose Unit's default port
+# Expose NGINX Unit port
 EXPOSE 8001
 
 # Start Unit
