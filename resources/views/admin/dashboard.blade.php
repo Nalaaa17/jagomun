@@ -61,6 +61,10 @@
                     <i class="ri-mail-line mr-3"></i>
                     <span>Messages</span>
                 </a>
+                <a href="{{ route('admin.referrals.index') }}" class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-200 rounded-lg">
+                    <i class="ri-share-forward-line mr-3"></i>
+                    <span>Referrals</span>
+                </a>
                 <a href="{{ route('admin.registrations.export') }}" class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-200 rounded-lg">
                     <i class="ri-file-excel-2-line mr-3"></i>
                     <span>Download Excel</span>
@@ -103,9 +107,7 @@
                     <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-between">
                         <div>
                             <span class="text-sm text-gray-500">Pendaftar Terverifikasi</span>
-                            {{-- AWAL PERUBAHAN: Memberi ID untuk update real-time --}}
                             <p id="verified-count" class="text-3xl font-bold">{{ $registrations->where('is_verified', true)->count() }}</p>
-                            {{-- AKHIR PERUBAHAN --}}
                         </div>
                         <div class="bg-green-100 text-green-600 p-3 rounded-full">
                             <i class="ri-checkbox-circle-line text-2xl"></i>
@@ -169,7 +171,6 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rp {{ number_format($reg->total_price, 0, ',', '.') }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            {{-- AWAL PERUBAHAN: Toggle Switch untuk Verifikasi --}}
                                             <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
                                                 <input type="checkbox" name="toggle" id="toggle-{{ $reg->id }}"
                                                        class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer verification-checkbox"
@@ -178,9 +179,14 @@
                                                 <label for="toggle-{{ $reg->id }}" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
                                             </div>
                                             <span class="text-xs text-gray-500 status-text-{{ $reg->id }}">{{ $reg->is_verified ? 'Verified' : 'Pending' }}</span>
-                                            {{-- AKHIR PERUBAHAN --}}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reg->created_at->format('d M Y') }}</td>
+                                        {{-- ====================================================================== --}}
+                                        {{-- === AWAL PERUBAHAN: Menambahkan Jam dan Menit === --}}
+                                        {{-- ====================================================================== --}}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reg->created_at->format('d M Y, H:i') }}</td>
+                                        {{-- ====================================================================== --}}
+                                        {{-- === AKHIR PERUBAHAN === --}}
+                                        {{-- ====================================================================== --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex items-center space-x-4">
                                                 <a href="{{ route('admin.registration.detail', $reg->id) }}" class="text-indigo-600 hover:text-indigo-900" title="View Details"><i class="ri-eye-line"></i></a>
@@ -210,11 +216,12 @@
             const menuBtn = document.getElementById('menu-btn');
             const sidebar = document.querySelector('.sidebar');
 
-            menuBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('open');
-            });
+            if(menuBtn) {
+                menuBtn.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                });
+            }
 
-            // --- AWAL PERUBAHAN: Logika untuk Toggle Switch Verifikasi ---
             const checkboxes = document.querySelectorAll('.verification-checkbox');
             const verifiedCountEl = document.getElementById('verified-count');
 
@@ -243,18 +250,16 @@
                     })
                     .then(data => {
                         if(data.success) {
-                            // Update teks status di baris tabel
                             statusText.textContent = isChecked ? 'Verified' : 'Pending';
-
-                            // Update kartu statistik secara real-time
-                            let currentCount = parseInt(verifiedCountEl.textContent);
-                            if(isChecked) {
-                                verifiedCountEl.textContent = currentCount + 1;
-                            } else {
-                                verifiedCountEl.textContent = currentCount - 1;
+                            if(verifiedCountEl) {
+                                let currentCount = parseInt(verifiedCountEl.textContent);
+                                if(isChecked) {
+                                    verifiedCountEl.textContent = currentCount + 1;
+                                } else {
+                                    verifiedCountEl.textContent = currentCount - 1;
+                                }
                             }
                         } else {
-                            // Kembalikan toggle jika gagal
                             this.checked = !isChecked;
                             alert('Gagal memperbarui status dari server.');
                         }
@@ -266,7 +271,6 @@
                     });
                 });
             });
-            // --- AKHIR PERUBAHAN ---
         });
     </script>
 </body>

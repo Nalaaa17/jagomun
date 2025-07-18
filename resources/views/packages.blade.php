@@ -10,9 +10,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <style>
         body { font-family: 'Inter', sans-serif; }
         .text-navy { color: #1E2233; }
@@ -84,8 +84,8 @@
             <div class="flex justify-between items-center py-8">
                 <a href="#home">
                 <img src="{{ asset('images/logo.png') }}"
-                        alt="JAGOMUN 2025 Logo"
-                        class="h-20 w-auto">
+                         alt="JAGOMUN 2025 Logo"
+                         class="h-20 w-auto">
                 </a>
                 <div class="hidden lg:flex items-center space-x-8">
                     <a href="/" class="text-white hover:text-gold transition-colors duration-300">Home</a>
@@ -165,7 +165,7 @@
 
                 <div class="space-y-4">
 
-                    <div class="accordion-item bg-ivory border border-champagne rounded-lg">
+                    <div class="accordion-item bg-ivory border border-champagne rounded-lg" data-role="delegate individual student">
                         <button class="accordion-trigger w-full flex justify-between items-center text-left p-6">
                             <span class="text-xl font-bold text-navy">Full Accommodation</span>
                             <div class="flex items-center space-x-4">
@@ -174,11 +174,11 @@
                                     <span class="price hidden" data-role="delegate" data-currency="usd">$ 140</span>
                                     <span class="price hidden" data-role="individual" data-currency="idr">Rp 1.145.000</span>
                                     <span class="price hidden" data-role="individual" data-currency="usd">$ 73</span>
-                                    <span class="price hidden" data-role="observer" data-currency="idr">Rp 1.200.000</span>
-                                    <span class="price hidden" data-role="observer" data-currency="usd">$ 72</span>
                                     <span class="price hidden" data-role="student" data-currency="idr">Rp 1.200.000</span>
                                     <span class="price hidden" data-role="student" data-currency="usd">$ 72</span>
                                 </span>
+                                {{-- PERUBAHAN: Menambahkan label untuk jumlah delegasi --}}
+                                <span class="text-sm text-royal font-semibold ml-1 hidden" data-role-label="delegate">/ 2 Delegates</span>
                                 <svg class="chevron size-6 text-navy" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
                             </div>
                         </button>
@@ -196,7 +196,7 @@
                         </div>
                     </div>
 
-                    <div class="accordion-item bg-ivory border border-champagne rounded-lg">
+                    <div class="accordion-item bg-ivory border border-champagne rounded-lg" data-role="delegate individual observer student">
                         <button class="accordion-trigger w-full flex justify-between items-center text-left p-6">
                             <span class="text-xl font-bold text-navy">Non-Accommodation</span>
                             <div class="flex items-center space-x-4">
@@ -210,15 +210,24 @@
                                     <span class="price hidden" data-role="student" data-currency="idr">Rp 495.000</span>
                                     <span class="price hidden" data-role="student" data-currency="usd">$ 32</span>
                                 </span>
+                                {{-- PERUBAHAN: Menambahkan label untuk jumlah delegasi --}}
+                                <span class="text-sm text-royal font-semibold ml-1 hidden" data-role-label="delegate">/ 2 Delegates</span>
                                 <svg class="chevron size-6 text-navy" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
                             </div>
                         </button>
                          <div class="accordion-content">
                             <div class="px-6 pb-6 text-royal border-t border-champagne">
-                                <ul class="list-disc list-inside mt-4 space-y-2">
+                                <ul class="list-disc list-inside mt-4 space-y-2" data-role-content="delegate individual student">
                                     <li>Full Access to All Conference Sessions</li>
                                     <li>Delegate Kit & Certificate</li>
-                                    <li>Full Meals</li>
+                                    <li>Meals during sessions</li>
+                                    <li>Social Night Access</li>
+                                    <li class="text-gray-500"><em>(Does not include hotel, airport transfer, and local transportation)</em></li>
+                                </ul>
+                                <ul class="list-disc list-inside mt-4 space-y-2 hidden" data-role-content="observer">
+                                    <li>Full Access to All Conference Sessions</li>
+                                    <li>Observer Kit & Certificate</li>
+                                    <li>Meals during sessions</li>
                                     <li>Social Night Access</li>
                                     <li class="text-gray-500"><em>(Does not include hotel, airport transfer, and local transportation)</em></li>
                                 </ul>
@@ -226,9 +235,9 @@
                         </div>
                     </div>
 
-                    <div class="accordion-item bg-ivory border border-champagne rounded-lg">
+                    <div class="accordion-item bg-ivory border border-champagne rounded-lg" data-role="delegate individual observer student">
                         <button class="accordion-trigger w-full flex justify-between items-center text-left p-6">
-                            <span class="text-xl font-bold text-navy">Online Delegate</span>
+                            <span id="online-package-title" class="text-xl font-bold text-navy">Online Delegate</span>
                             <div class="flex items-center space-x-4">
                                 <span class="text-xl font-semibold text-gold">
                                     <span class="price hidden" data-role="delegate" data-currency="idr">Rp 180.000</span>
@@ -238,16 +247,23 @@
                                     <span class="price hidden" data-role="observer" data-currency="idr">Rp 75.000</span>
                                     <span class="price hidden" data-role="observer" data-currency="usd">$ 5</span>
                                      <span class="price hidden" data-role="student" data-currency="idr">Rp 85.000</span>
-                                    <span class="price hidden" data-role="student" data-currency="usd">$6</span>
+                                     <span class="price hidden" data-role="student" data-currency="usd">$6</span>
                                 </span>
+                                {{-- PERUBAHAN: Menambahkan label untuk jumlah delegasi --}}
+                                <span class="text-sm text-royal font-semibold ml-1 hidden" data-role-label="delegate">/ 2 Delegates</span>
                                 <svg class="chevron size-6 text-navy" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
                             </div>
                         </button>
                          <div class="accordion-content">
-                           <div class="px-6 pb-6 text-royal border-t border-champagne">
-                                <ul class="list-disc list-inside mt-4 space-y-2">
+                            <div class="px-6 pb-6 text-royal border-t border-champagne">
+                                <ul class="list-disc list-inside mt-4 space-y-2" data-role-content="delegate individual student">
                                     <li>Full Access to All Conference Sessions via Zoom/Platform</li>
-                                    <li>E-Certificate</li>
+                                    <li>Delegate Kit & E-Certificate</li>
+                                    <li>Opportunity to win awards</li>
+                                </ul>
+                                <ul class="list-disc list-inside mt-4 space-y-2 hidden" data-role-content="observer">
+                                    <li>Full Access to All Conference Sessions via Zoom/Platform</li>
+                                    <li>Observer Kit & E-Certificate</li>
                                     <li>Opportunity to win awards</li>
                                 </ul>
                             </div>
@@ -260,15 +276,29 @@
     </main>
 
     <footer class="bg-navy py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
-            <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
-            <p class="text-sm">Organized by UNEJ Model United Nations Club</p>
+    <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
+        <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
+        <p class="text-sm mb-4">Organized by UNEJ Model United Nations Club</p>
+
+        <div class="flex justify-center space-x-6 text-white text-lg">
+            <a href="https://www.instagram.com/jagomun.2025" target="_blank" class="hover:text-white">
+                <i class="ri-instagram-line"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/jagomun/" target="_blank" class="hover:text-white">
+                <i class="ri-linkedin-box-line"></i>
+            </a>
+            <a href="mailto:Jagomunofficial@gmail.com" class="hover:text-white">
+                <i class="ri-mail-line"></i>
+            </a>
+            <a href="https://wa.me/6281217248675" target="_blank" class="hover:text-white">
+                <i class="ri-whatsapp-line"></i>
+            </a>
         </div>
-    </footer>
+    </div>
+</footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
@@ -280,20 +310,68 @@
 
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
 
             let activeRole = 'delegate';
             let activeCurrency = 'idr';
 
             const roleToggles = document.querySelectorAll('.role-toggle');
             const currencyToggles = document.querySelectorAll('.currency-toggle');
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            const onlinePackageTitle = document.getElementById('online-package-title');
 
-            function updatePrices() {
+            function updateDisplay() {
+                // 1. Update Prices
                 document.querySelectorAll('.price').forEach(p => p.classList.add('hidden'));
-                const selector = `.price[data-role="${activeRole}"][data-currency="${activeCurrency}"]`;
-                document.querySelectorAll(selector).forEach(p => p.classList.remove('hidden'));
+                const priceSelector = `.price[data-role="${activeRole}"][data-currency="${activeCurrency}"]`;
+                document.querySelectorAll(priceSelector).forEach(p => p.classList.remove('hidden'));
+
+                // 2. Update Accordion Visibility
+                accordionItems.forEach(item => {
+                    const roles = item.dataset.role.split(' ');
+                    if (roles.includes(activeRole)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                // 3. Update Accordion Content
+                document.querySelectorAll('[data-role-content]').forEach(content => {
+                    const roles = content.dataset.roleContent.split(' ');
+                    if (roles.includes(activeRole)) {
+                        content.classList.remove('hidden');
+                    } else {
+                        content.classList.add('hidden');
+                    }
+                });
+
+                // 4. Update Online Package Title
+                if (onlinePackageTitle) {
+                    if (activeRole === 'observer') {
+                        onlinePackageTitle.textContent = 'Online Observer';
+                    } else {
+                        onlinePackageTitle.textContent = 'Online Delegate';
+                    }
+                }
+
+                // ======================================================================
+                // === AWAL PERUBAHAN: Logika untuk menampilkan label jumlah delegasi ===
+                // ======================================================================
+                document.querySelectorAll('[data-role-label]').forEach(label => {
+                    if (label.dataset.roleLabel === activeRole) {
+                        label.classList.remove('hidden');
+                    } else {
+                        label.classList.add('hidden');
+                    }
+                });
+                // ======================================================================
+                // === AKHIR PERUBAHAN ===
+                // ======================================================================
             }
 
             roleToggles.forEach(toggle => {
@@ -301,7 +379,7 @@
                     activeRole = this.id.replace('btn-', '');
                     roleToggles.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
-                    updatePrices();
+                    updateDisplay();
                 });
             });
 
@@ -310,7 +388,7 @@
                     activeCurrency = this.id.replace('btn-', '');
                     currencyToggles.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
-                    updatePrices();
+                    updateDisplay();
                 });
             });
 
@@ -324,7 +402,8 @@
                 });
             });
 
-            updatePrices();
+            // Initial call
+            updateDisplay();
         });
     </script>
 </body>

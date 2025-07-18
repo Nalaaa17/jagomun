@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <script>
         // Konfigurasi Tailwind CSS untuk warna dan animasi kustom
         tailwind.config = {
@@ -452,42 +453,21 @@ no-scrollbar::-webkit-scrollbar {
 
     <section id="news" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('/images/raja.jpg');">
     <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
-    {{-- <div class="absolute inset-0 z-[-1]" style="background: linear-gradient(to bottom, #1E2233 0%, #151826 100%);"></div> --}}
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-20 scroll-reveal">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
                 News <span class="gradient-text">JAGOMUN 2025</span>
             </h2>
-            <p class="text-xl text-white/80 max-w-3xl mx-auto">Follow our journey and stay updated with key announcements.</p>
         </div>
 
         <div class="relative">
-            <div class="absolute left-0 top-1/2 w-full h-1 -translate-y-1/2 bg-gradient-to-r from-transparent via-gold to-transparent opacity-30"></div>
-
-            <div class="relative flex flex-col lg:flex-row justify-between items-center w-full gap-12 lg:gap-8">
+            <div class="relative flex flex-col lg:flex-row justify-center items-center w-full gap-12 lg:gap-16">
 
                 <div class="w-full lg:w-1/3 scroll-reveal">
                     <div class="relative text-center">
-                        <div class="absolute left-1/2 -translate-x-1/2 -top-4 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
-                            <i class="fas fa-calendar-check text-gold text-xs"></i>
-                        </div>
-                        <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover" style="--glow-color: 180, 151, 107;">
-                            <div class="overflow-hidden">
-                                <img src="https://images.pexels.com/photos/4439444/pexels-photo-4439444.jpeg" alt="Registration" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Registration Opens Soon!</h3>
-                                <p class="text-white/80 text-sm">Get ready! Delegate registration is set to open on 21 Juli 2025. Prepare your applications and secure your spot early!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w-full lg:w-1/3 scroll-reveal" style="transition-delay: 200ms;">
-                    <div class="relative text-center">
-                         <div class="absolute left-1/2 -translate-x-1/2 -top-4 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
-                             <i class="fas fa-dollar-sign text-gold text-xs"></i>
+                        <div class="absolute left-1/2 -translate-x-1/2 -top-4 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
+                            <i class="fas fa-dollar-sign text-gold text-xs"></i>
                         </div>
                         <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover" style="--glow-color: 180, 151, 107;">
                             <div class="overflow-hidden">
@@ -495,24 +475,24 @@ no-scrollbar::-webkit-scrollbar {
                             </div>
                             <div class="p-6">
                                 <h3 class="text-xl font-bold text-white mb-2">Early Bird Cashback </h3>
-                                <p class="text-white/80 text-sm">Exciting news! We'll be offering early bird cashback for the first 5 delegates who register got cashback 5%!!</p>
+                                <p class="text-white/80 text-sm text-justify">Exciting news! We'll be offering early bird cashback for the first 5 delegates who register got cashback 5%!!</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="w-full lg:w-1/3 scroll-reveal" style="transition-delay: 400ms;">
+                <div class="w-full lg:w-1/3 scroll-reveal" style="transition-delay: 200ms;">
                     <div class="relative text-center">
-                        <div class="absolute left-1/2 -translate-x-1/2 -top-4 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
-                             <i class="fas fa-book-open text-gold text-xs"></i>
+                        <div class="absolute left-1/2 -translate-x-1/2 -top-4 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
+                            <i class="fas fa-book-open text-gold text-xs"></i>
                         </div>
                         <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover" style="--glow-color: 180, 151, 107;">
-                           <div class="overflow-hidden">
+                            <div class="overflow-hidden">
                                 <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop" alt="Topics" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                             </div>
                             <div class="p-6">
                                 <h3 class="text-xl font-bold text-white mb-2">Topics Revealed!</h3>
-                                <p class="text-white/80 text-sm">Curious about the topics? The detailed information for all councils and their topics can be found in the “Council” menu.</p>
+                                <p class="text-white/80 text-sm text-justify">Curious about the topics? The detailed information for all councils and their topics can be found in the “Council” menu.</p>
                             </div>
                         </div>
                     </div>
@@ -549,7 +529,7 @@ no-scrollbar::-webkit-scrollbar {
                 <h3 class="text-3xl font-bold text-white mb-4 relative z-10">Oktaviani Rosmala</h3>
 
                 <div class="text-white/90 space-y-4 leading-relaxed">
-                    <p class="font-semibold italic">
+                    <p class="font-semibold italic text-justify">
                         "It is with great pride and heartfelt enthusiasm to introducing Jember Annual Global Model United Nations (JAGOMUN) 2025.
 
                         This year’s theme, Bridging the Gap: Reimagining World Prosperity and Development Amid Shifting Global Forces,” calls upon us all to reflect, question, and act. We live in a time where global forces — from geopolitical tension — continue to reshape our shared future. In the face of uncertainty, the world needs bold, empathetic, and forward-thinking leaders more than ever.
@@ -558,13 +538,13 @@ no-scrollbar::-webkit-scrollbar {
 
                     </p>
 
-                    <p class="pt-4 border-t border-gold/20">
+                    <p class="pt-4 border-t border-gold/20 text-justify">
                         At JAGOMUN, we believe that young people are not just future leaders — you are today’s changemakers. Your ideas, your passion, and your voice have the power to influence discourse, bridge global divides, and reimagine development that is inclusive and sustainable.
 
                         JAGOMUN is more than a simulation; it is a living, breathing space for youth to sharpen their diplomacy, build cross-cultural understanding, and take responsibility as global citizens.
 
                     </p>
-                    <p>
+                    <p class="text-justify">
                         This conference is your platform to grow, challenge perspectives, and become catalysts for real-world change. Whether you are speaking in committee sessions, drafting resolutions, or engaging in cultural exchange — your role here matters.
 
                         Welcome to JAGOMUN 2025 — where youth lead the conversation, diplomacy drives action, and the future begins with you
@@ -634,30 +614,32 @@ no-scrollbar::-webkit-scrollbar {
                 <h2 class="text-4xl md:text-5xl font-bold text-white">
                     Delegates <span class="gradient-text">Experience</span>
                 </h2>
-                <div class="w-24 h-1 bg-gold mx-auto mt-6 mb-16"></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
                 <div class="flex flex-col items-center text-center">
                     <blockquote class="text-lg text-ivory/90 leading-relaxed italic">
-                        <p>"JAGOMUN provides an unforgettable experience. JAGOMUN offers new things by bringing the nuances and characteristic of the beautiful Jember district. Apart from that, the commite works very profesionally and reliably so that we delegates feel comfortable when participating in JAGOMUN. I highly recommend you to join JAGOMUN this year."</p>
+                        <p class="text-justify">"It was an opportunity to attend JAGOMUN 2024 as a delegate. One of the aspects that i really liked from jagomun2024 was the hard working hospitality crews, not only did we get to experience what a proper MUN is like but their to interact with the staffs especially them was a great experience itself!, at first i was already stunned and nervous by the new environment of Jember, but the welcoming greets from the hospitality crews really makes me feels welcomed there, not to mention that (IIRC) 2 nights after we arrived in the hotel, hospitality crews took me and my friends to roam the city and have fun, the event itself was really great!, its not exactly the usual MUN where i felt so pressured, something about the chair/co-chair and the room itself makes me feel so calm and respected, jagomun2024 was the best thing a MUN beginners can learn from and it was very memorable to me since i learned a lot and learned things outside the MUN experience itself, it was definitely definitely worth it."</p>
                     </blockquote>
                     <div class="mt-8 flex flex-col items-center">
-                        <img class="h-20 w-20 rounded-full object-cover border-2 border-gold" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Avatar of Naufal Ammar Fathan Suahrol">
+                        <img class="h-40 w-40 rounded-full object-cover border-2 border-gold" src="{{ asset('images/muh.jpg') }}">
                         <div class="mt-4">
-                            <p class="text-xl font-semibold text-champagne">Naufal Ammar Fathan Suahrol</p>
+                            <p class="text-xl font-semibold text-champagne">Muhammad Randy Rustaman</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex flex-col items-center text-center">
-                     <blockquote class="text-lg text-ivory/90 leading-relaxed italic">
-                        <p>"As the closing of my highschool MUN journey, JAGOMUN 2023 was a valuable experience and treasured memory until now. The conference offered an oppurtunity for me to delve deeper into how intense MUN could be; I cloud really feel how much is at stake when going through heated debates and back-to-back negotiations between blocs. I've not only improved my problem solving and diplomacy skills, but also my research abilities in ensuring a substantive debate. I wholeheartedly recommend future delegates to join JAGOMUN 2024 if you're in search for refreshing and engaging experience in MUN, regardless of whether you're a beginner or an advantage delegates."</p>
-                    </blockquote>
+                         <blockquote class="text-lg text-ivory/90 leading-relaxed italic">
+                            <p class="text-justify">"Based on my experience at JAGOMUN 2024, I was genuinely impressed by the entire committee, especially the Delegate Relations division. They made sure every aspect of the delegates' needs was well taken care of. I was one of the accommodation delegates, and from the moment they picked me up, they were incredibly helpful and welcoming. They even accompanied me to a souvenir shop to buy some traditional snacks from Jember, and brought me to explore the night market. What impressed me the most was they didn’t just support us as committee members, but also treated us like friends.
+                                 Everything else like meals, hotel arrangements, and the whole event was excellent as well. Perhaps one small suggestion for this year is it might be even more helpful if delegates could be accompanied to the station, especially for those unfamiliar with the city. A little extra support like that would make the experience feel even more comfortable.
+                                 So, if you’re considering getting the accommodation package, I highly recommend it. Go for it, and don’t hesitate! :))
+                                 "</p>
+                        </blockquote>
                     <div class="mt-8 flex flex-col items-center">
-                        <img class="h-20 w-20 rounded-full object-cover border-2 border-gold" src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Avatar of Mitalia Habsari Suwanda">
+                        <img class="h-40 w-40 rounded-full object-cover border-2 border-gold" src="{{ asset('images/depi.jpg') }}">
                         <div class="mt-4">
-                            <p class="text-xl font-semibold text-champagne">Mitalia Habsari Suwanda</p>
+                            <p class="text-xl font-semibold text-champagne">Depi Mulyani</p>
                         </div>
                     </div>
                 </div>
@@ -680,7 +662,7 @@ no-scrollbar::-webkit-scrollbar {
                     <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>JAGOMUN is open to all university students and high school students aged 15-25.</p>
+                    <p class="text-justify">JAGOMUN is open to all university students and high school students aged 15-25.</p>
                 </div>
             </div>
 
@@ -690,7 +672,7 @@ no-scrollbar::-webkit-scrollbar {
                     <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>The facilities provided will depend on the package delegate choose. If delegate register with the Accommodation Package, we will provide lodging and local transportation during your stay in Jember, along with meals and full access to all conference sessions. For those who choose the
+                    <p class="text-justify">The facilities provided will depend on the package delegate choose. If delegate register with the Accommodation Package, we will provide lodging and local transportation during your stay in Jember, along with meals and full access to all conference sessions. For those who choose the
                         Non-Accommodation Package we provide meals and full access to the conference, but accommodation and local transport are not included. Meanwhile, participants who register under the Online Packagewill receive full access to all conference sessions, materials, and activities virtually through our online platform.
                     </p>
                 </div>
@@ -702,7 +684,7 @@ no-scrollbar::-webkit-scrollbar {
                     <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>The event will commence with an Opening Ceremony,  featuring a talk show with distinguished speakers who are experts in their respective fields, accompanied by welcoming remarks delivered by prominent figures. The core of the event will be the Committee Sessions, where delegates will engage in structured debates, negotiations, and resolution drafting—simulating real diplomatic discussions. To encourage engagement and build meaningful connections among participants, the agenda will also include Social Nights and gala dinner, offering a space for informal interaction and camaraderie. The program will conclude with a Closing Ceremony and Awarding Session, which will be thoughtfully arranged and enhanced with entertainment segments to provide a memorable conclusion to the entire experience.</p>
+                    <p class="text-justify">The event will commence with an Opening Ceremony,  featuring a talk show with distinguished speakers who are experts in their respective fields, accompanied by welcoming remarks delivered by prominent figures. The core of the event will be the Committee Sessions, where delegates will engage in structured debates, negotiations, and resolution drafting—simulating real diplomatic discussions. To encourage engagement and build meaningful connections among participants, the agenda will also include Social Nights and gala dinner, offering a space for informal interaction and camaraderie. The program will conclude with a Closing Ceremony and Awarding Session, which will be thoughtfully arranged and enhanced with entertainment segments to provide a memorable conclusion to the entire experience.</p>
                 </div>
             </div>
 
@@ -712,7 +694,7 @@ no-scrollbar::-webkit-scrollbar {
                     <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
-                    <p>Absolutely! JAGOMUN is open to delegates of all experience levels. We highly recommend beginner councils like UNEP or UNHCR for first-timers. Additionally, we will provide training materials and a workshop session to help you understand the Rules of Procedure and basic MUN concepts.</p>
+                    <p class="text-justify">Absolutely! JAGOMUN is open to delegates of all experience levels. We highly recommend beginner councils like UNEP or UNHCR for first-timers. Additionally, we will provide training materials and a workshop session to help you understand the Rules of Procedure and basic MUN concepts.</p>
                 </div>
             </div>
         </div>
@@ -722,8 +704,8 @@ no-scrollbar::-webkit-scrollbar {
     <section id="register" class="py-20" style="background: linear-gradient(135deg, #2D3B61 0%, #1E2233 100%);">
         <div class="max-w-4xl mx-auto px-4 text-center scroll-reveal">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Are You Ready to Speak, Lead, and  Embrace your Diplomacy?</h2>
-            <p class="text-xl text-champagne mb-12">
-                JAGOMUN 2025 registration is now open!  Don’t miss your chance to be part of the most anticipated and origin Model United Nations conference in East Java. Secure your seat at the table today!
+            <p class="text-xl text-champagne mb-12 text-justify">
+                JAGOMUN 2025 registration is now open!  Don’t miss your chance to be part of the most anticipated and origin Model United Nations conference in East Java. Secure your seat at the table today!
             </p>
             <a href="#" class="group relative inline-flex items-center justify-center px-10 py-4 text-xl font-semibold text-navy bg-gradient-to-r from-gold to-champagne rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 Register Now
@@ -732,11 +714,26 @@ no-scrollbar::-webkit-scrollbar {
     </section>
 
     <footer class="bg-navy py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
-            <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
-            <p class="text-sm">Organized by UNEJ Model United Nations Club</p>
+    <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
+        <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
+        <p class="text-sm mb-4">Organized by UNEJ Model United Nations Club</p>
+
+        <div class="flex justify-center space-x-6 text-white text-lg">
+            <a href="https://www.instagram.com/jagomun.2025" target="_blank" class="hover:text-white">
+                <i class="ri-instagram-line"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/jagomun/" target="_blank" class="hover:text-white">
+                <i class="ri-linkedin-box-line"></i>
+            </a>
+            <a href="mailto:Jagomunofficial@gmail.com" class="hover:text-white">
+                <i class="ri-mail-line"></i>
+            </a>
+            <a href="https://wa.me/6281217248675" target="_blank" class="hover:text-white">
+                <i class="ri-whatsapp-line"></i>
+            </a>
         </div>
-    </footer>
+    </div>
+</footer>
 
     <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -857,7 +854,7 @@ const councilData = {
                 <div class="space-y-6">
                     <div>
                         <h3 class="text-2xl font-bold text-gold mb-2">About ${council.title}</h3>
-                        <p class="text-white/80 leading-relaxed break-words">${council.description}</p>
+                        <p class="text-white/80 leading-relaxed break-words text-justify">${council.description}</p>
                     </div>
                     <div class="bg-navy/50 p-4 rounded-lg">
                         <h4 class="font-bold text-white mb-3 flex items-center"><i class="fas fa-book-open mr-2 text-gold"></i>Topics of Discussion</h4>
