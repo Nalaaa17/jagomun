@@ -112,7 +112,6 @@
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Kontak Utama</dt><dd class="text-gray-800">{{ $registration->full_name ?? '-' }}</dd></div>
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Email Kontak</dt><dd class="text-gray-800">{{ $registration->email ?? '-' }}</dd></div>
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Telepon Kontak</dt><dd class="text-gray-800">{{ $registration->phone ?? '-' }}</dd></div>
-                            <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Referral Code</dt><dd class="text-gray-800 font-semibold">{{ $registration->partnership_code ?? '-' }}</dd></div>
                         </dl>
                     </div>
                 </div>
@@ -241,17 +240,6 @@
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Gender</dt><dd class="text-gray-800">{{ $registration->gender ?? '-' }}</dd></div>
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Institusi</dt><dd class="text-gray-800">{{ $registration->institution_name ?? '-' }}</dd></div>
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Domisili/Kebangsaan</dt><dd class="text-gray-800">{{ $registration->nationality ?? '-' }}</dd></div>
-
-                            {{-- ====================================================================== --}}
-                            {{-- === AWAL PERUBAHAN: Menampilkan Council Preference untuk Observer === --}}
-                            {{-- ====================================================================== --}}
-                            @if($registration->registering_as == 'Observer')
-                            <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Council to Observe</dt><dd class="text-gray-800 font-semibold">{{ $registration->council_preference_1 ?? '-' }}</dd></div>
-                            @endif
-                            {{-- ====================================================================== --}}
-                            {{-- === AKHIR PERUBAHAN === --}}
-                            {{-- ====================================================================== --}}
-
                             <div class="space-y-1 lg:col-span-3"><dt class="font-medium text-gray-500 text-sm">Alamat Lengkap</dt><dd class="text-gray-800 whitespace-normal">{{ $registration->full_address ?? '-' }}</dd></div>
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Metode Kehadiran</dt>
                                 <dd class="font-medium">
@@ -274,6 +262,7 @@
                     </div>
                 </div>
 
+                {{-- PERBAIKAN: Bagian ini sekarang akan tampil untuk Individual/Observer --}}
                 <div class="bg-white overflow-hidden shadow-md rounded-lg">
                     <div class="p-6 border-b border-gray-200">
                         <h2 class="text-xl font-semibold text-gray-800">Dokumen Pendukung</h2>
@@ -339,6 +328,7 @@
                         </div>
                     </div>
                 </div>
+                {{-- AKHIR PERBAIKAN --}}
             @endif
 
         </div>

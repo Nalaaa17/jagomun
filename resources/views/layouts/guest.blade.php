@@ -10,7 +10,6 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -99,27 +98,12 @@
         </main>
     </div>
 
-    <footer class="bg-navy py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
-        <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
-        <p class="text-sm mb-4">Organized by UNEJ Model United Nations Club</p>
-
-        <div class="flex justify-center space-x-6 text-white text-lg">
-            <a href="https://www.instagram.com/jagomun.2025" target="_blank" class="hover:text-white">
-                <i class="ri-instagram-line"></i>
-            </a>
-            <a href="https://www.linkedin.com/company/jagomun/" target="_blank" class="hover:text-white">
-                <i class="ri-linkedin-box-line"></i>
-            </a>
-            <a href="mailto:Jagomunofficial@gmail.com" class="hover:text-white">
-                <i class="ri-mail-line"></i>
-            </a>
-            <a href="https://wa.me/6281217248675" target="_blank" class="hover:text-white">
-                <i class="ri-whatsapp-line"></i>
-            </a>
+    <footer style="background-color: var(--color-navy);" class="py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
+            <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
+            <p class="text-sm">Organized by UNEJ Model United Nations Club</p>
         </div>
-    </div>
-</footer>
+    </footer>
 
     <script>
     // Menjalankan semua script setelah seluruh konten halaman dimuat

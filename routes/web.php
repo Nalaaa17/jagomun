@@ -9,7 +9,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\Admin\ReferralCodeController;
 
 
 /*
@@ -44,15 +43,6 @@ Route::prefix('register')->name('registration.')->group(function () {
     Route::get('/success', [RegistrationController::class, 'success'])->name('success');
 });
 
-// ======================================================================
-// === AWAL PERUBAHAN: Rute untuk validasi kode referral dipindahkan ke sini ===
-// ======================================================================
-Route::post('/referrals/check', [RegistrationController::class, 'checkReferral'])->name('referrals.check');
-// ======================================================================
-// === AKHIR PERUBAHAN ===
-// ======================================================================
-
-
 // --- ADMIN AUTHENTICATION ROUTES ---
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('login');
@@ -67,13 +57,10 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     Route::get('/registrations/{registration}', [AdminController::class, 'showRegistrationDetail'])->name('registration.detail');
     Route::get('contacts', [ContactMessageController::class, 'index'])->name('contacts.index');
     Route::delete('contacts/{contact}', [ContactMessageController::class, 'destroy'])->name('contacts.destroy');
+    // Mengarah ke AdminController dan fungsi toggleVerification
     Route::post('/registrations/{registration}/toggle-verification', [AdminController::class, 'toggleVerification'])->name('registration.toggleVerification');
     Route::delete('/registrations/{id}', [AdminController::class, 'destroy'])->name('registration.destroy');
 
-    // Menggunakan Route::resource untuk menyederhanakan rute CRUD Referral
-    Route::resource('referrals', ReferralCodeController::class)->except(['show']);
-
-    // Rute check referral DIHAPUS dari sini karena sudah dipindah ke atas
 });
 
 // Laravel Breeze Authentication Routes (jika masih diperlukan untuk user biasa)
@@ -87,3 +74,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/packages', [App\Http\Controllers\PageController::class, 'packages'])->name('packages');
+

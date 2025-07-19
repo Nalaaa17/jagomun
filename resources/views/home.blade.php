@@ -9,8 +9,40 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<<<<<<< HEAD
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+=======
+    <script>
+        // Konfigurasi Tailwind CSS untuk warna dan animasi kustom
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#1E2233',
+                        'royal': '#2D3B61',
+                        'gold': '#B4976B',
+                        'champagne': '#D6C4A4',
+                        'ivory': '#F2EFEA'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fadeInUp': 'fadeInUp 0.8s ease-out',
+                        'slideInLeft': 'slideInLeft 0.8s ease-out',
+                        'slideInRight': 'slideInRight 0.8s ease-out',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-slow': 'pulse 4s infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Menggunakan font Inter untuk tampilan yang bersih dan modern */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+>>>>>>> parent of 889b5eb (Modifikasi sebelum hosting)
 
 
     {{-- BARIS INI MENGGANTIKAN SEMUA CDN DAN STYLE INLINE ANDA --}}
@@ -89,6 +121,7 @@
              </div>
          </section>
 
+<<<<<<< HEAD
      <section id="news" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('{{ asset('images/raja.jpg') }}');">
      <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
 
@@ -135,6 +168,75 @@
                          </div>
                      </div>
                  </div>
+=======
+    <section id="news" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('/images/raja.jpg');">
+    <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
+    {{-- <div class="absolute inset-0 z-[-1]" style="background: linear-gradient(to bottom, #1E2233 0%, #151826 100%);"></div> --}}
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-20 scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                News <span class="gradient-text">JAGOMUN 2025</span>
+            </h2>
+            <p class="text-xl text-white/80 max-w-3xl mx-auto">Follow our journey and stay updated with key announcements.</p>
+        </div>
+
+        <div class="relative">
+            <div class="absolute left-0 top-1/2 w-full h-1 -translate-y-1/2 bg-gradient-to-r from-transparent via-gold to-transparent opacity-30"></div>
+
+            <div class="relative flex flex-col lg:flex-row justify-between items-center w-full gap-12 lg:gap-8">
+
+                <div class="w-full lg:w-1/3 scroll-reveal">
+                    <div class="relative text-center">
+                        <div class="absolute left-1/2 -translate-x-1/2 -top-4 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
+                            <i class="fas fa-calendar-check text-gold text-xs"></i>
+                        </div>
+                        <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover" style="--glow-color: 180, 151, 107;">
+                            <div class="overflow-hidden">
+                                <img src="https://images.pexels.com/photos/4439444/pexels-photo-4439444.jpeg" alt="Registration" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Registration Opens Soon!</h3>
+                                <p class="text-white/80 text-sm">Get ready! Delegate registration is set to open on 21 Juli 2025. Prepare your applications and secure your spot early!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/3 scroll-reveal" style="transition-delay: 200ms;">
+                    <div class="relative text-center">
+                         <div class="absolute left-1/2 -translate-x-1/2 -top-4 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
+                             <i class="fas fa-dollar-sign text-gold text-xs"></i>
+                        </div>
+                        <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover" style="--glow-color: 180, 151, 107;">
+                            <div class="overflow-hidden">
+                                <img src="https://images.pexels.com/photos/5625130/pexels-photo-5625130.jpeg" alt="Discount" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Early Bird Cashback </h3>
+                                <p class="text-white/80 text-sm">Exciting news! We'll be offering early bird cashback for the first 5 delegates who register got cashback 5%!!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/3 scroll-reveal" style="transition-delay: 400ms;">
+                    <div class="relative text-center">
+                        <div class="absolute left-1/2 -translate-x-1/2 -top-4 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
+                             <i class="fas fa-book-open text-gold text-xs"></i>
+                        </div>
+                        <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover" style="--glow-color: 180, 151, 107;">
+                           <div class="overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop" alt="Topics" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Topics Revealed!</h3>
+                                <p class="text-white/80 text-sm">Curious about the topics? The detailed information for all councils and their topics can be found in the “Council” menu.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+>>>>>>> parent of 889b5eb (Modifikasi sebelum hosting)
 
              </div>
          </div>
@@ -167,12 +269,19 @@
 
                  <h3 class="text-3xl font-bold text-white mb-4 relative z-10">Oktaviani Rosmala</h3>
 
+<<<<<<< HEAD
                  <div class="text-white/90 space-y-4 leading-relaxed">
                      <p class="font-semibold italic text-justify">
                          "It is with great pride and heartfelt enthusiasm to introducing Jember Annual Global Model United Nations (JAGOMUN) 2025.
+=======
+                <div class="text-white/90 space-y-4 leading-relaxed">
+                    <p class="font-semibold italic">
+                        "It is with great pride and heartfelt enthusiasm to introducing Jember Annual Global Model United Nations (JAGOMUN) 2025.
+>>>>>>> parent of 889b5eb (Modifikasi sebelum hosting)
 
                          This year’s theme, Bridging the Gap: Reimagining World Prosperity and Development Amid Shifting Global Forces,” calls upon us all to reflect, question, and act. We live in a time where global forces — from geopolitical tension — continue to reshape our shared future. In the face of uncertainty, the world needs bold, empathetic, and forward-thinking leaders more than ever.
 
+<<<<<<< HEAD
                          And that is where youths take the voice and action!"
                      </p>
                      <p class="pt-4 border-t border-gold/20 text-justify">
@@ -187,6 +296,29 @@
              </div>
          </div>
      </div>
+=======
+                        And that is where youths take the voice and action!"
+
+                    </p>
+
+                    <p class="pt-4 border-t border-gold/20">
+                        At JAGOMUN, we believe that young people are not just future leaders — you are today’s changemakers. Your ideas, your passion, and your voice have the power to influence discourse, bridge global divides, and reimagine development that is inclusive and sustainable.
+
+                        JAGOMUN is more than a simulation; it is a living, breathing space for youth to sharpen their diplomacy, build cross-cultural understanding, and take responsibility as global citizens.
+
+                    </p>
+                    <p>
+                        This conference is your platform to grow, challenge perspectives, and become catalysts for real-world change. Whether you are speaking in committee sessions, drafting resolutions, or engaging in cultural exchange — your role here matters.
+
+                        Welcome to JAGOMUN 2025 — where youth lead the conversation, diplomacy drives action, and the future begins with you
+
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+>>>>>>> parent of 889b5eb (Modifikasi sebelum hosting)
 </div>
 </section>
 
@@ -239,6 +371,7 @@
      </div>
 </section>
 
+<<<<<<< HEAD
      <section id="testimonials" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('{{ asset('images/raja.jpg') }}');">
          <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -278,10 +411,52 @@
              </div>
          </div>
      </section>
+=======
+    <section id="testimonials" class="py-24 bg-navy relative overflow-hidden parallax-section" style="--bg-image: url('/images/raja.jpg');">
+        <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white">
+                    Delegates <span class="gradient-text">Experience</span>
+                </h2>
+                <div class="w-24 h-1 bg-gold mx-auto mt-6 mb-16"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+                <div class="flex flex-col items-center text-center">
+                    <blockquote class="text-lg text-ivory/90 leading-relaxed italic">
+                        <p>"JAGOMUN provides an unforgettable experience. JAGOMUN offers new things by bringing the nuances and characteristic of the beautiful Jember district. Apart from that, the commite works very profesionally and reliably so that we delegates feel comfortable when participating in JAGOMUN. I highly recommend you to join JAGOMUN this year."</p>
+                    </blockquote>
+                    <div class="mt-8 flex flex-col items-center">
+                        <img class="h-20 w-20 rounded-full object-cover border-2 border-gold" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Avatar of Naufal Ammar Fathan Suahrol">
+                        <div class="mt-4">
+                            <p class="text-xl font-semibold text-champagne">Naufal Ammar Fathan Suahrol</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center text-center">
+                     <blockquote class="text-lg text-ivory/90 leading-relaxed italic">
+                        <p>"As the closing of my highschool MUN journey, JAGOMUN 2023 was a valuable experience and treasured memory until now. The conference offered an oppurtunity for me to delve deeper into how intense MUN could be; I cloud really feel how much is at stake when going through heated debates and back-to-back negotiations between blocs. I've not only improved my problem solving and diplomacy skills, but also my research abilities in ensuring a substantive debate. I wholeheartedly recommend future delegates to join JAGOMUN 2024 if you're in search for refreshing and engaging experience in MUN, regardless of whether you're a beginner or an advantage delegates."</p>
+                    </blockquote>
+                    <div class="mt-8 flex flex-col items-center">
+                        <img class="h-20 w-20 rounded-full object-cover border-2 border-gold" src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Avatar of Mitalia Habsari Suwanda">
+                        <div class="mt-4">
+                            <p class="text-xl font-semibold text-champagne">Mitalia Habsari Suwanda</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="faq" class="py-24 bg-navy relative overflow-hidden parallax-section section-separator" style="--bg-image: url('/images/raja.jpg');">
+    <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
+>>>>>>> parent of 889b5eb (Modifikasi sebelum hosting)
 
      <section id="faq" class="py-24 bg-navy relative overflow-hidden parallax-section section-separator" style="--bg-image: url('{{ asset('images/raja.jpg') }}');">
      <div class="absolute inset-0 backdrop-blur-sm z-[-1]" style="background: linear-gradient(135deg, rgba(30, 34, 51, 0.85) 0%, rgba(45, 59, 97, 0.85) 100%);"></div>
 
+<<<<<<< HEAD
      <div class="max-w-4xl mx-auto px-4 relative z-10">
          <div class="text-center mb-16 scroll-reveal">
              <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Frequently Asked <span class="gradient-text">Questions</span></h2>
@@ -333,12 +508,62 @@
              </div>
          </div>
      </div>
+=======
+        <div class="space-y-4 scroll-reveal">
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">Who can participate in JAGOMUN 2025?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>JAGOMUN is open to all university students and high school students aged 15-25.</p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">What is included in the registration fee?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>The facilities provided will depend on the package delegate choose. If delegate register with the Accommodation Package, we will provide lodging and local transportation during your stay in Jember, along with meals and full access to all conference sessions. For those who choose the
+                        Non-Accommodation Package we provide meals and full access to the conference, but accommodation and local transport are not included. Meanwhile, participants who register under the Online Packagewill receive full access to all conference sessions, materials, and activities virtually through our online platform.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">What social events are planned?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>The event will commence with an Opening Ceremony,  featuring a talk show with distinguished speakers who are experts in their respective fields, accompanied by welcoming remarks delivered by prominent figures. The core of the event will be the Committee Sessions, where delegates will engage in structured debates, negotiations, and resolution drafting—simulating real diplomatic discussions. To encourage engagement and build meaningful connections among participants, the agenda will also include Social Nights and gala dinner, offering a space for informal interaction and camaraderie. The program will conclude with a Closing Ceremony and Awarding Session, which will be thoughtfully arranged and enhanced with entertainment segments to provide a memorable conclusion to the entire experience.</p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-royal/40 backdrop-blur-lg p-6 rounded-xl border border-gold/20">
+                <button class="faq-question w-full text-left flex justify-between items-center">
+                    <span class="text-lg font-semibold text-white">I'm a first-timer. Can I join?</span>
+                    <svg class="w-6 h-6 transform transition-transform text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden mt-4 text-white/80 leading-relaxed">
+                    <p>Absolutely! JAGOMUN is open to delegates of all experience levels. We highly recommend beginner councils like UNEP or UNHCR for first-timers. Additionally, we will provide training materials and a workshop session to help you understand the Rules of Procedure and basic MUN concepts.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+>>>>>>> parent of 889b5eb (Modifikasi sebelum hosting)
 </section>
 <section id="register" class="py-20" style="background: linear-gradient(135deg, #2D3B61 0%, #1E2233 100%);">
         <div class="max-w-4xl mx-auto px-4 text-center scroll-reveal">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Are You Ready to Speak, Lead, and  Embrace your Diplomacy?</h2>
             <p class="text-xl text-champagne mb-12">
+<<<<<<< HEAD
                 JAGOMUN 2025 registration is now open!  Don’t miss your chance to be part of the most anticipated and origin Model United Nations conference in East Java. Secure your seat at the table today!
+=======
+                JAGOMUN 2025 registration is now open!  Don’t miss your chance to be part of the most anticipated and origin Model United Nations conference in East Java. Secure your seat at the table today!
+>>>>>>> parent of 889b5eb (Modifikasi sebelum hosting)
             </p>
             <a href="#" class="group relative inline-flex items-center justify-center px-10 py-4 text-xl font-semibold text-navy bg-gradient-to-r from-gold to-champagne rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 Register Now
@@ -347,26 +572,11 @@
     </section>
 
     <footer class="bg-navy py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
-        <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
-        <p class="text-sm mb-4">Organized by UNEJ Model United Nations Club</p>
-
-        <div class="flex justify-center space-x-6 text-white text-lg">
-            <a href="https://www.instagram.com/jagomun.2025" target="_blank" class="hover:text-white">
-                <i class="ri-instagram-line"></i>
-            </a>
-            <a href="https://www.linkedin.com/company/jagomun/" target="_blank" class="hover:text-white">
-                <i class="ri-linkedin-box-line"></i>
-            </a>
-            <a href="mailto:Jagomunofficial@gmail.com" class="hover:text-white">
-                <i class="ri-mail-line"></i>
-            </a>
-            <a href="https://wa.me/6281217248675" target="_blank" class="hover:text-white">
-                <i class="ri-whatsapp-line"></i>
-            </a>
+        <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
+            <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
+            <p class="text-sm">Organized by UNEJ Model United Nations Club</p>
         </div>
-    </div>
-</footer>
+    </footer>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -480,7 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="space-y-6">
                     <div>
                         <h3 class="text-2xl font-bold text-gold mb-2">About ${council.title}</h3>
-                        <p class="text-white/80 leading-relaxed break-words text-justify">${council.description}</p>
+                        <p class="text-white/80 leading-relaxed break-words">${council.description}</p>
                     </div>
                     <div class="bg-navy/50 p-4 rounded-lg">
                         <h4 class="font-bold text-white mb-3 flex items-center"><i class="fas fa-book-open mr-2 text-gold"></i>Topics of Discussion</h4>

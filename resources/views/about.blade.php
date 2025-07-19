@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <style>
         /* Menggunakan font Inter untuk tampilan yang bersih dan modern */
         body {
@@ -193,27 +192,11 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-navy py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
-        <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
-        <p class="text-sm mb-4">Organized by UNEJ Model United Nations Club</p>
-
-        <!-- Social Links -->
-        <div class="flex justify-center space-x-6 text-white text-lg">
-            <a href="https://www.instagram.com/jagomun.2025" target="_blank" class="hover:text-white">
-                <i class="ri-instagram-line"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/jagomun" target="_blank" class="hover:text-white">
-                <i class="ri-linkedin-box-line"></i>
-            </a>
-            <a href="mailto:jagomun@gmail.com" class="hover:text-white">
-                <i class="ri-mail-line"></i>
-            </a>
-            <a href="https://wa.me/6281234567890" target="_blank" class="hover:text-white">
-                <i class="ri-whatsapp-line"></i>
-            </a>
+    <footer class="bg-navy py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-white/70">
+            <p>&copy; 2025 JAGOMUN. All Rights Reserved.</p>
+            <p class="text-sm">Organized by UNEJ Model United Nations Club</p>
         </div>
-    </div>
     </footer>
 
     <script>
