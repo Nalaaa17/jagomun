@@ -12,16 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('delegation_registrations', function (Blueprint $table) {
-            // Menambahkan kolom baru setelah kolom 'full_name'
-            $table->date('date_of_birth')->nullable()->after('full_name');
-            $table->integer('age')->nullable()->after('date_of_birth');
-            $table->string('gender')->nullable()->after('age');
-            $table->text('full_address')->nullable()->after('institution_name');
-
-            // Mengubah nama kolom 'nationality' menjadi 'domicile_or_nationality' agar lebih jelas
-            // Jika Anda ingin tetap 'nationality', lewati baris ini
-            $table->renameColumn('nationality', 'domicile_or_nationality');
-
             // Menambahkan kolom untuk pengalaman MUN setelah 'package_type'
             $table->text('previous_mun_experience')->nullable()->after('package_type');
             $table->text('mun_awards')->nullable()->after('previous_mun_experience');
@@ -38,7 +28,7 @@ return new class extends Migration
 
 
             // Menambahkan kolom untuk path file dokumen
-            $table->string('student_id_path')->nullable()->after('social_media_proof');
+            $table->string('student_id_path')->nullable()->after('social_media_proof_path');
             $table->string('parental_consent_path')->nullable()->after('student_id_path');
             $table->string('partnership_code')->nullable()->after('parental_consent_path');
 

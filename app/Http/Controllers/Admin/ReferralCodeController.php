@@ -87,9 +87,10 @@ class ReferralCodeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ReferralCode $referralCode)
+    public function destroy($id)
     {
-        $referralCode->forceDelete();
+        $referralCode = ReferralCode::findOrFail($id);
+        $referralCode->delete();
 
         return redirect()->route('admin.referrals.index', ['page' => 1])
             ->with('success', 'Referral code deleted successfully!');
