@@ -177,7 +177,10 @@
                                         Jagobank: 109929292133 A.N Nadia Aisha Syarif
                                         <br><strong class="text-slate-800">E- wallet :</strong> Shopeepay:
                                         088289799127 A.N Pididididi
-                                        <br><strong class="text-slate-800">PayPal:</strong> -
+                                        <br><strong class="text-slate-800">PayPal:</strong>
+                                        <a href="https://www.paypal.me/NadiaAishaSyarif" class="text-blue-600 underline" target="_blank">
+                                           NadiaAishaSyarif
+                                        </a>
                                     </div>
                                 </div>
                                 {{-- Kolom Kanan: File Uploads & Confirmation --}}
@@ -364,8 +367,8 @@
 
             // --- Payment and Package Logic ---
             const packagePrices = {
-                'Non-Accommodation': 650000,
-                'Online': 250000
+                'Non-Accommodation': 495000,
+                'Online': 50000
             };
 
             const biayaPaketEl = document.getElementById('biaya-paket');

@@ -191,7 +191,10 @@
                                         </ul>
                                     </div>
                                     <div>
-                                        <strong class="text-slate-800">PayPal:</strong> -
+                                        <strong class="text-slate-800">PayPal:</strong>
+                                        <a href="https://www.paypal.me/NadiaAishaSyarif" class="text-blue-600 underline" target="_blank">
+                                           NadiaAishaSyarif
+                                        </a>
                                     </div>
                                 </div>
                             </div>
