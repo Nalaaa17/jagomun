@@ -642,7 +642,7 @@
                             <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover"
                                 style="--glow-color: 180, 151, 107;">
                                 <div class="overflow-hidden">
-                                    <img src="https://images.pexels.com/photos/5625130/pexels-photo-5625130.jpeg"
+                                    <img src="{{ asset('images/cashback.jpg') }}"
                                         alt="Discount"
                                         class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                                 </div>
@@ -664,7 +664,7 @@
                             <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover"
                                 style="--glow-color: 180, 151, 107;">
                                 <div class="overflow-hidden">
-                                    <img src="{{ asset('images/cashback.png') }}"
+                                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop"
                                         alt="Topics"
                                         class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                                 </div>
