@@ -242,34 +242,12 @@
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Institusi</dt><dd class="text-gray-800">{{ $registration->institution_name ?? '-' }}</dd></div>
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Domisili/Kebangsaan</dt><dd class="text-gray-800">{{ $registration->nationality ?? '-' }}</dd></div>
 
-                            {{-- ====================================================================== --}}
-                            {{-- === AWAL PERUBAHAN: Menampilkan Council Preference untuk Observer === --}}
-                            {{-- ====================================================================== --}}
+
                             @if($registration->registering_as == 'Observer')
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Council to Observe</dt><dd class="text-gray-800 font-semibold">{{ $registration->council_preference_1 ?? '-' }}</dd></div>
                             @endif
 
-                            @if (is_null($registration->delegation_id))
-                            <div class="space-y-1 lg:col-span-3">
-                                <dt class="font-medium text-gray-500 text-sm">Preferensi Council #1</dt>
-                                <dd class="text-gray-800">
-                                    <div><strong>Nama Council:</strong> {{ $registration->council_preference_1 ?? '-' }}</div>
-                                    <div><strong>Negara:</strong> {{ $registration->country_preference_1_1 ?? '-' }} & {{ $registration->country_preference_1_2 ?? '-' }}</div>
-                                    <div class="italic text-sm text-gray-600"><strong>Alasan:</strong> "{{ $registration->reason_for_council_preference_1 ?? '-' }}"</div>
-                                </dd>
-                            </div>
-                            <div class="space-y-1 lg:col-span-3">
-                                <dt class="font-medium text-gray-500 text-sm">Preferensi Council #2</dt>
-                                <dd class="text-gray-800">
-                                    <div><strong>Nama Council:</strong> {{ $registration->council_preference_2 ?? '-' }}</div>
-                                    <div><strong>Negara:</strong> {{ $registration->country_preference_2_1 ?? '-' }} & {{ $registration->country_preference_2_2 ?? '-' }}</div>
-                                    <div class="italic text-sm text-gray-600"><strong>Alasan:</strong> "{{ $registration->reason_for_council_preference_2 ?? '-' }}"</div>
-                                </dd>
-                            </div>
-                            @endif
-                            {{-- ====================================================================== --}}
-                            {{-- === AKHIR PERUBAHAN === --}}
-                            {{-- ====================================================================== --}}
+
 
                             <div class="space-y-1 lg:col-span-3"><dt class="font-medium text-gray-500 text-sm">Alamat Lengkap</dt><dd class="text-gray-800 whitespace-normal">{{ $registration->full_address ?? '-' }}</dd></div>
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Metode Kehadiran</dt>
@@ -358,8 +336,25 @@
                         </div>
                     </div>
                 </div>
+                @if (is_null($registration->delegation_id))
+                            <div class="space-y-1 lg:col-span-3">
+                                <dt class="font-medium text-gray-500 text-sm">Preferensi Council #1</dt>
+                                <dd class="text-gray-800">
+                                    <div><strong>Nama Council:</strong> {{ $registration->council_preference_1 ?? '-' }}</div>
+                                    <div><strong>Negara:</strong> {{ $registration->country_preference_1_1 ?? '-' }} & {{ $registration->country_preference_1_2 ?? '-' }}</div>
+                                    <div class="italic text-sm text-gray-600"><strong>Alasan:</strong> "{{ $registration->reason_for_council_preference_1 ?? '-' }}"</div>
+                                </dd>
+                            </div>
+                            <div class="space-y-1 lg:col-span-3">
+                                <dt class="font-medium text-gray-500 text-sm">Preferensi Council #2</dt>
+                                <dd class="text-gray-800">
+                                    <div><strong>Nama Council:</strong> {{ $registration->council_preference_2 ?? '-' }}</div>
+                                    <div><strong>Negara:</strong> {{ $registration->country_preference_2_1 ?? '-' }} & {{ $registration->country_preference_2_2 ?? '-' }}</div>
+                                    <div class="italic text-sm text-gray-600"><strong>Alasan:</strong> "{{ $registration->reason_for_council_preference_2 ?? '-' }}"</div>
+                                </dd>
+                            </div>
+                @endif
             @endif
-
         </div>
     </main>
 
