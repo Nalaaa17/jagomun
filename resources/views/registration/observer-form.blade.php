@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Halaman Registrasi - Jagomun')
+@section('title')
+Halaman Registrasi - Jagomun
+@endsection
 @section('content')
     <div class="bg-slate-50 min-h-screen">
         <div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
