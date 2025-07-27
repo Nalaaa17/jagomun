@@ -134,6 +134,14 @@
                                 <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Gender</dt><dd class="text-gray-800">{{ $delegate->gender ?? '-' }}</dd></div>
                                 <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Kebangsaan</dt><dd class="text-gray-800">{{ $delegate->nationality ?? '-' }}</dd></div>
                                 <div class="space-y-1 lg:col-span-3"><dt class="font-medium text-gray-500 text-sm">Alamat Lengkap</dt><dd class="text-gray-800 whitespace-normal">{{ $delegate->full_address ?? '-' }}</dd></div>
+                                <div class="space-y-1 lg:col-span-3">
+                                    <dt class="font-medium text-gray-500 text-sm">Pengalaman MUN</dt>
+                                    <dd class="text-gray-800 whitespace-pre-wrap">{{ $delegate->previous_mun_experience ?? '-' }}</dd>
+                                </div>
+                                <div class="space-y-1 lg:col-span-3">
+                                    <dt class="font-medium text-gray-500 text-sm">Penghargaan MUN</dt>
+                                    <dd class="text-gray-800 whitespace-pre-wrap">{{ $delegate->mun_awards ?? '-' }}</dd>
+                                </div>
                             </dl>
                         </div>
                         <hr>
@@ -267,6 +275,14 @@
 
 
                             <div class="space-y-1 lg:col-span-3"><dt class="font-medium text-gray-500 text-sm">Alamat Lengkap</dt><dd class="text-gray-800 whitespace-normal">{{ $registration->full_address ?? '-' }}</dd></div>
+                            <div class="space-y-1 lg:col-span-3">
+                                <dt class="font-medium text-gray-500 text-sm">Pengalaman MUN</dt>
+                                <dd class="text-gray-800 whitespace-pre-wrap">{{ $registration->previous_mun_experience ?? '-' }}</dd>
+                            </div>
+                            <div class="space-y-1 lg:col-span-3">
+                                <dt class="font-medium text-gray-500 text-sm">Penghargaan MUN</dt>
+                                <dd class="text-gray-800 whitespace-pre-wrap">{{ $registration->mun_awards ?? '-' }}</dd>
+                            </div>
                             <div class="space-y-1"><dt class="font-medium text-gray-500 text-sm">Metode Kehadiran</dt>
                                 <dd class="font-medium">
                                     @if($registration->attendance_type == 'Offline')
