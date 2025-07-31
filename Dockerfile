@@ -30,6 +30,8 @@ COPY . .
 
 # Set proper permissions
 RUN chown -R unit:unit . && chmod -R ug+rwX storage bootstrap/cache
+RUN chown -R unit:unit storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
 # Install Laravel dependencies
 RUN composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
