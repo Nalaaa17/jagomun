@@ -27,18 +27,18 @@
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-200 rounded-lg">
                     <i class="ri-dashboard-line mr-3"></i><span>Dashboard</span>
                 </a>
-                <a href="#" class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-200 rounded-lg">
+                <a href="{{ route('admin.contacts.index') }}" class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-200 rounded-lg">
                     <i class="ri-mail-line mr-3"></i><span>Messages</span>
                 </a>
                 <a href="{{ route('admin.referrals.index') }}" class="flex items-center px-4 py-2.5 bg-indigo-600 text-white rounded-lg">
                     <i class="ri-share-forward-line mr-3"></i><span>Referrals</span>
                 </a>
-                <a href="#" class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-200 rounded-lg">
+                <a href="{{ route('admin.registrations.export') }}" class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-200 rounded-lg">
                     <i class="ri-file-excel-2-line mr-3"></i><span>Download Excel</span>
                 </a>
             </nav>
             <div class="absolute bottom-6 left-6 right-6">
-                <a href="#" class="flex items-center justify-center w-full px-4 py-2.5 text-gray-600 bg-gray-200 hover:bg-red-100 hover:text-red-600 rounded-lg">
+                <a href="{{ route('admin.login') }}" class="flex items-center justify-center w-full px-4 py-2.5 text-gray-600 bg-gray-200 hover:bg-red-100 hover:text-red-600 rounded-lg">
                     <i class="ri-logout-box-r-line mr-3"></i><span>Logout</span>
                 </a>
             </div>
