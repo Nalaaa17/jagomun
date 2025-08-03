@@ -327,7 +327,7 @@ Halaman Registrasi - Jagomun
                 </div>
                 <div class="md:col-span-1">
                     <x-input-label for="parental_consent" :value="__('Parental Consent Letter (PDF - If applicable)')" />
-                    <p class="text-sm text-slate-500 mb-1">Required for applicants under 18 attending offline. Template: <a
+                    <p class="text-sm text-slate-500 mb-1">Required for applicants under 17 attending offline. Template: <a
                             href="http://bit.ly/ParentalConsentLetterJAGOMUN2025" target="_blank"
                             class="text-indigo-600 hover:underline font-semibold">Download here</a></p>
                     <input id="parental_consent" name="parental_consent" type="file"
