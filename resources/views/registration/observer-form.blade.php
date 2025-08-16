@@ -370,8 +370,8 @@ Halaman Registrasi - Jagomun
 
             // --- Payment and Package Logic ---
             const packagePrices = {
-                'Non-Accommodation': 495000,
-                'Online': 50000
+                'Non-Accommodation': 530000,
+                'Online': 60000
             };
 
             const biayaPaketEl = document.getElementById('biaya-paket');

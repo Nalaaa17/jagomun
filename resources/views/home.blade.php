@@ -647,9 +647,8 @@
                                         class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                                 </div>
                                 <div class="p-6">
-                                    <h3 class="text-xl font-bold text-white mb-2">Early Bird Cashback </h3>
-                                    <p class="text-white/80 text-sm text-justify">Exciting news! We'll be offering
-                                        early bird cashback for the first 5 delegates who register got cashback 5%!!</p>
+                                    <h3 class="text-xl font-bold text-white mb-2">Independence Day Cashback  </h3>
+                                    <p class="text-white/80 text-sm text-justify">Celebrate Independence Day with great savings!!! Enjoy exclusive cashback from August 17th to 19th.</p>
                                 </div>
                             </div>
                         </div>
@@ -669,10 +668,31 @@
                                         class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                                 </div>
                                 <div class="p-6">
-                                    <h3 class="text-xl font-bold text-white mb-2">Topics Revealed!</h3>
-                                    <p class="text-white/80 text-sm text-justify">Curious about the topics? The
-                                        detailed information for all councils and their topics can be found in the
-                                        “Council” menu.</p>
+                                    <h3 class="text-xl font-bold text-white mb-2">Regular Phase Open!</h3>
+                                    <p class="text-white/80 text-sm text-justify">With Regular Phase Registration now open, this is your chance to take part in a distinguished conference that empowers young leaders to collaborate, debate, and create meaningful change on pressing global issues.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-1/3 scroll-reveal">
+                        <div class="relative text-center">
+                            <div
+                                class="absolute left-1/2 -translate-x-1/2 -top-4 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-gold text-xs"></i>
+                            </div>
+                            <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover"
+                                style="--glow-color: 180, 151, 107;">
+                                <div class="overflow-hidden">
+                                    <img src="{{ asset('images/cashback.jpg') }}"
+                                        alt="Discount"
+                                        class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-white mb-2">Student Package Available </h3>
+                                    <p class="text-white/80 text-sm text-justify">Are you a junior or senior high school student?
+                                        Enjoy our special rate by entering a referral code before payment!
+                                        Get your code by contacting Faried at 081217248675.</p>
                                 </div>
                             </div>
                         </div>

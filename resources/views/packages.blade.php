@@ -135,7 +135,7 @@
                 <div class="text-center mb-6">
                     <p class="text-royal italic">
                         All prices listed below are
-                        <span class="font-bold text-gold not-italic">Early Bird</span>
+                        <span class="font-bold text-gold not-italic">Regular Phase </span>
                         rates.
                     </p>
                 </div>
@@ -170,12 +170,12 @@
                             <span class="text-xl font-bold text-navy">Full Accommodation</span>
                             <div class="flex items-center space-x-4">
                                 <span class="text-xl font-semibold text-gold">
-                                    <span class="price hidden" data-role="delegate" data-currency="idr">Rp 2.240.000</span>
-                                    <span class="price hidden" data-role="delegate" data-currency="usd">$ 140</span>
-                                    <span class="price hidden" data-role="individual" data-currency="idr">Rp 1.145.000</span>
-                                    <span class="price hidden" data-role="individual" data-currency="usd">$ 70</span>
-                                    <span class="price hidden" data-role="student" data-currency="idr">Rp 1.120.000</span>
-                                    <span class="price hidden" data-role="student" data-currency="usd">$ 70</span>
+                                    <span class="price hidden" data-role="delegate" data-currency="idr">Rp 2.337.000</span>
+                                    <span class="price hidden" data-role="delegate" data-currency="usd">$ 148</span>
+                                    <span class="price hidden" data-role="individual" data-currency="idr">Rp 1.230.000</span>
+                                    <span class="price hidden" data-role="individual" data-currency="usd">$ 79</span>
+                                    <span class="price hidden" data-role="student" data-currency="idr">Rp 1.168.500</span>
+                                    <span class="price hidden" data-role="student" data-currency="usd">$ 79</span>
                                 </span>
                                 {{-- PERUBAHAN: Menambahkan label untuk jumlah delegasi --}}
                                 <span class="text-sm text-royal font-semibold ml-1 hidden" data-role-label="delegate">/ 2 Delegates</span>
@@ -201,14 +201,14 @@
                             <span class="text-xl font-bold text-navy">Non-Accommodation</span>
                             <div class="flex items-center space-x-4">
                                 <span class="text-xl font-semibold text-gold">
-                                    <span class="price hidden" data-role="delegate" data-currency="idr">Rp 990.000</span>
-                                    <span class="price hidden" data-role="delegate" data-currency="usd">$ 62</span>
-                                    <span class="price hidden" data-role="individual" data-currency="idr">Rp 505.000</span>
-                                    <span class="price hidden" data-role="individual" data-currency="usd">$ 33</span>
-                                    <span class="price hidden" data-role="observer" data-currency="idr">Rp 495.000</span>
-                                    <span class="price hidden" data-role="observer" data-currency="usd">$ 32</span>
-                                    <span class="price hidden" data-role="student" data-currency="idr">Rp 495.000</span>
-                                    <span class="price hidden" data-role="student" data-currency="usd">$ 32</span>
+                                    <span class="price hidden" data-role="delegate" data-currency="idr">Rp 1.035.500</span>
+                                    <span class="price hidden" data-role="delegate" data-currency="usd">$ 66</span>
+                                    <span class="price hidden" data-role="individual" data-currency="idr">Rp545.000</span>
+                                    <span class="price hidden" data-role="individual" data-currency="usd">$ 36</span>
+                                    <span class="price hidden" data-role="observer" data-currency="idr">Rp 530.000</span>
+                                    <span class="price hidden" data-role="observer" data-currency="usd">$ 34</span>
+                                    <span class="price hidden" data-role="student" data-currency="idr">Rp 517.7500</span>
+                                    <span class="price hidden" data-role="student" data-currency="usd">$ 36</span>
                                 </span>
                                 {{-- PERUBAHAN: Menambahkan label untuk jumlah delegasi --}}
                                 <span class="text-sm text-royal font-semibold ml-1 hidden" data-role-label="delegate">/ 2 Delegates</span>
@@ -240,14 +240,14 @@
                             <span id="online-package-title" class="text-xl font-bold text-navy">Online Delegate</span>
                             <div class="flex items-center space-x-4">
                                 <span class="text-xl font-semibold text-gold">
-                                    <span class="price hidden" data-role="delegate" data-currency="idr">Rp 180.000</span>
-                                    <span class="price hidden" data-role="delegate" data-currency="usd">$ 12</span>
-                                    <span class="price hidden" data-role="individual" data-currency="idr">Rp 95.000</span>
-                                    <span class="price hidden" data-role="individual" data-currency="usd">$ 8</span>
-                                    <span class="price hidden" data-role="observer" data-currency="idr">Rp 50.000</span>
-                                    <span class="price hidden" data-role="observer" data-currency="usd">$ 5</span>
-                                     <span class="price hidden" data-role="student" data-currency="idr">Rp 85.000</span>
-                                     <span class="price hidden" data-role="student" data-currency="usd">$6</span>
+                                    <span class="price hidden" data-role="delegate" data-currency="idr">Rp 209.000</span>
+                                    <span class="price hidden" data-role="delegate" data-currency="usd">$ 14</span>
+                                    <span class="price hidden" data-role="individual" data-currency="idr">Rp 110.000</span>
+                                    <span class="price hidden" data-role="individual" data-currency="usd">$ 9</span>
+                                    <span class="price hidden" data-role="observer" data-currency="idr">Rp 60.000</span>
+                                    <span class="price hidden" data-role="observer" data-currency="usd">$ 6</span>
+                                     <span class="price hidden" data-role="student" data-currency="idr">Rp 104.000</span>
+                                     <span class="price hidden" data-role="student" data-currency="usd">$9</span>
                                 </span>
                                 {{-- PERUBAHAN: Menambahkan label untuk jumlah delegasi --}}
                                 <span class="text-sm text-royal font-semibold ml-1 hidden" data-role-label="delegate">/ 2 Delegates</span>
