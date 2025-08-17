@@ -633,7 +633,7 @@
             <div class="relative">
                 <div class="relative flex flex-col lg:flex-row justify-center items-center w-full gap-12 lg:gap-16">
 
-                    <div class="w-full lg:w-1/3 scroll-reveal">
+                    <div class="w-full lg:w-1/3 scroll-reveal" style="transition-delay: 200ms;">
                         <div class="relative text-center">
                             <div
                                 class="absolute left-1/2 -translate-x-1/2 -top-4 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
@@ -642,7 +642,7 @@
                             <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover"
                                 style="--glow-color: 180, 151, 107;">
                                 <div class="overflow-hidden">
-                                    <img src="{{ asset('images/17.jpg') }}"
+                                    <img src="{{ asset('images/17.png') }}"
                                         alt="Discount"
                                         class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                                 </div>
@@ -663,7 +663,7 @@
                             <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover"
                                 style="--glow-color: 180, 151, 107;">
                                 <div class="overflow-hidden">
-                                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop"
+                                    <img src="{{ asset('images/phase.jpg') }}"
                                         alt="Topics"
                                         class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                                 </div>
@@ -675,7 +675,7 @@
                         </div>
                     </div>
 
-                    <div class="w-full lg:w-1/3 scroll-reveal">
+                    <div class="w-full lg:w-1/3 scroll-reveal" style="transition-delay: 200ms;">
                         <div class="relative text-center">
                             <div
                                 class="absolute left-1/2 -translate-x-1/2 -top-4 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
