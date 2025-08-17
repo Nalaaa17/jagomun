@@ -566,8 +566,8 @@ Halaman Registrasi - Jagomun
             const pricing = {
                 'Full Accommodation': {
                     2: 2337000,
-                    3: 3431000,
-                    4: 4562000,
+                    3: 3431700,
+                    4: 4526400,
                     5: 5535000
                 },
                 'Non-Accommodation': {

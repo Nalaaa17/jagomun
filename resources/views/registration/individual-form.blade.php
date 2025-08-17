@@ -572,7 +572,7 @@ Halaman Registrasi - Jagomun
 
             // --- START: Payment and Package Logic (FIXED) ---
             const packagePrices = {
-                'Full Accommodation': 1235000,
+                'Full Accommodation': 1230000,
                 'Non-Accommodation': 545000,
                 'Online': 110000
             };
