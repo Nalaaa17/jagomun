@@ -642,13 +642,13 @@
                             <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover"
                                 style="--glow-color: 180, 151, 107;">
                                 <div class="overflow-hidden">
-                                    <img src="{{ asset('images/17.png') }}"
+                                    <img src="{{ asset('images/pbb.jpg') }}"
                                         alt="Discount"
                                         class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                                 </div>
                                 <div class="p-6">
-                                    <h3 class="text-xl font-bold text-white mb-2">Independence Day Cashback  </h3>
-                                    <p class="text-white/80 text-sm text-justify">Celebrate Independence Day with great savings!!! Enjoy exclusive cashback from August 17th to 19th.</p>
+                                    <h3 class="text-xl font-bold text-white mb-2">Celebrate United Nation Day with JAGOMUN  </h3>
+                                    <p class="text-white/80 text-sm text-justify">Celebrate United Nations Day with us this October 24th at JAGOMUN 2025! Step into the shoes of a diplomat, voice your ideas, and shape solutions for global challenges.</p>
                                 </div>
                             </div>
                         </div>
