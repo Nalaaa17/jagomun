@@ -176,9 +176,9 @@ class RegistrationController extends Controller
 
         $packageType = $validatedData['package_type'];
         $packagePrices = [
-            'Full Accommodation' => 1145000,
-            'Non-Accommodation' => 505000,
-            'Online' => 95000
+            'Full Accommodation' => 1230000,
+            'Non-Accommodation' => 545000,
+            'Online' => 110000
         ];
         $price = $packagePrices[$packageType] ?? 0;
 
@@ -357,9 +357,9 @@ class RegistrationController extends Controller
         ]);
 
         $pricing = [
-            'Full Accommodation' => [2 => 2240000, 3 => 3360000, 4 => 4480000, 5 => 5600000],
-            'Non-Accommodation' => [2 => 990000, 3 => 1485000, 4 => 1980000, 5 => 2475000],
-            'Online' => [2 => 180000, 3 => 261000, 4 => 340000, 5 => 410000]
+            'Full Accommodation' => [2 => 2337000, 3 => 3431700, 4 => 4526400, 5 => 5535000],
+            'Non-Accommodation' => [2 => 1035000, 3 => 1520550, 4 => 2005600, 5 => 2452500],
+            'Online' => [2 => 209000, 3 => 306900, 4 => 404800, 5 => 495000]
         ];
         $delegateCount = (int)$validatedData['delegate_count'];
         $packageType = $validatedData['package_type'];
