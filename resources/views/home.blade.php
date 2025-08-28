@@ -663,7 +663,7 @@
                             <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover"
                                 style="--glow-color: 180, 151, 107;">
                                 <div class="overflow-hidden">
-                                    <img src="{{ asset('images/phase.jpg') }}"
+                                    <img src="{{ asset('images/reg.png') }}"
                                         alt="Topics"
                                         class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                                 </div>
@@ -684,7 +684,7 @@
                             <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover"
                                 style="--glow-color: 180, 151, 107;">
                                 <div class="overflow-hidden">
-                                    <img src="{{ asset('images/student.jpg') }}"
+                                    <img src="{{ asset('images/student.png') }}"
                                         alt="Discount"
                                         class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                                 </div>
