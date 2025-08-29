@@ -8,7 +8,7 @@
 
     <meta name="description" content="JAGOMUN 2025 is an international forum for young leaders to engage in diplomatic discourse, develop critical thinking, and address global challenges.">
 
-
+    <!-- Favicon & PWA -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
@@ -16,14 +16,39 @@
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <meta name="theme-color" content="#1E2233">
 
-
+    <!-- Structured Data: Event -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "JAGOMUN 2025",
-      "url": "{{ url('/') }}",
-      "logo": "{{ asset('images/logo.png') }}"
+      "@type": "Event",
+      "name": "JAGOMUN 2025 - Jember Annual Global Model United Nations",
+      "startDate": "2025-07-15T09:00",
+      "endDate": "2025-07-18T17:00",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "inLanguage": "en",
+      "location": {
+        "@type": "Place",
+        "name": "University of Jember",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Jl. Kalimantan No.37",
+          "addressLocality": "Jember",
+          "addressRegion": "East Java",
+          "postalCode": "68121",
+          "addressCountry": "ID"
+        }
+      },
+      "image": [
+        "{{ asset('images/logo.png') }}"
+      ],
+      "description": "JAGOMUN 2025 is an international forum for young leaders to engage in diplomatic discourse, develop critical thinking, and address global challenges.",
+      "organizer": {
+        "@type": "Organization",
+        "name": "JAGOMUN",
+        "url": "{{ url('/') }}",
+        "logo": "{{ asset('images/logo.png') }}"
+      }
     }
     </script>
 
