@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Admin\ReferralCodeController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +28,13 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact.index
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 
-// --- REGISTRATION FLOW ROUTES ---
+// ======================================================================
+// ========== REGISTRATION FLOW ROUTES (PILIH SALAH SATU MODE) ==========
+// ======================================================================
+
+// --- MODE 1: PENDAFTARAN DIBUKA ---
+// Uncomment bagian ini kalau registrasi dibuka
+/*
 Route::prefix('register')->name('registration.')->group(function () {
     Route::get('/type-selection', [RegistrationController::class, 'chooseType'])->name('chooseType');
     Route::post('/process-type', [RegistrationController::class, 'processType'])->name('processType');
@@ -43,14 +48,16 @@ Route::prefix('register')->name('registration.')->group(function () {
     Route::post('/observer-submit', [RegistrationController::class, 'submitObserverForm'])->name('observerSubmit');
     Route::get('/success', [RegistrationController::class, 'success'])->name('success');
 });
+*/
 
-// ======================================================================
-// === AWAL PERUBAHAN: Rute untuk validasi kode referral dipindahkan ke sini ===
-// ======================================================================
+// --- MODE 2: PENDAFTARAN DITUTUP ---
+// Uncomment bagian ini kalau registrasi ditutup
+Route::get('/registration-closed', [RegistrationController::class, 'registrationClosed'])
+    ->name('registration.registrationclosed');
+
+
+// --- REFERRAL CHECK ---
 Route::post('/referrals/check', [RegistrationController::class, 'checkReferral'])->name('referrals.check');
-// ======================================================================
-// === AKHIR PERUBAHAN ===
-// ======================================================================
 
 
 // --- ADMIN AUTHENTICATION ROUTES ---
@@ -70,20 +77,19 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     Route::post('/registrations/{registration}/toggle-verification', [AdminController::class, 'toggleVerification'])->name('registration.toggleVerification');
     Route::delete('/registrations/{id}', [AdminController::class, 'destroy'])->name('registration.destroy');
 
-    // Menggunakan Route::resource untuk menyederhanakan rute CRUD Referral
+    // CRUD Referral Code
     Route::resource('referrals', ReferralCodeController::class)->except(['show']);
-
-    // Rute check referral DIHAPUS dari sini karena sudah dipindah ke atas
 });
 
-// Laravel Breeze Authentication Routes (jika masih diperlukan untuk user biasa)
+// Laravel Breeze Authentication Routes (jika masih dipakai untuk user biasa)
 require __DIR__.'/auth.php';
 
-// Dashboard untuk user biasa (jika ada)
+// Dashboard untuk user biasa
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
 
-Route::get('/packages', [App\Http\Controllers\PageController::class, 'packages'])->name('packages');
+// Extra pages
+Route::get('/packages', [PageController::class, 'packages'])->name('packages');

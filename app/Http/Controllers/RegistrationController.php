@@ -517,4 +517,8 @@ class RegistrationController extends Controller
             'message' => 'Discount applied successfully!'
         ]);
     }
+    public function registrationClosed()
+    {
+    return view('registration.registrationclosed');
+    }
 }
