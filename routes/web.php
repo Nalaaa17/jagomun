@@ -34,7 +34,7 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 
 // --- MODE 1: PENDAFTARAN DIBUKA ---
 // Uncomment bagian ini kalau registrasi dibuka
-/*
+
 Route::prefix('register')->name('registration.')->group(function () {
     Route::get('/type-selection', [RegistrationController::class, 'chooseType'])->name('chooseType');
     Route::post('/process-type', [RegistrationController::class, 'processType'])->name('processType');
@@ -48,12 +48,12 @@ Route::prefix('register')->name('registration.')->group(function () {
     Route::post('/observer-submit', [RegistrationController::class, 'submitObserverForm'])->name('observerSubmit');
     Route::get('/success', [RegistrationController::class, 'success'])->name('success');
 });
-*/
+
 
 // --- MODE 2: PENDAFTARAN DITUTUP ---
 // Uncomment bagian ini kalau registrasi ditutup
-Route::get('/registration-closed', [RegistrationController::class, 'registrationClosed'])
-    ->name('registration.registrationclosed');
+// Route::get('/registration-closed', [RegistrationController::class, 'registrationClosed'])
+//     ->name('registration.registrationclosed');
 
 
 // --- REFERRAL CHECK ---

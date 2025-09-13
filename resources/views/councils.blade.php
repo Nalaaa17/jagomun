@@ -59,7 +59,7 @@
                     <a href="{{ route('packages') }}" class="text-white hover:text-gold transition-colors duration-300">Packages</a>
                 </div>
                 <div class="hidden lg:flex">
-                    <a href="{{ route('registration.registrationclosed') }}" class="text-white hover:text-gold transition-colors duration-300">
+                    <a href="{{ route('registration.chooseType') }}" class="text-white hover:text-gold transition-colors duration-300">
                         Register Now
                     </a>
                 </div>
@@ -78,7 +78,7 @@
                 <a href="{{ route('about') }}" class="block px-3 py-2 text-white hover:text-gold">About</a>
                 <a href="{{ route('contact.index') }}" class="block px-3 py-2 text-white hover:text-gold">FAQ</a>
                 <a href="{{ route('packages') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">Packages</a>
-                <a href="{{ route('registration.registrationclosed') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">Register Now</a>
+                <a href="{{ route('registration.chooseType') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">Register Now</a>
             </div>
         </div>
     </nav>
