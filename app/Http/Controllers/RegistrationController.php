@@ -176,9 +176,9 @@ class RegistrationController extends Controller
 
         $packageType = $validatedData['package_type'];
         $packagePrices = [
-            'Full Accommodation' => 1230000,
-            'Non-Accommodation' => 545000,
-            'Online' => 110000
+            'Full Accommodation' => 1400000,
+            'Non-Accommodation' => 574000,
+            'Online' => 150000
         ];
         $price = $packagePrices[$packageType] ?? 0;
 
@@ -357,9 +357,9 @@ class RegistrationController extends Controller
         ]);
 
         $pricing = [
-            'Full Accommodation' => [2 => 2337000, 3 => 3431700, 4 => 4526400, 5 => 5535000],
-            'Non-Accommodation' => [2 => 1035000, 3 => 1520550, 4 => 2005600, 5 => 2452500],
-            'Online' => [2 => 209000, 3 => 306900, 4 => 404800, 5 => 495000]
+            'Full Accommodation' => [2 => 2660000, 3 => 3906000, 4 => 5152000, 5 => 6300000],
+            'Non-Accommodation' => [2 => 1090600, 3 => 1601460, 4 => 2112320, 5 => 2583000],
+            'Online' => [2 => 256500, 3 => 376650, 4 => 496800, 5 => 607500]
         ];
         $delegateCount = (int)$validatedData['delegate_count'];
         $packageType = $validatedData['package_type'];
@@ -517,8 +517,8 @@ class RegistrationController extends Controller
             'message' => 'Discount applied successfully!'
         ]);
     }
-    public function registrationClosed()
-    {
-    return view('registration.registrationclosed');
-    }
+    // public function registrationClosed()
+    // {
+    // return view('registration.registrationclosed');
+    // }
 }

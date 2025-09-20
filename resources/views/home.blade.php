@@ -594,7 +594,7 @@
                         class="text-white hover:text-gold transition-colors duration-300">Packages</a>
                 </div>
                 <div class="hidden lg:flex">
-                    <a href="{{ route('registration.registrationclosed') }}"
+                    <a href="{{ route('registration.chooseType') }}"
                         class="text-white hover:text-gold transition-colors duration-300">Register Now</a>
                 </div>
                 <div class="lg:hidden">
@@ -617,7 +617,7 @@
                     class="mobile-link block px-3 py-2 text-white hover:text-gold">FAQ</a>
                 <a href="{{ route('packages') }}"
                     class="mobile-link block px-3 py-2 text-white hover:text-gold">Packages</a>
-                <a href="{{ route('registration.registrationclosed') }}"
+                <a href="{{ route('registration.chooseType') }}"
                     class="mobile-link block px-3 py-2 text-white hover:text-gold">Register Now</a>
             </div>
         </div>
@@ -651,7 +651,7 @@
                     thinking, and address global challenges through the lens of the United Nations.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-                    <a href="{{ route('registration.registrationclosed') }}"
+                    <a href="{{ route('registration.chooseType') }}"
                         class="group relative inline-flex items-center justify-center px-10 py-4 text-lg font-semibold text-navy bg-gradient-to-r from-gold to-champagne rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                         <span class="mr-3">Register Here</span>
                     </a>
@@ -713,14 +713,16 @@
                             <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover h-full flex flex-col"
                                 style="--glow-color: 180, 151, 107;">
                                 <div class="overflow-hidden">
-                                    <img src="{{ asset('images/closed.png') }}"
+                                    <img src="{{ asset('images/late.png') }}"
                                         alt="Topics"
                                         class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
                                 </div>
                                 <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-white mb-2">Regular Phase Closed!</h3>
+                                    <h3 class="text-xl font-bold text-white mb-2">Late Phase Open!</h3>
                                      <p class="text-white/80 text-sm text-justify flex-grow">
-                                        Stay tuned as we prepare to open the Late Phase, your next chance to be part of this distinguished conference. Don’t miss it!
+                                        The Regular Phase has ended, but worry not!
+                                        the Late Phase is now OPEN!
+                                        Join JAGOMUN and take your diplomacy skills to the next level
                                     </p>
                                 </div>
                             </div>
@@ -746,6 +748,30 @@
                                         Are you a junior or senior high school student?
                                         Enjoy our special rate by entering a referral code before payment!
                                         Get your code by contacting Faried at 081217248675.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-1/3 flex scroll-reveal" style="transition-delay: 200ms;">
+                        <div class="relative text-center">
+                            <div
+                                class="absolute left-1/2 -translate-x-1/2 -top-4 w-8 h-8 bg-royal border-4 border-gold rounded-full z-10 flex items-center justify-center">
+                                <i class="fas fa-book-open text-gold text-xs"></i>
+                            </div>
+                            <div class="bg-royal/50 backdrop-blur-lg rounded-xl border border-gold/20 shadow-2xl shadow-black/20 overflow-hidden card-hover h-full flex flex-col"
+                                style="--glow-color: 180, 151, 107;">
+                                <div class="overflow-hidden">
+                                    <img src="{{ asset('images/sakti.png') }}"
+                                        alt="Topics"
+                                        class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                                </div>
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <h3 class="text-xl font-bold text-white mb-2">Sacred Pancasila Day!</h3>
+                                     <p class="text-white/80 text-sm text-justify flex-grow">
+                                        The values of Pancasila inspire us to embrace unity, integrity, and dialogue.
+                                        Join JAGOMUN today with our special discount and take part in shaping tomorrow’s diplomacy.
                                     </p>
                                 </div>
                             </div>

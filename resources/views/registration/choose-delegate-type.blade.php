@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="hidden lg:flex" id="nav-links">
-                    <a href="{{ route('registration.registrationclosed') }}" class="flex items-center text-white hover:text-gold transition-colors duration-300 font-semibold">
+                    <a href="{{ route('registration.chooseType') }}" class="flex items-center text-white hover:text-gold transition-colors duration-300 font-semibold">
                         {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg> --}}
@@ -57,7 +57,7 @@
             </div>
 
             <div id="mobile-menu" class="lg:hidden hidden px-4 pb-4">
-                <a href="{{ route('registration.registrationclosed') }}" class="block text-white hover:text-gold transition-colors duration-300 font-semibold py-2">
+                <a href="{{ route('registration.chooseType') }}" class="block text-white hover:text-gold transition-colors duration-300 font-semibold py-2">
                     Back
                 </a>
             </div>
