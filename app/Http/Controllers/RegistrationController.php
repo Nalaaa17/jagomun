@@ -256,12 +256,6 @@ class RegistrationController extends Controller
             'institution_name' => 'required|string|max:255', // Menggunakan institution_name
             'full_address' => 'required|string',
             'attendance_type' => ['required', Rule::in(['Online', 'Offline'])],
-            'package_type' => ['required', Rule::in(['Non-Accommodation', 'Online'])],
-            'payment_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'social_media_proof' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'info_confirmation' => 'required|accepted',
-            'data_usage_agreement' => 'required|accepted',
-            'total_price' => 'required|numeric', // Validasi total_price
             'council_preference_1' => 'required|string|max:255',
         ]);
         // ======================================================================
@@ -270,8 +264,8 @@ class RegistrationController extends Controller
 
         DB::beginTransaction();
         try {
-            $paymentProofPath = $request->file('payment_proof')->store('proofs/payment', 'public');
-            $socialMediaProofPath = $request->hasFile('social_media_proof') ? $request->file('social_media_proof')->store('proofs/social_media', 'public') : null;
+            // $paymentProofPath = $request->file('payment_proof')->store('proofs/payment', 'public');
+            // $socialMediaProofPath = $request->hasFile('social_media_proof') ? $request->file('social_media_proof')->store('proofs/social_media', 'public') : null;
 
             // ======================================================================
             // === AWAL PERBAIKAN: Menambahkan semua field yang hilang ke database ===
@@ -285,16 +279,14 @@ class RegistrationController extends Controller
                 'nationality' => $validatedData['nationality'],
                 'institution_name' => $validatedData['institution_name'],
                 'attendance_type' => $validatedData['attendance_type'],
-                'package_type' => $validatedData['package_type'],
-                'total_price' => $validatedData['total_price'], // Mengambil dari data tervalidasi
-                'payment_proof_path' => $paymentProofPath,
-                'social_media_proof_path' => $socialMediaProofPath,
+                'package_type' => 'Free',
+                'total_price' => 0, // Mengambil dari data tervalidasi
+                'payment_proof_path' => null,
+                'social_media_proof_path' => null,
                 'date_of_birth' => $validatedData['date_of_birth'],
                 'age' => $validatedData['age'],
                 'gender' => $validatedData['gender'],
                 'full_address' => $validatedData['full_address'],
-                'info_confirmation' => $request->boolean('info_confirmation'),
-                'data_usage_agreement' => $request->boolean('data_usage_agreement'),
                 'is_verified' => false,
                 'council_preference_1' => $validatedData['council_preference_1'],
             ]);

@@ -151,13 +151,13 @@ Halaman Registrasi - Jagomun
                     </div>
 
                     {{-- STEP 2: Package, Payment & Confirmation --}}
-                    <div id="step-2" class="form-step">
+                    {{-- <div id="step-2" class="form-step">
                         <div class="step-content">
                             <h2 class="text-2xl font-semibold text-slate-700 mb-6 border-l-4 border-indigo-500 pl-4">
                                 Package & Payment</h2>
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8"> --}}
                                 {{-- Kolom Kiri: Pilihan Paket, Total --}}
-                                <div class="space-y-6">
+                                {{-- <div class="space-y-6">
                                     <div>
                                         <x-input-label :value="__('Please select your package')" class="mb-3" />
                                         <div id="package-list" class="space-y-3"></div>
@@ -185,9 +185,9 @@ Halaman Registrasi - Jagomun
                                            NadiaAishaSyarif
                                         </a>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- Kolom Kanan: File Uploads & Confirmation --}}
-                                <div class="space-y-6">
+                                {{-- <div class="space-y-6">
                                     <div>
                                         <x-input-label for="payment_proof" :value="__('Payment Proof Upload')" />
                                         <label for="payment_proof"
@@ -252,22 +252,14 @@ Halaman Registrasi - Jagomun
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <input type="hidden" name="total_price" id="total_price_input" value="0">
 
                     {{-- FORM NAVIGATION BUTTONS --}}
                     <div class="flex items-center justify-between mt-12 pt-6 border-t border-slate-200">
-                        <button type="button" id="prev-btn"
-                            class="px-6 py-2 bg-slate-200 text-slate-800 font-semibold rounded-lg hover:bg-slate-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                            Previous
-                        </button>
-                        <button type="button" id="next-btn"
-                            class="px-8 py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors">
-                            Next Step
-                        </button>
-                        <button type="submit" id="submit-btn"
-                            class="hidden px-8 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors">
+                        <button type="submit"
+                            class="px-8 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors">
                             {{ __('Submit Observer Registration') }}
                         </button>
                     </div>
@@ -305,175 +297,27 @@ Halaman Registrasi - Jagomun
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- Multi-Step Form Logic ---
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const submitBtn = document.getElementById('submit-btn');
-            const formSteps = Array.from(document.querySelectorAll('.form-step'));
-            const stepperItems = Array.from(document.querySelectorAll('.stepper-item'));
-            let currentStep = 0;
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
 
-            nextBtn.addEventListener('click', () => {
-                if (validateStep(currentStep)) {
-                    if (currentStep < formSteps.length - 1) {
-                        currentStep++;
-                        updateFormSteps();
-                    }
-                }
-            });
+    form.addEventListener('submit', function(event) {
+        // Cari semua input, select, textarea yang wajib diisi
+        const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+        let isValid = true;
 
-            prevBtn.addEventListener('click', () => {
-                if (currentStep > 0) {
-                    currentStep--;
-                    updateFormSteps();
-                }
-            });
-
-            function validateStep(stepIndex) {
-                const currentStepElement = formSteps[stepIndex];
-                const inputs = currentStepElement.querySelectorAll(
-                    'input[required], select[required], textarea[required]');
-                let isValid = true;
-                for (const input of inputs) {
-                    if (!input.checkValidity()) {
-                        input.reportValidity();
-                        isValid = false;
-                        break;
-                    }
-                }
-                return isValid;
+        for (const input of inputs) {
+            if (!input.checkValidity()) {
+                input.reportValidity(); // munculkan pesan error bawaan browser
+                isValid = false;
+                break;
             }
+        }
 
-            function updateFormSteps() {
-                formSteps.forEach((step, index) => {
-                    step.classList.toggle('active-step', index === currentStep);
-                });
-                updateStepper();
-                updateButtons();
-            }
-
-            function updateStepper() {
-                stepperItems.forEach((item, index) => {
-                    item.classList.toggle('active', index === currentStep);
-                    item.classList.toggle('completed', index < currentStep);
-                });
-            }
-
-            function updateButtons() {
-                prevBtn.disabled = currentStep === 0;
-                nextBtn.classList.toggle('hidden', currentStep === formSteps.length - 1);
-                submitBtn.classList.toggle('hidden', currentStep !== formSteps.length - 1);
-            }
-
-            updateFormSteps();
-
-            // --- Payment and Package Logic ---
-            const packagePrices = {
-                'Non-Accommodation': 0,
-                'Online': 0
-            };
-
-            const biayaPaketEl = document.getElementById('biaya-paket');
-            const namaPaketEl = document.getElementById('nama-paket');
-            const packageListContainer = document.getElementById('package-list');
-            const attendanceOffline = document.getElementById('attendance_offline');
-            const attendanceOnline = document.getElementById('attendance_online');
-            const totalPriceInput = document.getElementById('total_price_input');
-
-            Object.keys(packagePrices).forEach((name) => {
-                const slug = name.toLowerCase().replace(/ /g, '-');
-                const price = packagePrices[name];
-                const formattedPrice = new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0
-                }).format(price);
-
-                const label = document.createElement('label');
-                label.htmlFor = `package_${slug}`;
-                label.className =
-                    "flex justify-between items-center cursor-pointer p-4 border rounded-lg has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-500 has-[:checked]:ring-2 has-[:checked]:ring-indigo-200 transition-all";
-
-                label.innerHTML = `
-            <div class="flex items-center">
-                <input id="package_${slug}" type="radio" name="package_type" value="${name}" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" required>
-                <span class="ml-3 text-sm font-medium text-gray-800">${name}</span>
-            </div>
-            <span class="text-sm font-semibold text-indigo-700">${formattedPrice}</span>
-        `;
-                if (packageListContainer) packageListContainer.appendChild(label);
-            });
-
-            const allPackageRadios = document.querySelectorAll('input[name="package_type"]');
-
-            function updatePackageAndPriceState() {
-                const isOnline = attendanceOnline.checked;
-
-                allPackageRadios.forEach(radio => {
-                    const isOnlinePackage = radio.value === 'Online';
-                    const parentLabel = radio.closest('label');
-                    if (isOnline) {
-                        radio.disabled = !isOnlinePackage;
-                        parentLabel.classList.toggle('opacity-50', !isOnlinePackage);
-                    } else {
-                        radio.disabled = isOnlinePackage;
-                        parentLabel.classList.toggle('opacity-50', isOnlinePackage);
-                    }
-                });
-
-                let selectedPackageInput = document.querySelector('input[name="package_type"]:checked');
-                if (selectedPackageInput && selectedPackageInput.disabled) {
-                    selectedPackageInput.checked = false;
-                    selectedPackageInput = null;
-                }
-
-                if (!selectedPackageInput) {
-                    const firstAvailable = document.querySelector('input[name="package_type"]:not(:disabled)');
-                    if (firstAvailable) {
-                        firstAvailable.checked = true;
-                        selectedPackageInput = firstAvailable;
-                    }
-                }
-
-                let currentPrice = 0;
-                if (selectedPackageInput) {
-                    const selectedPackageName = selectedPackageInput.value;
-                    currentPrice = packagePrices[selectedPackageName] || 0;
-                    const formattedPrice = new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR',
-                        minimumFractionDigits: 0
-                    }).format(currentPrice);
-                    biayaPaketEl.textContent = formattedPrice;
-                    namaPaketEl.textContent = `For package: ${selectedPackageName}`;
-                } else {
-                    biayaPaketEl.textContent = 'Rp 0';
-                    namaPaketEl.textContent = 'Please select a package';
-                }
-                totalPriceInput.value = currentPrice;
-            }
-
-            if (packageListContainer) {
-                packageListContainer.addEventListener('change', updatePackageAndPriceState);
-            }
-            attendanceOffline.addEventListener('change', updatePackageAndPriceState);
-            attendanceOnline.addEventListener('change', updatePackageAndPriceState);
-
-            function setupFileUpload(inputId, textId) {
-                const input = document.getElementById(inputId);
-                const text = document.getElementById(textId);
-                if (input && text) {
-                    input.addEventListener('change', () => {
-                        text.textContent = input.files.length > 0 ? input.files[0].name :
-                            'Click to upload file. Max 2MB.';
-                    });
-                }
-            }
-            setupFileUpload('payment_proof', 'payment_proof_filename');
-            setupFileUpload('social_media_proof', 'social_media_proof_filename');
-
-            updatePackageAndPriceState();
-        });
-    </script>
+        // kalau ada yang tidak valid → cegah submit
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+});
+</script>
 @endsection
