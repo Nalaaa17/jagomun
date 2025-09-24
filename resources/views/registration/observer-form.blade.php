@@ -113,8 +113,6 @@ Halaman Registrasi - Jagomun
                                         class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
                                         required>
                                         <option value="">Select Council to Observe</option>
-                                        <option value="UNEP" @if (old('council_preference_1') == 'UNEP') selected @endif>UNEP
-                                            (Beginner, Offline)</option>
                                         <option value="UNHRC" @if (old('council_preference_1') == 'UNHRC') selected @endif>UNHRC
                                             (Beginner, Online)</option>
                                         <option value="IAEA" @if (old('council_preference_1') == 'IAEA') selected @endif>IAEA
