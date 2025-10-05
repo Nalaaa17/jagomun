@@ -35,24 +35,24 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 // --- MODE 1: PENDAFTARAN DIBUKA ---
 // Uncomment bagian ini kalau registrasi dibuka
 
-Route::prefix('register')->name('registration.')->group(function () {
-    Route::get('/type-selection', [RegistrationController::class, 'chooseType'])->name('chooseType');
-    Route::post('/process-type', [RegistrationController::class, 'processType'])->name('processType');
-    Route::get('/choose-delegate-type/{type}', [RegistrationController::class, 'chooseDelegateType'])->name('chooseDelegateType');
-    Route::post('/process-delegate-type', [RegistrationController::class, 'processDelegateType'])->name('processDelegateType');
-    Route::get('/individual-form', [RegistrationController::class, 'showIndividualForm'])->name('individualForm');
-    Route::post('/individual-submit', [RegistrationController::class, 'submitIndividualForm'])->name('individualSubmit');
-    Route::get('/delegation-form', [RegistrationController::class, 'showDelegationForm'])->name('delegationForm');
-    Route::post('/delegation-submit', [RegistrationController::class, 'submitDelegationForm'])->name('delegationSubmit');
-    Route::get('/observer-form', [RegistrationController::class, 'observerForm'])->name('observerForm');
-    Route::post('/observer-submit', [RegistrationController::class, 'submitObserverForm'])->name('observerSubmit');
-    Route::get('/success', [RegistrationController::class, 'success'])->name('success');
-});
+// Route::prefix('register')->name('registration.')->group(function () {
+//     Route::get('/type-selection', [RegistrationController::class, 'chooseType'])->name('chooseType');
+//     Route::post('/process-type', [RegistrationController::class, 'processType'])->name('processType');
+//     Route::get('/choose-delegate-type/{type}', [RegistrationController::class, 'chooseDelegateType'])->name('chooseDelegateType');
+//     Route::post('/process-delegate-type', [RegistrationController::class, 'processDelegateType'])->name('processDelegateType');
+//     Route::get('/individual-form', [RegistrationController::class, 'showIndividualForm'])->name('individualForm');
+//     Route::post('/individual-submit', [RegistrationController::class, 'submitIndividualForm'])->name('individualSubmit');
+//     Route::get('/delegation-form', [RegistrationController::class, 'showDelegationForm'])->name('delegationForm');
+//     Route::post('/delegation-submit', [RegistrationController::class, 'submitDelegationForm'])->name('delegationSubmit');
+//     Route::get('/observer-form', [RegistrationController::class, 'observerForm'])->name('observerForm');
+//     Route::post('/observer-submit', [RegistrationController::class, 'submitObserverForm'])->name('observerSubmit');
+//     Route::get('/success', [RegistrationController::class, 'success'])->name('success');
+// });
 
 
 
-// Route::get('/registration-closed', [RegistrationController::class, 'registrationClosed'])
-//     ->name('registration.registrationclosed');
+Route::get('/registration-closed', [RegistrationController::class, 'registrationClosed'])
+    ->name('registration.registrationclosed');
 
 
 // --- REFERRAL CHECK ---

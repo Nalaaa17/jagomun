@@ -84,7 +84,7 @@
                 </div>
                 <div class="hidden lg:flex">
                     {{-- PERBAIKAN: Mengganti text-navy dengan text-gray-900 --}}
-                    <a href="{{ route('registration.chooseType') }}" class="text-white hover:text-gold transition-colors duration-300">
+                    <a href="{{ route('registration.registrationclosed') }}" class="text-white hover:text-gold transition-colors duration-300">
                         Register Now
                     </a>
                 </div>
@@ -103,7 +103,7 @@
                 <a href="{{ route('councils') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">Councils</a>
                 <a href="{{ route('contact.index') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">FAQ</a>
                 <a href="{{ route('packages') }}" class="mobile-link block px-3 py-2 text-white hover:text-gold">Packages</a>
-                <a href="{{ route('registration.chooseType') }}" class="mmobile-link block px-3 py-2 text-white hover:text-gold">Register Now</a>
+                <a href="{{ route('registration.registrationclosed') }}" class="mmobile-link block px-3 py-2 text-white hover:text-gold">Register Now</a>
             </div>
         </div>
     </nav>
