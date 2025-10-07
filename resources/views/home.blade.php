@@ -594,7 +594,7 @@
                         class="text-white hover:text-gold transition-colors duration-300">Packages</a>
                 </div>
                 <div class="hidden lg:flex">
-                    <a href="{{ route('registration.registrationclosed') }}"
+                    <a href="{{ route('registration.chooseType') }}"
                         class="text-white hover:text-gold transition-colors duration-300">Register Now</a>
                 </div>
                 <div class="lg:hidden">
@@ -617,7 +617,7 @@
                     class="mobile-link block px-3 py-2 text-white hover:text-gold">FAQ</a>
                 <a href="{{ route('packages') }}"
                     class="mobile-link block px-3 py-2 text-white hover:text-gold">Packages</a>
-                <a href="{{ route('registration.registrationclosed') }}"
+                <a href="{{ route('registration.chooseType') }}"
                     class="mobile-link block px-3 py-2 text-white hover:text-gold">Register Now</a>
             </div>
         </div>
@@ -651,7 +651,7 @@
                     thinking, and address global challenges through the lens of the United Nations.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-                    <a href="{{ route('registration.registrationclosed') }}"
+                    <a href="{{ route('registration.chooseType') }}"
                         class="group relative inline-flex items-center justify-center px-10 py-4 text-lg font-semibold text-navy bg-gradient-to-r from-gold to-champagne rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                         <span class="mr-3">Register Here</span>
                     </a>
