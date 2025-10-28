@@ -75,7 +75,7 @@
                 <h1 class="text-4xl font-bold text-white mb-4">I am Registering As...</h1>
                 <p class="text-white mb-10">Choose your registration type to proceed to the next step.</p>
 
-                <form action="{{ route('registration.processType') }}" method="POST">
+                <form action="{{ route('registration.registrationclosed') }}" method="POST">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
 

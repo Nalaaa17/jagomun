@@ -57,7 +57,7 @@
             </div>
 
             <div id="mobile-menu" class="lg:hidden hidden px-4 pb-4">
-                <a href="{{ route('registration.chooseType') }}" class="block text-white hover:text-gold transition-colors duration-300 font-semibold py-2">
+                <a href="{{ route('registration.registrationclosed') }}" class="block text-white hover:text-gold transition-colors duration-300 font-semibold py-2">
                     Back
                 </a>
             </div>
